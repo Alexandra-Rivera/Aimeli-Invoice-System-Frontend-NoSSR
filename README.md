@@ -1,4 +1,9 @@
 # Aimeli Invoice System Frontend
+## Descripcion del proyecto
+Aimeli Invoice System Frontend contiene la interfaz de usuario del sistema Aimeli Invoice System. El objetivo del sistema es cumplir con las siguientes funcionalidades: 
+* Gestión de inventario en tiempo real.
+* Registro de ventas y compras con generación de reportes.
+* Generación automática de viñetas y facturas.
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.3.
 
