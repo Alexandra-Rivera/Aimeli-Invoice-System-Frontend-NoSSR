@@ -6,9 +6,13 @@ Aimeli Invoice System Frontend contiene la interfaz de usuario del sistema Aimel
 * Generación automática de viñetas y facturas.
 
 ## Tecnologías utilizadas
-* Tailwind CSS
-* Flowbite
-* Angular v19
+
+| Tecnología  | Descripción |
+| ------------- | ------------- |
+| **Angular v19**  | Framework o plataforma de desarrollo de código abierto que se basa en componentes.  |
+| **Tailwind CSS**  | Es un framework CSS que permite crear sitios web personalizados usando clases predefinidas de propiedades CSS  |
+| **Flowbite**  | Es una biblioteca de componentes de interfaz de usuario (UI) de código abierto, que está basada en Tailwind CSS. Incluye componentes como botones, menús desplegables, banners, tablas y barras de navegación. |
+
 
 ## Angular v19
 Este proyecto fue generado usando Angular CLI versión 19.2.3.
