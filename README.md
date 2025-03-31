@@ -9,7 +9,7 @@ Aimeli Invoice System Frontend contiene la interfaz de usuario del sistema Aimel
 
 | Tecnología  | Descripción |
 | ------------- | ------------- |
-| **Angular v19**  | Framework o plataforma de desarrollo de código abierto que se basa en componentes.  |
+| **Angular v19**  | Framework o plataforma de desarrollo de código abierto que se basa en componentes. Está escrito en TypeScript, incluye bibliotecas integradas para enrutamiento, administración de formularios y comunicación cliente-servidor  |
 | **Tailwind CSS**  | Es un framework CSS que permite crear sitios web personalizados usando clases predefinidas de propiedades CSS  |
 | **Flowbite**  | Es una biblioteca de componentes de interfaz de usuario (UI) de código abierto, que está basada en Tailwind CSS. Incluye componentes como botones, menús desplegables, banners, tablas y barras de navegación. |
 
