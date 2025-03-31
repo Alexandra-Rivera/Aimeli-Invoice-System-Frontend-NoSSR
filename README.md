@@ -6,10 +6,11 @@ Aimeli Invoice System Frontend contiene la interfaz de usuario del sistema Aimel
 * Generación automática de viñetas y facturas.
 
 ## Tecnologías utilizadas
+* Tailwind CSS
+* Flowbite
+* Angular v19
 
-### Tailwind CSS
-### Flowbite
-
+## Angular v19
 Este proyecto fue generado usando Angular CLI versión 19.2.3.
 
 ## Servidor de desarrollo local
