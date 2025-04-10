@@ -1,0 +1,245 @@
+<!-- Encabezado -->
+<app-nav-component titulo="Inventario" />
+<br />
+
+<!-- Search bar y filtros -->
+<form class="max-w-lg mx-auto">
+  <div class="flex">
+    <label
+      for="search-dropdown"
+      class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
+      >Your Email</label
+    >
+    <button
+      id="dropdown-button"
+      data-dropdown-toggle="dropdown"
+      class="shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-s-lg hover:bg-gray-200"
+      type="button"
+    >
+      Filtrar por
+      <svg
+        class="w-2.5 h-2.5 ms-2.5"
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 10 6"
+      >
+        <path
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="m1 1 4 4 4-4"
+        />
+      </svg>
+    </button>
+    <div
+      id="dropdown"
+      class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 dark:bg-gray-700"
+    >
+      <div
+        id="accordion-color"
+        data-accordion="collapse"
+        data-active-classes="bg-blue-100 dark:bg-gray-800 text-blue-600 dark:text-white"
+      >
+        <h2 id="accordion-color-heading-1">
+          <button
+            type="button"
+            class="flex items-center justify-between w-full p-3 font-medium rtl:text-right text-gray-500 border border-b-0 border-gray-200"
+            data-accordion-target="#accordion-color-body-1"
+            aria-expanded="false"
+            aria-controls="accordion-color-body-1"
+          >
+            <span>Categorías</span>
+            <svg
+              data-accordion-icon
+              class="w-3 h-3 rotate-180 shrink-0"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 10 6"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 5 5 1 1 5"
+              />
+            </svg>
+          </button>
+        </h2>
+        <div
+          id="accordion-color-body-1"
+          class="hidden"
+          aria-labelledby="accordion-color-heading-1"
+        >
+          <div
+            class="p-5 border border-b-0 border-gray-200 dark:border-gray-700 dark:bg-gray-900"
+          >
+            <ul>
+              <li class="text-gray-700 hover:text-black-font-color">
+                <a href="">Ropa</a>
+              </li>
+              <li class="text-gray-700 hover:text-black-font-color">
+                <a href="">Accesorios</a>
+              </li>
+              <li class="text-gray-700 hover:text-black-font-color">
+                <a href="">Maquillaje</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <h2 id="accordion-color-heading-2">
+          <button
+            type="button"
+            class="flex items-center justify-between w-full p-3 font-medium rtl:text-right text-gray-500 border border-b-0 border-gray-200"
+            data-accordion-target="#accordion-color-body-2"
+            aria-expanded="false"
+            aria-controls="accordion-color-body-2"
+          >
+            <span>Cantidad</span>
+            <svg
+              data-accordion-icon
+              class="w-3 h-3 rotate-180 shrink-0"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 10 6"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 5 5 1 1 5"
+              />
+            </svg>
+          </button>
+        </h2>
+        <div
+          id="accordion-color-body-2"
+          class="hidden"
+          aria-labelledby="accordion-color-heading-2"
+        >
+          <div
+            class="p-5 border border-b-0 border-gray-200 dark:border-gray-700"
+          >
+            <div class="relative mb-6">
+              <label for="labels-range-input" class="sr-only"
+                >Labels range</label
+              >
+              <input
+                id="labels-range-input"
+                type="range"
+                value="1000"
+                min="100"
+                max="1500"
+                class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
+              />
+              <span
+                class="text-sm text-gray-500 dark:text-gray-400 absolute start-0 -bottom-6"
+                >Min 0</span
+              >
+              <span
+                class="text-sm text-gray-500 dark:text-gray-400 absolute end-0 -bottom-6"
+                >Max 100</span
+              >
+            </div>
+          </div>
+        </div>
+        <h2 id="accordion-color-heading-3">
+          <button
+            type="button"
+            class="flex items-center justify-between w-full p-3 font-medium rtl:text-right text-gray-500 border border-b-0 border-gray-200"
+            data-accordion-target="#accordion-color-body-3"
+            aria-expanded="false"
+            aria-controls="accordion-color-body-3"
+          >
+            <span>Precio</span>
+            <svg
+              data-accordion-icon
+              class="w-3 h-3 rotate-180 shrink-0"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 10 6"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 5 5 1 1 5"
+              />
+            </svg>
+          </button>
+        </h2>
+        <div
+          id="accordion-color-body-3"
+          class="hidden"
+          aria-labelledby="accordion-color-heading-3"
+        >
+          <div
+            class="p-5 border border-t-0 border-gray-200 dark:border-gray-700"
+          >
+            <form action="">
+              <input
+                type="number"
+                name="cantidad"
+                id="cantidad"
+                class="w-[100%] mb-2"
+                placeholder="$0.00"
+              />
+              <button
+                type="button"
+                class="px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800"
+              >
+                Submit
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="relative w-full">
+      <input
+        type="search"
+        id="search-dropdown"
+        class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg border-s-gray-50 border-s-2 border border-gray-300"
+        placeholder="Busca tus productos por nombre aquí"
+        required
+      />
+      <button
+        type="submit"
+        class="absolute top-0 end-0 p-2.5 text-sm font-medium h-full text-white bg-blue-700 rounded-e-lg border border-blue-700 hover:bg-blue-800"
+      >
+        <svg
+          class="w-4 h-4"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 20 20"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+          />
+        </svg>
+        <span class="sr-only">Search</span>
+      </button>
+    </div>
+  </div>
+</form>
+
+<!-- Listado de productos -->
+
+<br />
+<section class="w-[100%] px-2 flex flex-col items-center">
+  <app-producto-component />
+  <app-producto-component />
+  <app-producto-component />
+</section>
