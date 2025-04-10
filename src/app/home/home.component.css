@@ -8,9 +8,8 @@
 /* Estilos para ambos botones cuando su panel está colapsado */
 #accordion-collapse [aria-expanded="false"][data-accordion-target="#accordion-collapse-body-1"],
 #accordion-collapse [aria-expanded="false"][data-accordion-target="#accordion-collapse-body-2"] {
-  background-color: #133A6C;
   color: white; /* Or your desired text color */
-}
+} 
 
 /* Hover para ambos botones cuando su panel está expandido */
 #accordion-collapse [aria-expanded="true"][data-accordion-target="#accordion-collapse-body-1"]:hover,
