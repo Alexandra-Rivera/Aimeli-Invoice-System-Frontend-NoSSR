@@ -3,13 +3,13 @@
 <br />
 
 <!-- Search bar y filtros -->
-<form class="max-w-lg mx-auto">
-  <div class="flex">
-    <label
+<form class="max-w-5xl mx-auto">
+  <div class="flex lg:h-[5vh]">
+    <!-- <label
       for="search-dropdown"
-      class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white"
+      class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white border-2 border-red-500"
       >Your Email</label
-    >
+    > -->
     <button
       id="dropdown-button"
       data-dropdown-toggle="dropdown"
@@ -40,7 +40,7 @@
       <div
         id="accordion-color"
         data-accordion="collapse"
-        data-active-classes="bg-blue-100 dark:bg-gray-800 text-blue-600 dark:text-white"
+        data-active-classes="bg-gray-200 text-black-font-color"
       >
         <h2 id="accordion-color-heading-1">
           <button
@@ -78,13 +78,13 @@
             class="p-5 border border-b-0 border-gray-200 dark:border-gray-700 dark:bg-gray-900"
           >
             <ul>
-              <li class="text-gray-700 hover:text-black-font-color">
+              <li class="text-gray-700 hover:text-blue-500 hover:font-bold">
                 <a href="">Ropa</a>
               </li>
-              <li class="text-gray-700 hover:text-black-font-color">
+              <li class="text-gray-700 hover:text-blue-500 hover:font-bold">
                 <a href="">Accesorios</a>
               </li>
-              <li class="text-gray-700 hover:text-black-font-color">
+              <li class="text-gray-700 hover:text-blue-500 hover:font-bold">
                 <a href="">Maquillaje</a>
               </li>
             </ul>
@@ -206,16 +206,17 @@
       <input
         type="search"
         id="search-dropdown"
-        class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg border-s-gray-50 border-s-2 border border-gray-300"
+        class="block p-2.5 lg:h-[100%] w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg border-s-gray-50 border-s-2 border border-gray-300"
         placeholder="Busca tus productos por nombre aquí"
         required
       />
       <button
         type="submit"
-        class="absolute top-0 end-0 p-2.5 text-sm font-medium h-full text-white bg-blue-700 rounded-e-lg border border-blue-700 hover:bg-blue-800"
+        id="boton-buscar"
+        class="absolute top-0 w-[5vh] end-0 p-2.5 m-auto text-sm font-medium h-full text-white bg-fondo-secundario hover:bg-[#0D2444] focus:bg-[#355C92] rounded-e-lg"
       >
         <svg
-          class="w-4 h-4"
+          class="w-[80%] h-[80%]"
           aria-hidden="true"
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
