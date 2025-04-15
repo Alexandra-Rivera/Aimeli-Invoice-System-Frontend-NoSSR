@@ -1,0 +1,60 @@
+<div
+  id="producto-component-container"
+  class="relative w-[100%] lg:w-[90vw] xl:w-[70vw] 2xl:w-[60vw] lg:h-[35vh] flex flex-col items-center bg-white rounded-lg shadow-sm md:flex-row hover:bg-gray-100"
+>
+  <img
+    class="object-cover w-full h-full rounded-t-lg md:w-[30%] lg:w-[40%] md:rounded-none md:rounded-s-lg"
+    src="ropa.jpeg"
+    alt=""
+  />
+  <div class="w-[100%] flex flex-col items-start p-5 leading-normal">
+    <span class="text-gray-500">Codigo SKU: {{ codigo_SKU }}</span>
+    <h5
+      class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
+    >
+      {{ nombre }}
+    </h5>
+    <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+      {{ descripcion }}
+    </p>
+
+    <div class="flex flex-col md:flex-row gap-1">
+      <span class="text-black-font-color font-semibold"
+        >Cantidad en existencias:</span
+      >
+      <p class="text-gray-700">{{ cantidad_existencias }}</p>
+    </div>
+
+    <div class="flex flex-col md:flex-row gap-1">
+      <span class="text-black-font-color font-semibold">Costo Unitario: </span>
+      <p class="text-gray-700">${{ costo_unitario }}</p>
+    </div>
+
+    <div class="flex flex-col md:flex-row gap-1">
+      <span class="text-black-font-color font-semibold">Precio de venta:</span>
+      <p class="text-gray-700">${{ precio_venta }}</p>
+    </div>
+  </div>
+
+  <button type="button" class="absolute right-2 bottom-5 boton-icono-editar">
+    <svg
+      class="w-6 h-6"
+      aria-hidden="true"
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      fill="none"
+      viewBox="0 0 24 24"
+    >
+      <path
+        stroke="currentColor"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"
+      />
+    </svg>
+    <span class="sr-only">Boton editar</span>
+  </button>
+</div>
+<br />
