@@ -5,6 +5,7 @@ import { ProveedoresComponent } from './home/pages/formularios/proveedores/prove
 import { CategoriasComponent } from './home/pages/formularios/categorias/categorias.component';
 import { EncomendistasComponent } from './home/pages/formularios/encomendistas/encomendistas.component';
 import { DestinosComponent } from './home/pages/formularios/destinos/destinos.component';
+import { InventarioComponent } from './home/pages/inventario/inventario.component';
 
 export const routes: Routes = [
     {
@@ -36,5 +37,10 @@ export const routes: Routes = [
         path: 'destinos',
         component: DestinosComponent,
         title: 'Destinos'
+    },
+    {
+        path: 'inventario',
+        component: InventarioComponent,
+        title: 'Inventario'
     }
 ];
