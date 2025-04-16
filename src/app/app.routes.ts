@@ -6,6 +6,7 @@ import { CategoriasComponent } from './home/pages/formularios/categorias/categor
 import { EncomendistasComponent } from './home/pages/formularios/encomendistas/encomendistas.component';
 import { DestinosComponent } from './home/pages/formularios/destinos/destinos.component';
 import { InventarioComponent } from './home/pages/inventario/inventario.component';
+import { RegistroComprasComponent } from './home/pages/movimientos/compras/registro-compras/registro-compras.component';
 
 export const routes: Routes = [
     {
@@ -42,5 +43,10 @@ export const routes: Routes = [
         path: 'inventario',
         component: InventarioComponent,
         title: 'Inventario'
+    },
+    {
+        path: 'compras',
+        component: RegistroComprasComponent,
+        title: 'Compras'
     }
 ];
