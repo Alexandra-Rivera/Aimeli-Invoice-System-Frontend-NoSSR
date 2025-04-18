@@ -7,6 +7,7 @@ import { EncomendistasComponent } from './home/pages/formularios/encomendistas/e
 import { DestinosComponent } from './home/pages/formularios/destinos/destinos.component';
 import { InventarioComponent } from './home/pages/inventario/inventario.component';
 import { RegistroComprasComponent } from './home/pages/movimientos/compras/registro-compras/registro-compras.component';
+import { FormularioComprasComponent } from './home/pages/movimientos/compras/formulario-compras/formulario-compras.component';
 
 export const routes: Routes = [
     {
@@ -48,5 +49,10 @@ export const routes: Routes = [
         path: 'compras',
         component: RegistroComprasComponent,
         title: 'Compras'
+    },
+    {
+        path: 'formulario-compras',
+        component: FormularioComprasComponent,
+        title: 'Formulario de Compras'
     }
 ];
