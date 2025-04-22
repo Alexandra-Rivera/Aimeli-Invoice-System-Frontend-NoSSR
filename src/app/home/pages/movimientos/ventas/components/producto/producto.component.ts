@@ -7,6 +7,7 @@ import { Component, Input } from '@angular/core';
   styleUrl: './producto.component.css'
 })
 export class ProductoComponent {
+  @Input() producto_id: number = 1;
   @Input() codigo_SKU: string = "XUJKLMNPT001";
   @Input() nombre:string = "Nombre por defecto";
   @Input() descripcion: string = "Descripcion del producto por defecto";

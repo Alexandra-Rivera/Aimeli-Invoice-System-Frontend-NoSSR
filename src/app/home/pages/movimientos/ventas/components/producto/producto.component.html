@@ -37,6 +37,8 @@
   <button
     type="button"
     class="absolute right-2 bottom-5 boton-icono-agregar-carrito"
+    data-tooltip-target="producto_id"
+    data-tooltip-placement="top"
   >
     <svg
       class="w-6 h-6"
@@ -58,5 +60,14 @@
 
     <span class="sr-only">Boton agregar al carrito</span>
   </button>
+
+  <div
+    id="producto_id"
+    role="tooltip"
+    class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-xs opacity-0 tooltip dark:bg-gray-700"
+  >
+    Añade este producto al carrito de compras
+    <div class="tooltip-arrow" data-popper-arrow></div>
+  </div>
 </div>
 <br />
