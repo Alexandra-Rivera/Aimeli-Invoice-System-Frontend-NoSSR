@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavComponentVentasComponent } from "../components/nav-component-ventas/nav-component-ventas.component";
-import { ProductoComponent } from "../components/producto/producto.component";
+import { ProductoComponent } from "./producto/producto.component";
 
 @Component({
   selector: 'app-listado-productos',
