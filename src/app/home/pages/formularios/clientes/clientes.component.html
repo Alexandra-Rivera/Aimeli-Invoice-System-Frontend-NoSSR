@@ -56,23 +56,6 @@
       <div class="snap-y bg-fondo-terciario rounded-xl scroll-py-4 overflow-y-auto h-[60vh] w-[90%] lg:w-[80%] custom-scrollbar">
       <ul class="snap-start px-10 py-6">
         <li class="flex justify-between items-center">Cliente 1 <a href="" class="text-select-text-color font-bold">Select</a></li>
-        <li>Cliente 2</li>
-        <li>Cliente 3</li>
-        <li>Cliente 1</li>
-        <li>Cliente 2</li>
-        <li>Cliente 3</li>
-        <li>Cliente 1</li>
-        <li>Cliente 2</li>
-        <li>Cliente 3</li>
-        <li>Cliente 1</li>
-        <li>Cliente 2</li>
-        <li>Cliente 3</li>
-        <li>Cliente 1</li>
-        <li>Cliente 2</li>
-        <li>Cliente 3</li>
-        <li>Cliente 1</li>
-        <li>Cliente 2</li>
-        <li>Cliente 3</li>
       </ul>
       </div>
     </section>
@@ -106,9 +89,12 @@
             required
           />
         </div>
-        <div class="flex flex-row items-center border-2 border-amber-600">
-        <app-boton-icono-eliminar/>
-        <app-boton-redondeado title="Guardar Cliente" estilos="boton-redondeado-oscuro"/>
+        <div class="flex flex-row items-center">
+        <button class="boton-icono-eliminar-relleno"><svg class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"/>
+        </svg>
+        </button>
+        <button class="boton-redondeado-oscuro h-full">Guardar Cliente</button>
       </div>
       </form>
     </section>
