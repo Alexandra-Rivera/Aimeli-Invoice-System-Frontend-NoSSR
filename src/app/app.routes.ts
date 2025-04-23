@@ -10,6 +10,7 @@ import { RegistroComprasComponent } from './home/pages/movimientos/compras/regis
 import { FormularioComprasComponent } from './home/pages/movimientos/compras/formulario-compras/formulario-compras.component';
 import { ListadoProductosComponent } from './home/pages/movimientos/ventas/listado-productos/listado-productos.component';
 import { HistorialVentasComponent } from './home/pages/movimientos/ventas/historial-ventas/historial-ventas.component';
+import { EstadoDePedidosComponent } from './home/pages/movimientos/ventas/estado-de-pedidos/estado-de-pedidos.component';
 
 export const routes: Routes = [
     {
@@ -66,5 +67,10 @@ export const routes: Routes = [
         path: 'historial-ventas',
         component: HistorialVentasComponent,
         title: 'Registro de Ventas'
+    },
+    {
+        path: 'estado-de-pedidos',
+        component: EstadoDePedidosComponent,
+        title: 'Estado de pedidos'
     }
 ];
