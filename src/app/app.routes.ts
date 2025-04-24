@@ -11,6 +11,7 @@ import { FormularioComprasComponent } from './home/pages/movimientos/compras/for
 import { ListadoProductosComponent } from './home/pages/movimientos/ventas/listado-productos/listado-productos.component';
 import { HistorialVentasComponent } from './home/pages/movimientos/ventas/historial-ventas/historial-ventas.component';
 import { EstadoDePedidosComponent } from './home/pages/movimientos/ventas/estado-de-pedidos/estado-de-pedidos.component';
+import { FormularioVentasComponent } from './home/pages/movimientos/ventas/formulario-ventas/formulario-ventas.component';
 
 export const routes: Routes = [
     {
@@ -72,5 +73,10 @@ export const routes: Routes = [
         path: 'estado-de-pedidos',
         component: EstadoDePedidosComponent,
         title: 'Estado de pedidos'
+    },
+    {
+        path: 'formulario-ventas',
+        component: FormularioVentasComponent,
+        title: 'Formulario de Ventas'
     }
 ];
