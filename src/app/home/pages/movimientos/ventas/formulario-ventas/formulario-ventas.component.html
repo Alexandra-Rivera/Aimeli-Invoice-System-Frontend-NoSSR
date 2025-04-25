@@ -1,0 +1,779 @@
+<!-- Encabezado -->
+<app-nav-component-ventas titulo="Formulario de Ventas" />
+
+<br />
+<!-- Formulario de factura y viñeta -->
+<form action="" class="w-full px-2 xl:px-15">
+  <h1 class="text-3xl font-semibold">Datos de la factura</h1>
+  <br />
+  <!-- Informacion de factura de la venta -->
+  <div
+    class="flex flex-col w-full lg:grid lg:grid-cols-2 gap-2 lg:gap-10 mb-10 lg:mt-5"
+  >
+    <!-- Fecha de venta Input -->
+    <div class="flex flex-col gap-3 w-[100%]">
+      <label for="" class="block mb-2 font-semibold">Fecha de venta:</label>
+      <div class="flex flex-row gap-2 w-[100%]">
+        <div>
+          <input
+            type="number"
+            id=""
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
+            placeholder="01"
+            required
+          />
+        </div>
+
+        <!-- Dropdown de meses -->
+        <div class="w-full relative">
+          <button
+            id="dropdownMesButton"
+            data-dropdown-toggle="dropdownMes"
+            class="w-full text-black-font-color bg-gray-100 hover:bg-gray-200 font-medium rounded-full text-sm px-5 py-2.5 text-center inline-flex items-center"
+            type="button"
+          >
+            Mes
+            <svg
+              class="w-2.5 h-2.5 ms-3"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 10 6"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="m1 1 4 4 4-4"
+              />
+            </svg>
+          </button>
+
+          <div
+            id="dropdownMes"
+            class="absolute w-[100%] z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm"
+          >
+            <ul
+              class="py-2 text-sm text-gray-700 dark:text-gray-200"
+              aria-labelledby="dropdownMesButton"
+            >
+              <li>
+                <a href="#" class="block px-4 py-2 hover:bg-gray-100">Enero</a>
+              </li>
+              <li>
+                <a href="#" class="block px-4 py-2 hover:bg-gray-100"
+                  >Febrero</a
+                >
+              </li>
+              <li>
+                <a href="#" class="block px-4 py-2 hover:bg-gray-100">Marzo</a>
+              </li>
+              <li>
+                <a href="#" class="block px-4 py-2 hover:bg-gray-100">Abril</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Dropdown de años -->
+        <div class="w-full relative">
+          <button
+            id="dropdownAniosButton"
+            data-dropdown-toggle="dropdownAnios"
+            class="w-full text-black-font-color bg-gray-100 hover:bg-gray-200 font-medium rounded-full text-sm px-5 py-2.5 text-center inline-flex items-center"
+            type="button"
+          >
+            Año
+            <svg
+              class="w-2.5 h-2.5 ms-3"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 10 6"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="m1 1 4 4 4-4"
+              />
+            </svg>
+          </button>
+
+          <div
+            id="dropdownAnios"
+            class="absolute w-full z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm"
+          >
+            <ul
+              class="py-2 text-sm text-gray-700 dark:text-gray-200"
+              aria-labelledby="dropdownAniosButton"
+            >
+              <li>
+                <a href="#" class="block px-4 py-2 hover:bg-gray-100">2025</a>
+              </li>
+              <li>
+                <a href="#" class="block px-4 py-2 hover:bg-gray-100">2026</a>
+              </li>
+              <li>
+                <a href="#" class="block px-4 py-2 hover:bg-gray-100">2027</a>
+              </li>
+              <li>
+                <a href="#" class="block px-4 py-2 hover:bg-gray-100">2028</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- N de factura y Vendedor -->
+    <div class="flex flex-col gap-3 w-full">
+      <!-- N de factura Input -->
+      <div class="flex flex-col gap-3 lg:flex-row">
+        <label for="" class="block mb-2 font-medium">N° de factura:</label>
+        <input
+          type="text"
+          id=""
+          class="w-full h-[85%] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-full block p-3"
+          placeholder="FAC0001"
+          required
+          disabled
+        />
+      </div>
+
+      <!-- Proveedor Input -->
+      <div class="flex flex-col gap-3 lg:flex-row">
+        <label for="" class="font-semibold">Vendedor:</label>
+        <div class="w-full relative">
+          <button
+            id="dropdownProveedorButton"
+            data-dropdown-toggle="dropdownProveedor"
+            class="w-full text-gray-700 bg-gray-100 hover:bg-gray-200 font-medium rounded-full text-sm px-5 py-2.5 text-center inline-flex items-center"
+            type="button"
+          >
+            Aimeli
+            <svg
+              class="w-2.5 h-2.5 ms-3"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 10 6"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="m1 1 4 4 4-4"
+              />
+            </svg>
+          </button>
+
+          <!-- Dropdown menu -->
+          <div
+            id="dropdownProveedor"
+            class="absolute w-full z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm dark:bg-gray-700"
+          >
+            <ul
+              class="py-2 text-sm text-gray-700 dark:text-gray-200"
+              aria-labelledby="dropdownProveedorButton"
+            >
+              <li>
+                <a
+                  href="#"
+                  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                  >Aimeli</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Datos del cliente -->
+  <h1 class="text-3xl font-semibold">Datos del cliente</h1>
+  <br />
+  <div
+    class="flex flex-col w-full lg:grid lg:grid-cols-2 gap-2 lg:gap-10 mb-10 lg:mt-5"
+  >
+    <!-- Nombre del cliente Input -->
+    <div class="flex flex-col gap-3 lg:flex-row lg:items-center">
+      <label for="" class="block mb-2 font-medium">Nombre:</label>
+      <div class="w-full lg:w-80 relative">
+        <button
+          id="dropdownClientesButton"
+          data-dropdown-toggle="dropdownClientes"
+          class="w-full text-gray-700 bg-gray-100 hover:bg-gray-200 font-medium rounded-full text-sm px-5 py-2.5 text-center inline-flex items-center"
+          type="button"
+        >
+          SARA VILMA PEÑA DE RODRIGUEZ
+          <svg
+            class="w-2.5 h-2.5 ms-3"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 10 6"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="m1 1 4 4 4-4"
+            />
+          </svg>
+        </button>
+
+        <div
+          id="dropdownClientes"
+          class="absolute w-full z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm dark:bg-gray-700"
+        >
+          <ul
+            class="py-2 text-sm text-gray-700 dark:text-gray-200"
+            aria-labelledby="dropdownClientesButton"
+          >
+            <li>
+              <a
+                href="#"
+                class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                >SARA VILMA PEÑA DE RODRIGUEZ</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Inputs de Número de teléfono y método de pago -->
+    <div class="flex flex-col lg:gap-2 w-full">
+      <!-- Agregar Numero de telefono Input -->
+      <div class="w-full mt-5 flex flex-col lg:flex-row">
+        <label for="" class="block mb-2 font-medium">Número de teléfono:</label>
+
+        <div class="relative w-full">
+          <input
+            type="phone"
+            id="phone-input"
+            class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-full border-s-0 border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-s-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
+            pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+            placeholder="0000-0000"
+            required
+          />
+        </div>
+      </div>
+
+      <!-- Agregar metodo de pago Input -->
+      <div class="flex flex-col lg:flex-row gap-3 mt-5">
+        <label for="" class="font-semibold">Método de pago:</label>
+
+        <div class="w-full relative">
+          <button
+            id="dropdownMetodoDePagoButton"
+            data-dropdown-toggle="dropdownMetodoDePago"
+            class="w-full text-black-font-color bg-gray-100 hover:bg-gray-200 font-medium rounded-full text-sm px-5 py-2.5 text-center inline-flex items-center"
+            type="button"
+          >
+            Efectivo
+            <svg
+              class="w-2.5 h-2.5 ms-3"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 10 6"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="m1 1 4 4 4-4"
+              />
+            </svg>
+          </button>
+          <div
+            id="dropdownMetodoDePago"
+            class="absolute w-full z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm"
+          >
+            <ul
+              class="py-2 text-sm text-gray-700"
+              aria-labelledby="dropdownMetodoDePagoButton"
+            >
+              <li>
+                <a href="#" class="block px-4 py-2 hover:bg-gray-100"
+                  >Efectivo</a
+                >
+              </li>
+              <li>
+                <a href="#" class="block px-4 py-2 hover:bg-gray-100"
+                  >Transferencia</a
+                >
+              </li>
+              <li>
+                <a href="#" class="block px-4 py-2 hover:bg-gray-100"
+                  >Tarjeta de Crédito</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br />
+  <!-- Tabla de productos -->
+  <div class="relative overflow-x-auto sm:rounded-lg w-full">
+    <table
+      class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
+    >
+      <!-- Encabezado de la tabla -->
+      <thead
+        class="text-xs text-white-font-color uppercase bg-tablas-encabezados-color dark:bg-gray-700 dark:text-gray-400"
+      >
+        <tr>
+          <th scope="col" class="px-6 py-3">Código del Producto</th>
+          <th scope="col" class="px-6 py-3">Nombre del Producto</th>
+          <th scope="col" class="px-6 py-3">Descripción</th>
+          <th scope="col" class="px-6 py-3">Cantidad</th>
+          <th scope="col" class="px-6 py-3">Costo Unitario</th>
+          <th scope="col" class="px-6 py-3">Precio de Venta</th>
+          <th scope="col" class="px-6 py-3"></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <!-- Contenido Dummy de la tabla -->
+        <tr class="bg-white border-b border-gray-200 hover:bg-gray-50">
+          <td class="px-6 py-4">XUJKLMNPT001</td>
+          <td class="px-6 py-4">CADENA DE CORAZON PLATEADO DE 15 CM</td>
+          <td class="px-6 py-4">
+            Lorem Ipsum is simply dummy text of the printing and typesetting
+            industry. Lorem Ipsum has been the industry's standard dummy text
+            ever since the 1500s, when an unknown printer.
+          </td>
+          <td class="px-6 py-4">5</td>
+          <td class="px-6 py-4">$2.25</td>
+          <td class="px-6 py-4">$4.25</td>
+          <td class="px-6 py-4">
+            <button
+              type="button"
+              class="font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center cursor-pointer"
+            >
+              <svg
+                class="w-6 h-6 text-eliminar-claro"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"
+                />
+              </svg>
+
+              <span class="sr-only">Boton eliminar fila</span>
+            </button>
+          </td>
+        </tr>
+
+        <!-- Formulario Input de la tabla -->
+        <tr class="bg-white border-b border-gray-200 hover:bg-gray-50">
+          <!-- Código de producto -->
+          <td class="px-6 py-4">
+            <input
+              type="text"
+              id=""
+              class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block p-3"
+              placeholder="XUJKLMNPT001"
+              required
+              disabled
+            />
+          </td>
+
+          <!-- Nombre de producto Input -->
+          <td class="px-6 py-4">
+            <input
+              type="text"
+              id="large-input"
+              placeholder="Escribir nombre de producto aquí"
+              class="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            />
+          </td>
+
+          <!-- Descripcion de producto Input -->
+          <td class="px-6 py-4">
+            <input
+              type="text"
+              id="large-input"
+              placeholder="Escribir descripcion de producto aquí"
+              class="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            />
+          </td>
+
+          <!-- Cantidad Input -->
+          <td class="px-6 py-4">
+            <input
+              type="number"
+              id=""
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
+              placeholder="0"
+              required
+            />
+          </td>
+
+          <!-- Precio Unitario Input -->
+          <td class="px-6 py-4">
+            <input
+              type="number"
+              id=""
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
+              placeholder="$2.25"
+              required
+            />
+          </td>
+
+          <!-- Precio de Venta Input -->
+          <td class="px-6 py-4">
+            <input
+              type="number"
+              id=""
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
+              placeholder="$4.25"
+              required
+            />
+          </td>
+
+          <!-- Boton Eliminar Fila -->
+          <td class="px-6 py-4">
+            <button
+              type="button"
+              class="font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center cursor-pointer"
+            >
+              <svg
+                class="w-6 h-6 text-eliminar-claro"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"
+                />
+              </svg>
+
+              <span class="sr-only">Boton eliminar fila</span>
+            </button>
+          </td>
+        </tr>
+
+        <br />
+        <!-- Anticipo Input -->
+        <tr class="bg-white border-b border-gray-200 hover:bg-gray-50">
+          <td class="px-6 py-4 font-bold">Anticipo:</td>
+          <td class="px-6 py-4">$0.00</td>
+        </tr>
+
+        <!-- Total de la compra -->
+        <tr class="bg-white border-b border-gray-200 hover:bg-gray-50">
+          <td class="px-6 py-4 font-bold">Total:</td>
+          <td class="px-6 py-4">$22.50</td>
+          <td class="px-6 py-4">VEINTIDÓS 50/100 DÓLARES</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Grupo de botones para agregar fila y generar factura -->
+  <div class="my-5 flex items-end justify-end">
+    <button type="button" class="boton-redondeado-claro">Agregar fila</button>
+    <button type="button" class="boton-redondeado-claro">
+      Generar Factura
+    </button>
+  </div>
+
+  <!-- Datos de la Viñeta  -->
+  <h1 class="text-3xl font-semibold">DATOS DE LA VIÑETA</h1>
+  <br />
+
+  <div
+    class="flex flex-col w-full lg:grid lg:grid-cols-2 gap-2 lg:gap-10 mb-10 lg:mt-5"
+  >
+    <!-- Encomendistas Dropdown Input -->
+    <div class="flex flex-col gap-3">
+      <label for="" class="font-semibold">Encomendista:</label>
+
+      <div class="w-full lg:w-[50%] relative">
+        <button
+          id="dropdownEncomendistasButton"
+          data-dropdown-toggle="dropdownEncomendistas"
+          class="w-full text-black-font-color bg-gray-100 hover:bg-gray-200 font-medium rounded-full text-sm px-5 py-2.5 text-center inline-flex items-center"
+          type="button"
+        >
+          Encomiendas GYB
+          <svg
+            class="w-2.5 h-2.5 ms-3"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 10 6"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="m1 1 4 4 4-4"
+            />
+          </svg>
+        </button>
+        <div
+          id="dropdownEncomendistas"
+          class="absolute w-full z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm"
+        >
+          <ul
+            class="py-2 text-sm text-gray-700"
+            aria-labelledby="dropdownEncomendistasButton"
+          >
+            <li>
+              <a href="#" class="block px-4 py-2 hover:bg-gray-100"
+                >Encomiendas CBG</a
+              >
+            </li>
+            <li>
+              <a href="#" class="block px-4 py-2 hover:bg-gray-100"
+                >Encomiendas VYG</a
+              >
+            </li>
+            <li>
+              <a href="#" class="block px-4 py-2 hover:bg-gray-100"
+                >Encomiendas Mi Pueblito</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Destino Dropdown Input -->
+    <div class="flex flex-col gap-3">
+      <label for="" class="font-semibold">Destinos:</label>
+
+      <div class="w-full lg:w-[80%] relative">
+        <button
+          id="dropdownDestinoButton"
+          data-dropdown-toggle="dropdownDestino"
+          class="w-full text-black-font-color bg-gray-100 hover:bg-gray-200 font-medium rounded-full text-sm px-5 py-2.5 text-center inline-flex items-center"
+          type="button"
+        >
+          Santa Tecla, a la par de las letras...
+          <svg
+            class="w-2.5 h-2.5 ms-3"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 10 6"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="m1 1 4 4 4-4"
+            />
+          </svg>
+        </button>
+        <div
+          id="dropdownDestino"
+          class="absolute w-full z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm"
+        >
+          <ul
+            class="py-2 text-sm text-gray-700"
+            aria-labelledby="dropdownDestinoButton"
+          >
+            <li>
+              <a href="#" class="block px-4 py-2 hover:bg-gray-100"
+                >La libertad, a la par del puerto</a
+              >
+            </li>
+            <li>
+              <a href="#" class="block px-4 py-2 hover:bg-gray-100"
+                >Playa El Tunco</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fecha de entrega a encomentista -->
+    <div class="flex flex-col gap-3">
+      <label for="" class="font-semibold"
+        >Fecha de entrega a encomendista:</label
+      >
+      <div class="relative max-w-sm">
+        <div
+          class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"
+        >
+          <svg
+            class="w-4 h-4 text-gray-500 dark:text-gray-400"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+          >
+            <path
+              d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"
+            />
+          </svg>
+        </div>
+        <input
+          id="fechaEntregaEncomendista"
+          datepicker
+          datepicker-buttons
+          datepicker-autoselect-today
+          type="text"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-full block w-full ps-10 p-2.5"
+          placeholder="Seleccionar fecha"
+        />
+      </div>
+    </div>
+
+    <!-- Fecha de entrega a cliente -->
+    <div class="flex flex-col gap-3">
+      <label for="" class="font-semibold">Fecha de entrega a Cliente:</label>
+      <div class="relative max-w-sm">
+        <div
+          class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"
+        >
+          <svg
+            class="w-4 h-4 text-gray-500 dark:text-gray-400"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+          >
+            <path
+              d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"
+            />
+          </svg>
+        </div>
+        <input
+          id="fechaEntregaCliente"
+          datepicker
+          datepicker-buttons
+          datepicker-autoselect-today
+          type="text"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-full block w-full ps-10 p-2.5"
+          placeholder="Seleccionar fecha"
+        />
+      </div>
+
+      <div class="flex flex-row gap-2 mt-2">
+        <div>
+          <label
+            for="horaLlegada"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >Hora de llegada a destino:</label
+          >
+          <div class="relative">
+            <div
+              class="absolute inset-y-0 end-0 top-0 flex items-center pe-3.5 pointer-events-none"
+            >
+              <svg
+                class="w-4 h-4 text-gray-500 dark:text-gray-400"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm11-4a1 1 0 1 0-2 0v4a1 1 0 0 0 .293.707l3 3a1 1 0 0 0 1.414-1.414L13 11.586V8Z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </div>
+            <input
+              type="time"
+              id="horaLlegada"
+              class="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              min="09:00"
+              max="18:00"
+              value="00:00"
+              required
+            />
+          </div>
+        </div>
+        <div>
+          <label
+            for="horaSalida"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >Hora de salida de destino:</label
+          >
+          <div class="relative">
+            <div
+              class="absolute inset-y-0 end-0 top-0 flex items-center pe-3.5 pointer-events-none"
+            >
+              <svg
+                class="w-4 h-4 text-gray-500 dark:text-gray-400"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm11-4a1 1 0 1 0-2 0v4a1 1 0 0 0 .293.707l3 3a1 1 0 0 0 1.414-1.414L13 11.586V8Z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </div>
+            <input
+              type="time"
+              id="horaSalida"
+              class="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              min="09:00"
+              max="18:00"
+              value="00:00"
+              required
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Comentarios Input -->
+    <div class="flex flex-col gap-3">
+      <label for="comentarios" class="block mb-2 font-semibold text-gray-900"
+        >Comentarios:</label
+      >
+      <textarea
+        id="comentarios"
+        rows="4"
+        class="block p-2.5 w-full lg:w-[70%] text-sm resize-none text-gray-900 bg-gray-50 rounded-lg border border-gray-300"
+        placeholder="Escribe tus comentarios aquí..."
+      ></textarea>
+    </div>
+  </div>
+
+  <!-- Grupo de botones de Guardar y Eliminar -->
+
+  <div class="flex flex-row justify-end mb-5">
+    <button class="boton-redondeado-oscuro">Guardar</button>
+    <button class="boton-redondeado-eliminar">Eliminar</button>
+  </div>
+</form>
