@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { NavbarComponentRegresarComponent } from "./components/navbar-component-regresar/navbar-component-regresar.component";
+import { NavComponentComponent } from '../../../../../components/nav-component/nav-component.component';
 
 @Component({
   selector: 'app-formulario-compras',
-  imports: [NavbarComponentRegresarComponent],
+  imports: [NavComponentComponent],
   templateUrl: './formulario-compras.component.html',
   styleUrl: './formulario-compras.component.css'
 })
