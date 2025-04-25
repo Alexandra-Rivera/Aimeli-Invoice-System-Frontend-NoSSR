@@ -9,6 +9,7 @@ import { InventarioComponent } from './home/pages/inventario/inventario.componen
 import { RegistroComprasComponent } from './home/pages/movimientos/compras/registro-compras/registro-compras.component';
 import { FormularioComprasComponent } from './home/pages/movimientos/compras/formulario-compras/formulario-compras.component';
 import { FormularioRegistroComponent } from './formulario-registro/formulario-registro.component';
+import { FormularioInfoAmeliComponent } from './formulario-info-ameli/formulario-info-ameli.component';
 
 
 export const routes: Routes = [
@@ -61,5 +62,10 @@ export const routes: Routes = [
         path: 'formulario-registro',
         component: FormularioRegistroComponent,
         title: 'Formulario de Registro'
+    },
+    {
+        path: 'formulario-info-aimeli',
+        component: FormularioInfoAmeliComponent,
+        title: 'Formulario de Informacion de Aimeli'
     }
 ];
