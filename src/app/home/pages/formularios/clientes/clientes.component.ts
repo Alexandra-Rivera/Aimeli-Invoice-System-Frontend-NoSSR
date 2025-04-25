@@ -1,8 +1,9 @@
 import { Component, Input } from '@angular/core';
+import { NavComponentComponent } from '../../../../components/nav-component/nav-component.component';
 
 @Component({
   selector: 'app-clientes',
-  imports: [],
+  imports: [NavComponentComponent],
   templateUrl: './clientes.component.html',
   styleUrl: './clientes.component.css'
 })
