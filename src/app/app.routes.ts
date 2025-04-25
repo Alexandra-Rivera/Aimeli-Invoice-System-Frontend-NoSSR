@@ -14,6 +14,7 @@ import { EstadoDePedidosComponent } from './home/pages/movimientos/ventas/estado
 import { FormularioVentasComponent } from './home/pages/movimientos/ventas/formulario-ventas/formulario-ventas.component';
 import { FormularioRegistroComponent } from './formulario-registro/formulario-registro.component';
 import { FormularioInfoAmeliComponent } from './formulario-info-ameli/formulario-info-ameli.component';
+import { LoginComponent } from './login/login.component';
 
 export const routes: Routes = [
     {
@@ -90,5 +91,10 @@ export const routes: Routes = [
         path: 'formulario-info-aimeli',
         component: FormularioInfoAmeliComponent,
         title: 'Formulario de Informacion de Aimeli'
+    },
+    {
+        path: 'login',
+        component: LoginComponent,
+        title: 'Login'
     }
 ];
