@@ -1,9 +1,9 @@
 import { Component, Input } from '@angular/core';
-import { NavComponentVentasComponent } from "../components/nav-component-ventas/nav-component-ventas.component";
+import { NavComponentComponent } from "../../../../../components/nav-component/nav-component.component";
 
 @Component({
   selector: 'app-estado-de-pedidos',
-  imports: [NavComponentVentasComponent],
+  imports: [NavComponentComponent],
   templateUrl: './estado-de-pedidos.component.html',
   styleUrl: './estado-de-pedidos.component.css'
 })

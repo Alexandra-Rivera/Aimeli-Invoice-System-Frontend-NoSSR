@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { NavComponentVentasComponent } from "../components/nav-component-ventas/nav-component-ventas.component";
 import { RegistroVentasTablaComponent } from "./registro-ventas-tabla/registro-ventas-tabla.component";
+import { NavComponentComponent } from "../../../../../components/nav-component/nav-component.component";
 
 @Component({
   selector: 'app-historial-ventas',
-  imports: [NavComponentVentasComponent, RegistroVentasTablaComponent],
+  imports: [RegistroVentasTablaComponent, NavComponentComponent],
   templateUrl: './historial-ventas.component.html',
   styleUrl: './historial-ventas.component.css'
 })
