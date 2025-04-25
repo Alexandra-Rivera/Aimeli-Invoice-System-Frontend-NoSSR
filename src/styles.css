@@ -62,7 +62,7 @@
     }
 
     .boton-icono-agregar-carrito {
-        @apply text-white  bg-fondo-secundario hover:bg-[#0D2444] font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center me-2 shadow-variable-sombra;
+        @apply text-white  bg-fondo-secundario hover:bg-[#0D2444] font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center me-2 shadow-variable-sombra cursor-pointer;
     }
 
     .boton-redondeado-eliminar {
