@@ -46,7 +46,7 @@
     }
     
     .boton-redondeado-oscuro {
-        @apply text-white bg-fondo-secundario hover:bg-[#0D2444] focus:bg-[#355C92] font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 shadow-variable-sombra;
+        @apply text-white bg-fondo-secundario hover:bg-[#0D2444] focus:bg-[#355C92] font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 shadow-variable-sombra;
     }
     
     .boton-redondeado-claro {
