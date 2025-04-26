@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component,OnInit } from '@angular/core';
 import { NavComponentVentasComponent } from "../components/nav-component-ventas/nav-component-ventas.component";
 import { ProductoComponent } from "./producto/producto.component";
 import { RouterOutlet } from '@angular/router';
+import { initFlowbite } from 'flowbite';
 
 @Component({
   selector: 'app-listado-productos',
@@ -9,6 +10,12 @@ import { RouterOutlet } from '@angular/router';
   templateUrl: './listado-productos.component.html',
   styleUrl: './listado-productos.component.css'
 })
-export class ListadoProductosComponent {
+export class ListadoProductosComponent implements OnInit {
+  constructor() { }
+
+  ngOnInit(): void {
+    // Initialization logic can go here
+    initFlowbite();
+  }
 
 }
