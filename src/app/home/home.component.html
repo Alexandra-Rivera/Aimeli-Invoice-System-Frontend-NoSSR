@@ -17,6 +17,8 @@
     <br />
 
     <button
+      routerLink="inventario"
+      routerLinkActive="active"
       class="boton-cuadrado-oscuro text-lg md:text-2xl h-[2.5rem] md:h-[3.5rem] flex items-center justify-center min-lg:h-[5rem] w-[100%]"
     >
       Inventarios
@@ -64,8 +66,18 @@
           class="lg:pl-24 pl-14 py-5 text-base md:text-lg lg:text-2xl border border-b-0 border-gray-200 bg-fondo-terciario rounded-2xl font-bold"
         >
           <ul>
-            <li><a href="#">Compras</a></li>
-            <li><a href="#">Ventas</a></li>
+            <li>
+              <a
+                routerLink="compras/historial-compras"
+                routerLinkActive="active"
+                >Compras</a
+              >
+            </li>
+            <li>
+              <a routerLink="ventas/listado-productos" routerLinkActive="active"
+                >Ventas</a
+              >
+            </li>
           </ul>
         </div>
       </div>
@@ -108,11 +120,33 @@
           class="lg:pl-24 pl-14 py-5 text-base md:text-lg lg:text-2xl border border-b-0 border-gray-200 bg-fondo-terciario rounded-2xl font-bold"
         >
           <ul>
-            <li><a href="#">Clientes</a></li>
-            <li><a href="#">Proveedores</a></li>
-            <li><a href="#">Categorías</a></li>
-            <li><a href="#">Encomendistas</a></li>
-            <li><a href="#">Destinos</a></li>
+            <li>
+              <a routerLink="formularios/clientes" routerLinkActive="active"
+                >Clientes</a
+              >
+            </li>
+            <li>
+              <a routerLink="formularios/proveedores" routerLinkActive="active"
+                >Proveedores</a
+              >
+            </li>
+            <li>
+              <a routerLink="formularios/categorias" routerLinkActive="active"
+                >Categorías</a
+              >
+            </li>
+            <li>
+              <a
+                routerLink="formularios/encomendistas"
+                routerLinkActive="active"
+                >Encomendistas</a
+              >
+            </li>
+            <li>
+              <a routerLink="formularios/destinos" routerLinkActive="active"
+                >Destinos</a
+              >
+            </li>
           </ul>
         </div>
       </div>
@@ -126,9 +160,11 @@
 
     <button
       type="button"
+      routerLink="formulario-info-aimeli"
+      routerLinkActive="active"
       class="boton-cuadrado-oscuro text-lg md:text-2xl h-[2.5rem] md:h-[3.5rem] flex items-center justify-center min-lg:h-[5rem] w-[100%]"
     >
-      Configuraciones
+      Datos de Aimeli
     </button>
 
     <br />
