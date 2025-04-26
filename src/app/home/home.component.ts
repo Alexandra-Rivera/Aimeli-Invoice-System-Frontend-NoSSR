@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { initFlowbite } from 'flowbite'; // Import Flowbite initialization function
 
 @Component({
   selector: 'app-home',
@@ -7,6 +8,12 @@ import { RouterOutlet } from '@angular/router';
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
+  constructor() { }
+
+  ngOnInit(): void {
+    // Initialization logic can go here
+    initFlowbite();
+  }
 
 }

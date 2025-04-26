@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RegistroVentasTablaComponent } from "./registro-ventas-tabla/registro-ventas-tabla.component";
 import { NavComponentComponent } from "../../../../../components/nav-component/nav-component.component";
+import { initFlowbite } from 'flowbite';
 
 @Component({
   selector: 'app-historial-ventas',
@@ -8,6 +9,11 @@ import { NavComponentComponent } from "../../../../../components/nav-component/n
   templateUrl: './historial-ventas.component.html',
   styleUrl: './historial-ventas.component.css'
 })
-export class HistorialVentasComponent {
+export class HistorialVentasComponent implements OnInit {
+  constructor() { }
 
+  ngOnInit(): void {
+    // Initialization logic can go here
+    initFlowbite();
+  }
 }

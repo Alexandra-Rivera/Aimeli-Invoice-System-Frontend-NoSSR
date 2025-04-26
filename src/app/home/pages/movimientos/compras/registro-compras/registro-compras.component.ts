@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavComponentComponent } from "../../../../../components/nav-component/nav-component.component";
 import { RegistroDeComprasTablaComponent } from "./components/registro-de-compras-tabla/registro-de-compras-tabla.component";
+import { initFlowbite } from 'flowbite';
 
 @Component({
   selector: 'app-registro-compras',
@@ -8,6 +9,12 @@ import { RegistroDeComprasTablaComponent } from "./components/registro-de-compra
   templateUrl: './registro-compras.component.html',
   styleUrl: './registro-compras.component.css'
 })
-export class RegistroComprasComponent {
+export class RegistroComprasComponent implements OnInit {
+  constructor() { }
+
+  ngOnInit(): void {
+    // Initialization logic can go here
+    initFlowbite(); // Uncomment if you need to initialize Flowbite here
+  }
 
 }
