@@ -1,8 +1,9 @@
 import { Component, Input } from '@angular/core';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
   selector: 'app-nav-component-ventas',
-  imports: [],
+  imports: [RouterLink, RouterLinkActive],
   templateUrl: './nav-component-ventas.component.html',
   styleUrl: './nav-component-ventas.component.css'
 })
