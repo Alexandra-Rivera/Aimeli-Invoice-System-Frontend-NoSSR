@@ -1,15 +1,15 @@
-<section class="flex justify-center order-1 lg:order-2">
+<app-nav-component titulo="Generar Reportes" />
+<section class="flex justify-center order-1 lg:order-2 mt-10 mx-5">
     <div class="mt-15">
-    <h3 class="centrar-contenido">Seleccionar rango de fechas</h3>
-    <div class="flex justify-center w-full order-2 lg:order-1 gap-2 mt-10">
-        <div class="mb-5 w-full">
-            <div>
+    <h1 class="centrar-contenido text-2xl font-bold text-fondo-secundario">Seleccionar rango de fechas</h1>
                 <div
                   id="date-range-picker"
                   date-rangepicker
-                  class="flex items-center justify-center"
+                  class="flex items-center justify-center gap-20"
                 >
-                  <div class="relative">
+                <div>
+                    <p class=" mt-5 mb-5">Desde</p>
+                    <div class="relative">
                     <div
                       class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"
                     >
@@ -32,35 +32,232 @@
                       class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5"
                       placeholder="Fecha de inicio"
                     />
+                </div>          
                   </div>
-                  <span class="mx-4 text-gray-500">a</span>
-                  <div class="relative">
-                    <div
-                      class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"
-                    >
-                      <svg
-                        class="w-4 h-4 text-gray-500"
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                      >
-                        <path
-                          d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"
+                  <div>
+                    <p class=" mt-5 mb-5">Hasta</p>
+                    <div class="relative">
+                        <div
+                          class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"
+                        >
+                          <svg
+                            class="w-4 h-4 text-gray-500"
+                            aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="currentColor"
+                            viewBox="0 0 20 20"
+                          >
+                            <path
+                              d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"
+                            />
+                          </svg>
+                        </div>
+                        <input
+                          id="datepicker-range-end"
+                          name="end"
+                          type="text"
+                          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5"
+                          placeholder="Fecha final"
                         />
-                      </svg>
+                      </div>
                     </div>
-                    <input
-                      id="datepicker-range-end"
-                      name="end"
-                      type="text"
-                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5"
-                      placeholder="Fecha final"
-                    />
                   </div>
+                  <div class="centrar-contenido px-6 mt-8">
+                    <p class="w-full">Tipo de reporte</p>
+                        <div class="w-full relative">
+                          <button
+                            id="buttonTipoReporte"
+                            data-dropdown-toggle="menuTipoReporte"
+                            class="w-full text-black-font-color bg-gray-100 hover:bg-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center cursor-pointer"
+                            type="button"
+                          >
+                            Reporte
+                            <svg
+                              class="w-2.5 h-2.5 ms-3"
+                              aria-hidden="true"
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 10 6"
+                            >
+                              <path
+                                stroke="currentColor"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                stroke-width="2"
+                                d="m1 1 4 4 4-4"
+                              />
+                            </svg>
+                          </button>
+            
+                          <!-- Dropdown menu -->
+                          <div
+                            id="menuTipoReporte"
+                            class="absolute w-[100%] z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm"
+                          >
+                            <ul
+                              class="py-2 text-sm text-gray-700"
+                              aria-labelledby="buttonTipoReporte"
+                            >
+                              <li>
+                                <a href="#" class="block px-4 py-2 hover:bg-gray-100"
+                                  >Compras</a
+                                >
+                              </li>
+                              <li>
+                                <a href="#" class="block px-4 py-2 hover:bg-gray-100"
+                                  >Ventas</a
+                                >
+                              </li>
+                              <li>
+                                <a href="#" class="block px-4 py-2 hover:bg-gray-100"
+                                  >Kardex</a
+                                >
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
                 </div>
-              </div>
-            </div>
-        </div>  
-    </div>
+                <div>
+                    <h1 class="text-2xl mt-10 centrar-contenido font-bold">Rango de producto</h1>
+                </div>
+    <div class="flex justify-center w-full order-2 lg:order-1 gap-2 mt-10">
+        <div class="mb-5 w-full">
+          <label
+            for="nombre"
+            class="block mb-2 text-sm font-medium text-gray-900"
+            >Seleccionar producto</label
+          >
+          <div class="w-full lg:w-50 relative">
+            <button
+              id="dropdownDefaultButton1"
+              data-dropdown-toggle="dropdown1"
+              class="w-full text-black-font-color bg-gray-100 hover:bg-gray-200 font-medium rounded-full text-sm px-5 py-2.5 text-center inline-flex items-center"
+              type="button"
+            >
+            Producto
+              <svg
+                class="w-2.5 h-2.5 ms-3"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 10 6"
+              >
+                <path
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="m1 1 4 4 4-4"
+                />
+              </svg>
+            </button>
+  
+            <!-- Dropdown menu -->
+            <div
+              id="dropdown1"
+              class="absolute w-full z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm"
+            >
+              <ul
+                class="py-2 text-sm text-gray-700"
+                aria-labelledby="dropdownDefaultButton1"
+              >
+                <li>
+                    <div class="flex items-center ps-3">
+                        <input id="vue-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500">
+                        <label for="vue-checkbox" class="w-full py-3 ms-2 text-sm font-medium text-gray-900">Blusa blanca con flores rosas</label>
+                    </div>
+                <li>
+                    <div class="flex items-center ps-3">
+                        <input id="vue-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500">
+                        <label for="vue-checkbox" class="w-full py-3 ms-2 text-sm font-medium text-gray-900">Jeans Cargo</label>
+                    </div>            
+                </li>
+                <li>
+                    <div class="flex items-center ps-3">
+                        <input id="vue-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500">
+                        <label for="vue-checkbox" class="w-full py-3 ms-2 text-sm font-medium text-gray-900">Top de estrellas</label>
+                    </div>                 </li>
+                <li>
+                    <div class="flex items-center ps-3">
+                        <input id="vue-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500">
+                        <label for="vue-checkbox" class="w-full py-3 ms-2 text-sm font-medium text-gray-900">Aretes de corazón</label>
+                    </div> 
+                </li>
+              </ul>
+            </div>  
+        </div>
+    </div> 
+    <div class="mb-5 w-full">
+        <label
+          for="nombre"
+          class="block mb-2 text-sm font-medium text-gray-900"
+          >Seleccionar categoría</label
+        >
+        <div class="w-full lg:w-50 relative">
+          <button
+            id="dropdownDefaultButton2"
+            data-dropdown-toggle="dropdown2"
+            class="w-full text-black-font-color bg-gray-100 hover:bg-gray-200 font-medium rounded-full text-sm px-5 py-2.5 text-center inline-flex items-center"
+            type="button"
+          >
+            Categoría
+            <svg
+              class="w-2.5 h-2.5 ms-3"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 10 6"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="m1 1 4 4 4-4"
+              />
+            </svg>
+          </button>
+
+          <!-- Dropdown menu -->
+          <div
+            id="dropdown2"
+            class="absolute w-full z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm"
+          >
+            <ul
+              class="py-2 text-sm text-gray-700"
+              aria-labelledby="dropdownDefaultButton2"
+            >
+              <li>
+                <div class="flex items-center ps-3">
+                    <input id="vue-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500">
+                    <label for="vue-checkbox" class="w-full py-3 ms-2 text-sm font-medium text-gray-900">Mujer</label>
+                </div> 
+              </li>
+              <li>
+                <div class="flex items-center ps-3">
+                    <input id="vue-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500">
+                    <label for="vue-checkbox" class="w-full py-3 ms-2 text-sm font-medium text-gray-900">Hombre</label>
+                </div> 
+              </li>
+              <li>
+                <div class="flex items-center ps-3">
+                    <input id="vue-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500">
+                    <label for="vue-checkbox" class="w-full py-3 ms-2 text-sm font-medium text-gray-900">Ropa</label>
+                </div> 
+              </li>
+              <li>
+                <div class="flex items-center ps-3">
+                    <input id="vue-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500">
+                    <label for="vue-checkbox" class="w-full py-3 ms-2 text-sm font-medium text-gray-900">Accesorios</label>
+                </div> 
+              </li>
+            </ul>
+          </div>
+      </div>
+      <button class="boton-redondeado-oscuro mt-40 lg:absolute lg:bottom-20 lg:right-80 absolute bottom-10 right-10">Generar</button>
+  </div>  
+</div>
+<div>
+</div>
+</div>          
 </section>
