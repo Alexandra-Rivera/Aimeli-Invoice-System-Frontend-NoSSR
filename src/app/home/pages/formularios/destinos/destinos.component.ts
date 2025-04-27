@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavComponentComponent } from '../../../../components/nav-component/nav-component.component';
+import { initFlowbite } from 'flowbite'; // Import Flowbite initialization function
 
 @Component({
   selector: 'app-destinos',
@@ -7,6 +8,11 @@ import { NavComponentComponent } from '../../../../components/nav-component/nav-
   templateUrl: './destinos.component.html',
   styleUrl: './destinos.component.css'
 })
-export class DestinosComponent {
+export class DestinosComponent implements OnInit {
+  constructor() { }
+  
+    ngOnInit(): void {
+        initFlowbite();
+      }
 
 }
