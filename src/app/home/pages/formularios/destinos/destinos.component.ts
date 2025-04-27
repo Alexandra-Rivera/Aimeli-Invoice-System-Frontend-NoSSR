@@ -11,7 +11,7 @@ import { initFlowbite } from 'flowbite'; // Import Flowbite initialization funct
 export class DestinosComponent implements OnInit {
   constructor() { }
   
-    ngOnInit(): void {
+    ngOnInit(): void {  
         initFlowbite();
       }
 
