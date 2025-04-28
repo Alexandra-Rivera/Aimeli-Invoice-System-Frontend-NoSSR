@@ -11,13 +11,9 @@ import { CommonModule, JsonPipe } from '@angular/common';
   styleUrl: './formulario-compras.component.css'
 })
 export class FormularioComprasComponent implements OnInit {
-  idmetodoPago!: number;
-  idProveedor!: number;
   metodosPago: string[] = ["Efectivo", "Transferencia", "Tarjeta de credito o debito"];
   proveedores: string[] = ['SHEIN', 'AliExpress', 'Temu'];
-
-  proveedorSeleccionado: string = "";
-  metodoPagoSeleccionado: string = "";
+  categorias: string[] = ["Accesorios", "Ropa para hombre", "Maquillaje", "Ropa para mujer"];
 
   constructor() { }
 
@@ -33,21 +29,14 @@ export class FormularioComprasComponent implements OnInit {
   formularioCompras: FormGroup = new FormGroup({
     fechaCompra: new FormControl(""),
     numeroFactura: new FormControl(""),
-    estado: new FormControl(""),
-    fechaCreacion: new FormControl(""),
-    fechaActualizacon: new FormControl(""),
-    idMetodoPago: new FormControl(this.idmetodoPago),
-    idProveedor: new FormControl(null),
+    metodoPago: new FormControl(""),
+    proveedor: new FormControl(""),
+
+    nombreProducto: new FormControl(""),
+    descripcionProducto: new FormControl(""),
+    categoria: new FormControl(""),
+    cantidadProducto: new FormControl(""),
+    costoUnitario: new FormControl(""),
+    precioVenta: new FormControl("")
   })
-
-  //Dropdown de metodo de pago
-
-  seleccionarMetodoPago(metodoPago: string) {
-    this.metodoPagoSeleccionado = metodoPago;
-  }
-
-  //Dropdown de proveedores
-  seleccionarProveedor(proveedor: string) {
-    this.proveedorSeleccionado = proveedor;
-  }
 }

@@ -49,101 +49,47 @@
 
       <!-- Proveedor Input -->
       <div class="flex flex-col gap-3 lg:flex-row">
-        <label for="botonDropdownProveedores" class="font-semibold"
-          >Proveedor:</label
-        >
-        <div class="w-full relative">
-          <button
-            id="botonDropdownProveedores"
-            data-dropdown-toggle="dropdownProveedores"
-            class="w-full text-gray-700 bg-gray-100 hover:bg-gray-200 font-medium rounded-full text-sm px-5 py-2.5 text-center inline-flex items-center"
-            type="button"
+        <div class="flex flex-col gap-3 w-[100%] relative">
+          <label for="proveedor" class="font-semibold"
+            >Seleccione un proveedor:</label
           >
-            {{ proveedorSeleccionado || "Proveedores" }}
-            <svg
-              class="w-2.5 h-2.5 ms-3"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 10 6"
-            >
-              <path
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="m1 1 4 4 4-4"
-              />
-            </svg>
-          </button>
 
-          <!-- Dropdown menu -->
-          <div
-            id="dropdownProveedores"
-            class="absolute w-full z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm"
+          <select
+            name="proveedor"
+            id="proveedor"
+            formControlName="proveedor"
+            class="w-full text-gray-700 border-none bg-gray-100 hover:bg-gray-200 font-medium rounded-full text-sm px-5 py-2.5 inline-flex items-center"
           >
-            <ul
+            <option
               *ngFor="let proveedor of proveedores"
-              class="py-2 text-sm text-gray-700"
-              aria-labelledby="botonDropdownProveedores"
+              class="block px-4 py-2 hover:bg-gray-100"
             >
-              <li
-                (click)="seleccionarProveedor(proveedor)"
-                class="block px-4 py-2 hover:bg-gray-100"
-              >
-                {{ proveedor }}
-              </li>
-            </ul>
-          </div>
+              {{ proveedor }}
+            </option>
+          </select>
         </div>
       </div>
     </div>
 
     <!-- Metodo de pago Input -->
     <div class="flex flex-col gap-3 w-[100%] relative">
-      <span for="" class="font-semibold">Metodo de pago:</span>
-      <button
-        id="botonDropdownMetodoPago"
-        data-dropdown-toggle="dropdownMetodoPago"
-        class="w-full text-black-font-color bg-gray-100 hover:bg-gray-200 font-medium rounded-full text-sm px-5 py-2.5 text-center inline-flex items-center"
-        type="button"
+      <label for="metodoPago" class="font-semibold"
+        >Seleccione un metodo de pago:</label
       >
-        {{ metodoPagoSeleccionado || "Método de pago" }}
-        <svg
-          class="w-2.5 h-2.5 ms-3"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 10 6"
-        >
-          <path
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="m1 1 4 4 4-4"
-          />
-        </svg>
-      </button>
 
-      <!-- Dropdown menu -->
-      <div
-        id="dropdownMetodoPago"
-        class="absolute w-full z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm"
+      <select
+        name="metodoPago"
+        id="metodoPago"
+        formControlName="metodoPago"
+        class="w-full text-gray-700 border-none bg-gray-100 hover:bg-gray-200 font-medium rounded-full text-sm px-5 py-2.5 inline-flex items-center"
       >
-        <ul
+        <option
           *ngFor="let metodoPago of metodosPago"
-          class="py-2 text-sm text-gray-700"
-          aria-labelledby="botonDropdownMetodoPago"
+          class="block px-4 py-2 hover:bg-gray-100"
         >
-          <li
-            (click)="seleccionarMetodoPago(metodoPago)"
-            class="block px-4 py-2 hover:bg-gray-100"
-          >
-            {{ metodoPago }}
-          </li>
-        </ul>
-      </div>
+          {{ metodoPago }}
+        </option>
+      </select>
     </div>
   </div>
 
@@ -253,6 +199,7 @@
             <input
               type="text"
               id="nombreProducto"
+              formControlName="nombreProducto"
               placeholder="Escribir nombre de producto aquí"
               class="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"
             />
@@ -263,6 +210,7 @@
             <input
               type="text"
               id="descripcionProducto"
+              formControlName="descripcionProducto"
               placeholder="Escribir descripcion de producto aquí"
               class="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"
             />
@@ -270,70 +218,32 @@
 
           <!-- Dropdown de Categorias -->
           <td class="px-6 py-4">
-            <div class="w-full relative">
-              <button
-                id="botonDropdownCategorias"
-                data-dropdown-toggle="dropdownCategorias"
-                class="w-full text-black-font-color bg-gray-100 hover:bg-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center cursor-pointer"
-                type="button"
+            <label for="categoria" class="font-semibold mb-5" hidden
+              >Categorias:</label
+            >
+            <select
+              name="categoria"
+              id="categoria"
+              formControlName="categoria"
+              class="w-full text-gray-700 border-none bg-gray-100 hover:bg-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex items-center"
+            >
+              <option
+                *ngFor="let categoria of categorias"
+                class="block px-10 py-2 hover:bg-gray-100"
               >
-                Categorías
-                <svg
-                  class="w-2.5 h-2.5 ms-3"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 10 6"
-                >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="m1 1 4 4 4-4"
-                  />
-                </svg>
-              </button>
-
-              <!-- Dropdown menu -->
-              <div
-                id="dropdownCategorias"
-                class="absolute w-[100%] z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-sm"
-              >
-                <ul
-                  class="py-2 text-sm text-gray-700"
-                  aria-labelledby="botonDropdownCategorias"
-                >
-                  <li>
-                    <a href="#" class="block px-4 py-2 hover:bg-gray-100"
-                      >Accesorios</a
-                    >
-                  </li>
-                  <li>
-                    <a href="#" class="block px-4 py-2 hover:bg-gray-100"
-                      >Ropa para mujeres</a
-                    >
-                  </li>
-                  <li>
-                    <a href="#" class="block px-4 py-2 hover:bg-gray-100"
-                      >Ropa para bebes</a
-                    >
-                  </li>
-                  <li>
-                    <a href="#" class="block px-4 py-2 hover:bg-gray-100"
-                      >Maquillaje</a
-                    >
-                  </li>
-                </ul>
-              </div>
-            </div>
+                {{ categoria }}
+              </option>
+            </select>
           </td>
 
           <!-- Cantidad Input -->
           <td class="px-6 py-4">
+            <label for="cantidadProducto" hidden>Cantidad: </label>
+
             <input
               type="number"
               id="cantidadProducto"
+              formControlName="cantidadProducto"
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
               placeholder="0"
               required
@@ -342,9 +252,11 @@
 
           <!-- Precio Unitario Input -->
           <td class="px-6 py-4">
+            <label for="costoUnitario" hidden>Costo Unitario: </label>
             <input
               type="number"
-              id="precioUnitario"
+              id="costoUnitario"
+              formControlName="costoUnitario"
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
               placeholder="$2.25"
               required
@@ -353,9 +265,12 @@
 
           <!-- Precio de Venta Input -->
           <td class="px-6 py-4">
+            <label for="precioVenta" hidden>Precio Venta: </label>
+
             <input
               type="number"
               id="precioVenta"
+              formControlName="precioVenta"
               class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
               placeholder="$4.25"
               required
