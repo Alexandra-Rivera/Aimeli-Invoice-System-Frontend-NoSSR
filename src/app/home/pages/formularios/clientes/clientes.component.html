@@ -9,7 +9,7 @@
       </div>
     </section>
     <section class="flex justify-center order-1 lg:order-2">
-      <form>
+      <form [formGroup]="formularioClientes" class="formularioClientes" (ngSubmit)="handleSubmit()">
         <div class="mb-5">
           <label
             for="nombre"
@@ -22,6 +22,7 @@
             class="w-96 p-2.5 border border-gray-300 rounded-full "
             placeholder="Cliente"
             required
+            formControlName="nombre"
           />
         </div>
         <div class="mb-5">
@@ -36,6 +37,7 @@
             class="w-96 p-2.5 border border-gray-300 rounded-full"
             placeholder="0000-0000"
             required
+            formControlName="telefono"
           />
         </div>
         <div class="flex flex-row items-center lg:mt-10">
@@ -46,6 +48,7 @@
         <button class="boton-redondeado-oscuro h-11 lg:w-[20vw]">Guardar Cliente</button>
       </div>
       </form>
+      <pre>{{formularioClientes.value | json}}</pre>
     </section>
   </div>
 </section>

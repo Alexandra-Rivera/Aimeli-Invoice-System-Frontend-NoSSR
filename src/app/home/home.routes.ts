@@ -26,5 +26,10 @@ export const homeRoutes: Routes = [
         path: 'formularios',
         loadChildren: () =>
             import('./pages/formularios/formularios.routes').then((c) => c.formulariosRoutes)
+    },{
+        path: 'reportes',
+        loadComponent: () =>
+            import('./pages/reportes/reportes.component').then((c) => c.ReportesComponent),
+        title: 'Reportes'
     }
 ];

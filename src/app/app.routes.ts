@@ -2,7 +2,6 @@ import { Routes } from '@angular/router';
 import { FormularioRegistroComponent } from './formulario-registro/formulario-registro.component';
 import { FormularioInfoAmeliComponent } from './formulario-info-ameli/formulario-info-ameli.component';
 import { LoginComponent } from './login/login.component';
-import { ReportesComponent } from './reportes/reportes.component';
 
 export const routes: Routes = [
     {
@@ -24,10 +23,5 @@ export const routes: Routes = [
         path: 'login',
         component: LoginComponent,
         title: 'Login'
-    },
-    {
-        path: 'reportes',
-        component: ReportesComponent,
-        title: 'reportes'
     }
 ];
