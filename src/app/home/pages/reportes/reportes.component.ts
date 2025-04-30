@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { initFlowbite } from 'flowbite'; // Import Flowbite initialization function
-import { NavComponentComponent } from '../components/nav-component/nav-component.component';
+import { NavComponentComponent } from '../../../components/nav-component/nav-component.component';
 
 @Component({
   selector: 'app-reportes',
