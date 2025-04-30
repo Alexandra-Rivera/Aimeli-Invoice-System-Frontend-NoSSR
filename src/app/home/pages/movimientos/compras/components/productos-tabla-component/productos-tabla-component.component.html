@@ -1,0 +1,67 @@
+<div class="relative overflow-x-auto sm:rounded-lg w-full">
+  <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+    <!-- Encabezado de la tabla -->
+    <thead
+      class="text-xs text-white-font-color uppercase bg-tablas-encabezados-color"
+    >
+      <tr>
+        <th scope="col" class="px-6 py-3">Imagen</th>
+        <th scope="col" class="px-6 py-3">Código de Producto</th>
+        <th scope="col" class="px-6 py-3">Nombre del producto</th>
+        <th scope="col" class="px-6 py-3">Descripción</th>
+        <th scope="col" class="px-6 py-3">Categoría</th>
+        <th scope="col" class="px-6 py-3">Cantidad</th>
+        <th scope="col" class="px-6 py-3">Costo Unitario</th>
+        <th scope="col" class="px-6 py-3">Precio de Venta</th>
+        <th scope="col" class="px-6 py-3"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Contenido Dummy de la tabla -->
+      <tr class="bg-white border-b border-gray-200 hover:bg-gray-50">
+        <td class="px-2 py-2 xl:px-4 xl:py-4">
+          <img
+            src="https://www.aismee.es/bibliotheque/190/collier-argent-petits-coeurs-personnalises.jpg"
+            alt="descripcion de la imagen"
+            class="w-[100%] h-[20vh] xl:w-[10vw] object-cover"
+          />
+        </td>
+        <td class="px-6 py-4">XUJKLMNPT001</td>
+        <td class="px-6 py-4">{{ nombreProducto }}</td>
+        <td class="px-6 py-4">
+          {{ descripcionProducto }}
+        </td>
+        <td class="px-6 py-4">{{ categoria }}</td>
+        <td class="px-6 py-4">{{ cantidadProducto }}</td>
+        <td class="px-6 py-4">${{ costoUnitario }}</td>
+        <td class="px-6 py-4">${{ precioVenta }}</td>
+        <td class="px-6 py-4">
+          <button
+            type="button"
+            class="font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center cursor-pointer"
+          >
+            <svg
+              class="w-6 h-6 text-eliminar-claro"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"
+              />
+            </svg>
+
+            <span class="sr-only">Boton eliminar fila</span>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

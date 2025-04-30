@@ -7,328 +7,340 @@
 <br />
 
 <!-- Formulario de Compra -->
-<form
-  action=""
-  class="w-full mt-20 px-2 xl:px-15"
-  [formGroup]="formularioCompras"
->
-  <!-- Informacion de factura de la compra -->
-  <div
-    class="flex flex-col w-full lg:grid lg:grid-cols-3 gap-2 xl:gap-10 mb-10 lg:mt-5"
-  >
-    <!-- Fecha de compra Input -->
-    <div class="flex flex-col gap-3 w-[100%]">
-      <label for="fechaCompra" class="block mb-2 font-semibold"
-        >Fecha de compra:</label
-      >
-      <input
-        name="fechaCompra"
-        type="date"
-        class="border-none rounded-full"
-        formControlName="fechaCompra"
-        placeholder="Seleccionar fecha"
-      />
-    </div>
-
-    <!-- N de factura y Proveedor -->
-    <div class="flex flex-col gap-3 w-[100%]">
-      <!-- N de factura Input -->
-      <div class="flex flex-col gap-3 lg:flex-row">
-        <label for="numeroFactura" class="block mb-2 font-medium"
-          >N° de factura:</label
+<section class="w-full mt-20 px-2 xl:px-15">
+  <form action="" [formGroup]="formularioCompras">
+    <!-- Informacion de factura de la compra -->
+    <div
+      class="flex flex-col w-full lg:grid lg:grid-cols-3 gap-2 xl:gap-10 mb-10 lg:mt-5"
+    >
+      <!-- Fecha de compra Input -->
+      <div class="flex flex-col gap-3 w-[100%]">
+        <label for="fechaCompra" class="block mb-2 font-semibold"
+          >Fecha de compra:</label
         >
         <input
-          type="text"
-          id="numeroFactura"
-          formControlName="numeroFactura"
-          class="w-full h-[85%] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-full block p-3"
-          placeholder="N Factura"
-          required
+          name="fechaCompra"
+          id="fechaCompra"
+          type="date"
+          class="border-none rounded-full"
+          formControlName="fechaCompra"
+          placeholder="Seleccionar fecha"
         />
       </div>
 
-      <!-- Proveedor Input -->
-      <div class="flex flex-col gap-3 lg:flex-row">
-        <div class="flex flex-col gap-3 w-[100%] relative">
-          <label for="proveedor" class="font-semibold"
-            >Seleccione un proveedor:</label
+      <!-- N de factura y Proveedor -->
+      <div class="flex flex-col gap-3 w-[100%]">
+        <!-- N de factura Input -->
+        <div class="flex flex-col gap-3 lg:flex-row">
+          <label for="numeroFactura" class="block mb-2 font-medium"
+            >N° de factura:</label
           >
-
-          <select
-            name="proveedor"
-            id="proveedor"
-            formControlName="proveedor"
-            class="w-full text-gray-700 border-none bg-gray-100 hover:bg-gray-200 font-medium rounded-full text-sm px-5 py-2.5 inline-flex items-center"
-          >
-            <option
-              *ngFor="let proveedor of proveedores"
-              class="block px-4 py-2 hover:bg-gray-100"
-            >
-              {{ proveedor }}
-            </option>
-          </select>
+          <input
+            type="text"
+            id="numeroFactura"
+            formControlName="numeroFactura"
+            class="w-full h-[85%] bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-full block p-3"
+            placeholder="N Factura"
+            required
+          />
         </div>
+
+        <!-- Proveedor Input -->
+        <div class="flex flex-col gap-3 lg:flex-row">
+          <div class="flex flex-col gap-3 w-[100%] relative">
+            <label for="proveedor" class="font-semibold"
+              >Seleccione un proveedor:</label
+            >
+
+            <select
+              name="proveedor"
+              id="proveedor"
+              formControlName="proveedor"
+              class="w-full text-gray-700 border-none bg-gray-100 hover:bg-gray-200 font-medium rounded-full text-sm px-5 py-2.5 inline-flex items-center"
+            >
+              <option
+                *ngFor="let proveedor of proveedores"
+                class="block px-4 py-2 hover:bg-gray-100"
+              >
+                {{ proveedor }}
+              </option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Metodo de pago Input -->
+      <div class="flex flex-col gap-3 w-[100%] relative">
+        <label for="metodoPago" class="font-semibold"
+          >Seleccione un metodo de pago:</label
+        >
+
+        <select
+          name="metodoPago"
+          id="metodoPago"
+          formControlName="metodoPago"
+          class="w-full text-gray-700 border-none bg-gray-100 hover:bg-gray-200 font-medium rounded-full text-sm px-5 py-2.5 inline-flex items-center"
+        >
+          <option
+            *ngFor="let metodoPago of metodosPago"
+            class="block px-4 py-2 hover:bg-gray-100"
+          >
+            {{ metodoPago }}
+          </option>
+        </select>
       </div>
     </div>
 
-    <!-- Metodo de pago Input -->
-    <div class="flex flex-col gap-3 w-[100%] relative">
-      <label for="metodoPago" class="font-semibold"
-        >Seleccione un metodo de pago:</label
-      >
-
-      <select
-        name="metodoPago"
-        id="metodoPago"
-        formControlName="metodoPago"
-        class="w-full text-gray-700 border-none bg-gray-100 hover:bg-gray-200 font-medium rounded-full text-sm px-5 py-2.5 inline-flex items-center"
-      >
-        <option
-          *ngFor="let metodoPago of metodosPago"
-          class="block px-4 py-2 hover:bg-gray-100"
+    <!-- Tabla de productos -->
+    <div class="relative overflow-x-auto sm:rounded-lg w-full">
+      <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+        <!-- Encabezado de la tabla -->
+        <thead
+          class="text-xs text-white-font-color uppercase bg-tablas-encabezados-color"
         >
-          {{ metodoPago }}
-        </option>
-      </select>
+          <tr>
+            <th scope="col" class="px-6 py-3">Imagen</th>
+            <th scope="col" class="px-6 py-3">Código de Producto</th>
+            <th scope="col" class="px-6 py-3">Categoría</th>
+            <th scope="col" class="px-6 py-3">Nombre del producto</th>
+            <th scope="col" class="px-6 py-3">Descripción</th>
+            <th scope="col" class="px-6 py-3">Cantidad</th>
+            <th scope="col" class="px-6 py-3">Costo Unitario</th>
+            <th scope="col" class="px-6 py-3">Precio de Venta</th>
+            <th scope="col" class="px-6 py-3"></th>
+          </tr>
+        </thead>
+
+        <tbody formArrayName="productos">
+          <!-- Formulario Input de la tabla -->
+
+          @let productosArray = formularioCompras.controls.productos.controls;
+          @for (producto of productosArray; let i = $index; track i) {
+          <tr
+            class="bg-white border-b border-gray-200 hover:bg-gray-50"
+            [formGroupName]="i"
+          >
+            <!-- Input de Subir Archivo -->
+            <td class="px-6 py-4">
+              <label
+                class="hidden mb-2 text-sm font-medium text-gray-900"
+                for="imagen-{{ i }}"
+                >Subir imagen</label
+              >
+              <p class="mb-5">Seleccione una imagen:</p>
+              <input
+                class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:outline-none cursor-pointer"
+                aria-describedby="file_input_help"
+                id="imagen-{{ i }}"
+                type="file"
+              />
+            </td>
+
+            <!-- Código de producto -->
+            <td class="px-6 py-4">
+              <label for="codigoProducto-{{ i }}" hidden
+                >Codigo de producto:</label
+              >
+              <input
+                type="text"
+                id="codigoProducto-{{ i }}"
+                class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block p-3"
+                placeholder="XUJKLMNPT001"
+                required
+                disabled
+              />
+            </td>
+
+            <!-- Dropdown de Categorias -->
+            <td class="px-6 py-4">
+              <label
+                for="categoriaProducto-{{ i }}"
+                class="font-semibold mb-5"
+                hidden
+                >Categorias:</label
+              >
+              <select
+                name="categoriaProducto-{{ i }}"
+                id="categoriaProducto-{{ i }}"
+                formControlName="categoria"
+                class="w-full text-gray-700 border-none bg-gray-100 hover:bg-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex items-center"
+              >
+                <option
+                  *ngFor="let categoria of categorias"
+                  class="block px-10 py-2 hover:bg-gray-100"
+                >
+                  {{ categoria }}
+                </option>
+              </select>
+            </td>
+
+            <!-- Nombre de producto Input -->
+            <td class="px-6 py-4">
+              <label
+                for="productoExistente-{{ i }}"
+                class="font-semibold mb-5"
+                hidden
+                >Producto existente:</label
+              >
+              @let productosExistentesArray =
+              obtenerArrayProductosExistentes(i);
+              <select
+                name="productoExistente-{{ i }}"
+                id="productoExistente-{{ i }}"
+                (change)="modificacionesProductoExistente(i)"
+                formControlName="nombreProducto"
+                class="w-full mb-[5%] text-gray-700 border-none bg-gray-100 hover:bg-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex items-center"
+              >
+                <option
+                  *ngFor="let productoExistente of productosExistentesArray"
+                  class="block px-10 py-2 hover:bg-gray-100"
+                >
+                  {{ productoExistente.nombreProducto }}
+                </option>
+              </select>
+              <br />
+              <label for="nombreProducto-{{ i }}" hidden></label>
+              <input
+                type="text"
+                id="nombreProducto-{{ i }}"
+                formControlName="nombreProducto"
+                placeholder="Escribir nombre de producto aquí"
+                class="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"
+              />
+            </td>
+
+            <!-- Descripcion de producto Input -->
+            <td class="px-6 py-4">
+              <label for="descripcionProducto-{{ i }}" hidden></label>
+              <textarea
+                type="text"
+                id="descripcionProducto-{{ i }}"
+                formControlName="descripcionProducto"
+                placeholder="Escribir descripción de producto aquí"
+                class="block w-full p-4 h-[10rem] text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 resize-none"
+              ></textarea>
+            </td>
+
+            <!-- Cantidad Input -->
+            <td class="px-6 py-4">
+              <label for="cantidadProducto-{{ i }}" hidden>Cantidad: </label>
+
+              <input
+                type="number"
+                id="cantidadProducto-{{ i }}"
+                formControlName="cantidadProducto"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
+                placeholder="0"
+                required
+              />
+            </td>
+
+            <!-- Costo Unitario Input -->
+            <td class="px-6 py-4">
+              <label for="costoUnitario-{{ i }}" hidden>Costo Unitario: </label>
+              <input
+                type="number"
+                id="costoUnitario-{{ i }}"
+                formControlName="costoUnitario"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
+                placeholder="$0.00"
+                required
+              />
+            </td>
+
+            <!-- Precio de Venta Input -->
+            <td class="px-6 py-4">
+              <label for="precioVenta-{{ i }}" hidden>Precio Venta: </label>
+
+              <input
+                type="number"
+                id="precioVenta-{{ i }}"
+                formControlName="precioVenta"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
+                placeholder="$0.00"
+                required
+              />
+            </td>
+
+            <!-- Boton Eliminar Fila -->
+            <td class="px-6 py-4">
+              <button
+                (click)="eliminarProducto(i)"
+                type="button"
+                class="font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center cursor-pointer"
+              >
+                <svg
+                  class="w-6 h-6 text-eliminar-claro"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"
+                  />
+                </svg>
+
+                <span class="sr-only">Boton eliminar fila</span>
+              </button>
+            </td>
+          </tr>
+          }
+
+          <br />
+
+          <!-- Total de la compra -->
+          <tr class="bg-white border-b border-gray-200 hover:bg-gray-50">
+            <td class="px-6 py-4 font-bold">Total:</td>
+            <td class="px-6 py-4">
+              <label for="totalCompra" hidden></label>
+              <input
+                type="text"
+                id="totalCompra"
+                name="totalCompra"
+                placeholder="$0"
+              />
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-  </div>
 
-  <!-- Tabla de productos -->
-  <div class="relative overflow-x-auto sm:rounded-lg w-full">
-    <table class="w-full text-sm text-left rtl:text-right text-gray-500">
-      <!-- Encabezado de la tabla -->
-      <thead
-        class="text-xs text-white-font-color uppercase bg-tablas-encabezados-color"
+    <br />
+
+    <!-- Grupo de botones -->
+    <div class="absolute md:right-15">
+      <button
+        (click)="agregarProducto()"
+        type="button"
+        class="boton-redondeado-claro cursor-pointer"
       >
-        <tr>
-          <th scope="col" class="px-6 py-3">Imagen</th>
-          <th scope="col" class="px-6 py-3">Código de Producto</th>
-          <th scope="col" class="px-6 py-3">Nombre del producto</th>
-          <th scope="col" class="px-6 py-3">Descripción</th>
-          <th scope="col" class="px-6 py-3">Categoría</th>
-          <th scope="col" class="px-6 py-3">Cantidad</th>
-          <th scope="col" class="px-6 py-3">Costo Unitario</th>
-          <th scope="col" class="px-6 py-3">Precio de Venta</th>
-          <th scope="col" class="px-6 py-3"></th>
-        </tr>
-      </thead>
-
-      <tbody>
-        <!-- Contenido Dummy de la tabla -->
-        <tr class="bg-white border-b border-gray-200 hover:bg-gray-50">
-          <td class="px-2 py-2 xl:px-4 xl:py-4">
-            <img
-              src="https://www.aismee.es/bibliotheque/190/collier-argent-petits-coeurs-personnalises.jpg"
-              alt="descripcion de la imagen"
-              class="w-[100%] h-[20vh] xl:w-[10vw] object-cover"
-            />
-          </td>
-          <td class="px-6 py-4">XUJKLMNPT001</td>
-          <td class="px-6 py-4">CADENA DE CORAZON PLATEADO DE 15 CM</td>
-          <td class="px-6 py-4">
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s, when an unknown printer.
-          </td>
-          <td class="px-6 py-4">Accesorios</td>
-          <td class="px-6 py-4">5</td>
-          <td class="px-6 py-4">$2.25</td>
-          <td class="px-6 py-4">$4.25</td>
-          <td class="px-6 py-4">
-            <button
-              type="button"
-              class="font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center cursor-pointer"
-            >
-              <svg
-                class="w-6 h-6 text-eliminar-claro"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"
-                />
-              </svg>
-
-              <span class="sr-only">Boton eliminar fila</span>
-            </button>
-          </td>
-        </tr>
-
-        <!-- Formulario Input de la tabla -->
-        <tr class="bg-white border-b border-gray-200 hover:bg-gray-50">
-          <!-- Input de Subir Archivo -->
-          <td class="px-6 py-4 flex flex-col items-center justify-center">
-            <label
-              class="hidden mb-2 text-sm font-medium text-gray-900"
-              for="imagen"
-              >Subir imagen</label
-            >
-            <input
-              class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:outline-none cursor-pointer"
-              aria-describedby="file_input_help"
-              id="imagen"
-              type="file"
-            />
-            <p class="mt-1 text-sm text-gray-500" id="file_input_help">
-              SVG, PNG, JPG or GIF (MAX. 800x400px).
-            </p>
-          </td>
-
-          <!-- Código de producto -->
-          <td class="px-6 py-4">
-            <input
-              type="text"
-              id="codigoProducto"
-              class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block p-3"
-              placeholder="XUJKLMNPT001"
-              required
-              disabled
-            />
-          </td>
-
-          <!-- Nombre de producto Input -->
-          <td class="px-6 py-4">
-            <input
-              type="text"
-              id="nombreProducto"
-              formControlName="nombreProducto"
-              placeholder="Escribir nombre de producto aquí"
-              class="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"
-            />
-          </td>
-
-          <!-- Descripcion de producto Input -->
-          <td class="px-6 py-4">
-            <input
-              type="text"
-              id="descripcionProducto"
-              formControlName="descripcionProducto"
-              placeholder="Escribir descripcion de producto aquí"
-              class="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"
-            />
-          </td>
-
-          <!-- Dropdown de Categorias -->
-          <td class="px-6 py-4">
-            <label for="categoria" class="font-semibold mb-5" hidden
-              >Categorias:</label
-            >
-            <select
-              name="categoria"
-              id="categoria"
-              formControlName="categoria"
-              class="w-full text-gray-700 border-none bg-gray-100 hover:bg-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex items-center"
-            >
-              <option
-                *ngFor="let categoria of categorias"
-                class="block px-10 py-2 hover:bg-gray-100"
-              >
-                {{ categoria }}
-              </option>
-            </select>
-          </td>
-
-          <!-- Cantidad Input -->
-          <td class="px-6 py-4">
-            <label for="cantidadProducto" hidden>Cantidad: </label>
-
-            <input
-              type="number"
-              id="cantidadProducto"
-              formControlName="cantidadProducto"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
-              placeholder="0"
-              required
-            />
-          </td>
-
-          <!-- Precio Unitario Input -->
-          <td class="px-6 py-4">
-            <label for="costoUnitario" hidden>Costo Unitario: </label>
-            <input
-              type="number"
-              id="costoUnitario"
-              formControlName="costoUnitario"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
-              placeholder="$2.25"
-              required
-            />
-          </td>
-
-          <!-- Precio de Venta Input -->
-          <td class="px-6 py-4">
-            <label for="precioVenta" hidden>Precio Venta: </label>
-
-            <input
-              type="number"
-              id="precioVenta"
-              formControlName="precioVenta"
-              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
-              placeholder="$4.25"
-              required
-            />
-          </td>
-
-          <!-- Boton Eliminar Fila -->
-          <td class="px-6 py-4">
-            <button
-              type="button"
-              class="font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center cursor-pointer"
-            >
-              <svg
-                class="w-6 h-6 text-eliminar-claro"
-                aria-hidden="true"
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"
-                />
-              </svg>
-
-              <span class="sr-only">Boton eliminar fila</span>
-            </button>
-          </td>
-        </tr>
-        <br />
-
-        <!-- Total de la compra -->
-        <tr class="bg-white border-b border-gray-200 hover:bg-gray-50">
-          <td class="px-6 py-4 font-bold">Total:</td>
-          <td class="px-6 py-4">$22.50</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
+        Agregar fila
+      </button>
+      <button
+        type="button"
+        class="boton-redondeado-oscuro cursor-pointer"
+        (click)="handleSubmit()"
+      >
+        Guardar
+      </button>
+      <button
+        type="button"
+        class="boton-redondeado-borrar cursor-pointer"
+        (click)="borrarTodosLosCampos()"
+      >
+        Borrar Registro
+      </button>
+    </div>
+  </form>
+  <pre>{{ formularioCompras.value | json }}</pre>
+  <h3 class="text-2xl">Productos Agregados</h3>
   <br />
-
-  <!-- Grupo de botones -->
-  <div class="absolute md:right-15">
-    <button type="button" class="boton-redondeado-claro cursor-pointer">
-      Agregar fila
-    </button>
-    <button type="button" class="boton-redondeado-oscuro cursor-pointer">
-      Guardar
-    </button>
-    <button type="button" class="boton-redondeado-borrar cursor-pointer">
-      Borrar
-    </button>
-  </div>
-</form>
-<pre>{{ formularioCompras.value | json }}</pre>
+  <!-- <app-productos-tabla-component /> -->
+</section>
