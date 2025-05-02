@@ -8,7 +8,7 @@
 
 <!-- Formulario de Compra -->
 <section class="w-full mt-20 px-2 xl:px-15">
-  <form action="" [formGroup]="formularioCompras">
+  <form action="" [formGroup]="formularioCompras" (ngSubmit)="handleSubmit()">
     <!-- Informacion de factura de la compra -->
     <div
       class="flex flex-col w-full lg:grid lg:grid-cols-3 gap-2 xl:gap-10 mb-10 lg:mt-5"
@@ -19,7 +19,6 @@
           >Fecha de compra:</label
         >
         <input
-          name="fechaCompra"
           id="fechaCompra"
           type="date"
           class="border-none rounded-full"
@@ -53,13 +52,14 @@
             >
 
             <select
-              name="proveedor"
               id="proveedor"
               formControlName="proveedor"
               class="w-full text-gray-700 border-none bg-gray-100 hover:bg-gray-200 font-medium rounded-full text-sm px-5 py-2.5 inline-flex items-center"
             >
+              <option value="" disabled selected>Seleccionar Proveedor</option>
               <option
                 *ngFor="let proveedor of proveedores"
+                [value]="proveedor"
                 class="block px-4 py-2 hover:bg-gray-100"
               >
                 {{ proveedor }}
@@ -81,8 +81,10 @@
           formControlName="metodoPago"
           class="w-full text-gray-700 border-none bg-gray-100 hover:bg-gray-200 font-medium rounded-full text-sm px-5 py-2.5 inline-flex items-center"
         >
+          <option value="" disabled selected>Seleccionar Método de Pago</option>
           <option
             *ngFor="let metodoPago of metodosPago"
+            [value]="metodoPago"
             class="block px-4 py-2 hover:bg-gray-100"
           >
             {{ metodoPago }}
@@ -107,6 +109,7 @@
             <th scope="col" class="px-6 py-3">Cantidad</th>
             <th scope="col" class="px-6 py-3">Costo Unitario</th>
             <th scope="col" class="px-6 py-3">Precio de Venta</th>
+            <th scope="col" class="px-6 py-3">Monto pagado</th>
             <th scope="col" class="px-6 py-3"></th>
           </tr>
         </thead>
@@ -120,7 +123,7 @@
             class="bg-white border-b border-gray-200 hover:bg-gray-50"
             [formGroupName]="i"
           >
-            <!-- Input de Subir Archivo -->
+            <!-- Input de Subir Imagen de producto -->
             <td class="px-6 py-4">
               <label
                 class="hidden mb-2 text-sm font-medium text-gray-900"
@@ -144,10 +147,10 @@
               <input
                 type="text"
                 id="codigoProducto-{{ i }}"
+                formControlName="codigoProducto"
                 class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block p-3"
                 placeholder="XUJKLMNPT001"
                 required
-                disabled
               />
             </td>
 
@@ -163,10 +166,15 @@
                 name="categoriaProducto-{{ i }}"
                 id="categoriaProducto-{{ i }}"
                 formControlName="categoria"
+                (change)="obtenerArrayProductosExistentes(i)"
                 class="w-full text-gray-700 border-none bg-gray-100 hover:bg-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex items-center"
               >
+                <option value="" disabled selected>
+                  Seleccionar Categoría
+                </option>
                 <option
                   *ngFor="let categoria of categorias"
+                  [value]="categoria"
                   class="block px-10 py-2 hover:bg-gray-100"
                 >
                   {{ categoria }}
@@ -187,13 +195,15 @@
               <select
                 name="productoExistente-{{ i }}"
                 id="productoExistente-{{ i }}"
-                (change)="modificacionesProductoExistente(i)"
                 formControlName="nombreProducto"
+                (change)="modificacionesProductoExistente(i)"
                 class="w-full mb-[5%] text-gray-700 border-none bg-gray-100 hover:bg-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex items-center"
               >
+                <option value="" disabled selected>Seleccionar Producto</option>
                 <option
                   *ngFor="let productoExistente of productosExistentesArray"
                   class="block px-10 py-2 hover:bg-gray-100"
+                  [value]="productoExistente.nombreProducto"
                 >
                   {{ productoExistente.nombreProducto }}
                 </option>
@@ -229,6 +239,7 @@
                 type="number"
                 id="cantidadProducto-{{ i }}"
                 formControlName="cantidadProducto"
+                (input)="calcularMontoTotalItem(i)"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
                 placeholder="0"
                 required
@@ -241,6 +252,7 @@
               <input
                 type="number"
                 id="costoUnitario-{{ i }}"
+                (input)="calcularMontoTotalItem(i)"
                 formControlName="costoUnitario"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
                 placeholder="$0.00"
@@ -258,6 +270,17 @@
                 formControlName="precioVenta"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
                 placeholder="$0.00"
+                required
+              />
+            </td>
+
+            <!-- Precio pagado por los articulos y el numero de articulos -->
+            <td class="px-6 py-4">
+              <input
+                type="number"
+                id="montoTotal-{{ i }}"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
+                placeholder="0.00"
                 required
               />
             </td>
@@ -294,21 +317,21 @@
           }
 
           <br />
-
-          <!-- Total de la compra -->
-          <tr class="bg-white border-b border-gray-200 hover:bg-gray-50">
-            <td class="px-6 py-4 font-bold">Total:</td>
-            <td class="px-6 py-4">
-              <label for="totalCompra" hidden></label>
-              <input
-                type="text"
-                id="totalCompra"
-                name="totalCompra"
-                placeholder="$0"
-              />
-            </td>
-          </tr>
         </tbody>
+        <!-- Total de la compra -->
+        <tr class="bg-white border-b border-gray-200 hover:bg-gray-50">
+          <td class="px-6 py-4 font-bold">Total:</td>
+          <td class="px-6 py-4">
+            <label for="totalCompra" hidden></label>
+            <input
+              type="text"
+              formControlName="totalCompra"
+              id="totalCompra"
+              class="border-none"
+              placeholder="$0"
+            />
+          </td>
+        </tr>
       </table>
     </div>
 
@@ -323,11 +346,7 @@
       >
         Agregar fila
       </button>
-      <button
-        type="button"
-        class="boton-redondeado-oscuro cursor-pointer"
-        (click)="handleSubmit()"
-      >
+      <button type="submit" class="boton-redondeado-oscuro cursor-pointer">
         Guardar
       </button>
       <button

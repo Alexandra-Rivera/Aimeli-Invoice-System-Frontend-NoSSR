@@ -3,7 +3,7 @@ import { NavComponentComponent } from '../../../../../components/nav-component/n
 import {FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
 import { CommonModule, JsonPipe } from '@angular/common';
 import { ComprasServiceService } from '../../../../../shared/data-access/compras-service/compras-service.service';
-import { ProductoExistente } from '../../../../../shared/interfaces/compras/producto-existente';
+import { Producto } from '../../../../../shared/interfaces/producto/producto';
 
 @Component({
   selector: 'app-formulario-compras',
@@ -12,11 +12,10 @@ import { ProductoExistente } from '../../../../../shared/interfaces/compras/prod
   styleUrl: './formulario-compras.component.css'
 })
 export class FormularioComprasComponent {
-
   metodosPago: string[] = ["Efectivo", "Transferencia", "Tarjeta de credito o debito"];
   proveedores: string[] = ['SHEIN', 'AliExpress', 'Temu'];
   categorias: string[] = ["Accesorios", "Ropa para hombre", "Maquillaje", "Ropa para mujer"];
-  productosExistentes: ProductoExistente[] = 
+  productosExistentes: Producto[] = 
   [
     {
     "codigoProducto": "ACC001",
@@ -67,12 +66,10 @@ export class FormularioComprasComponent {
       "precioVenta": 45.00
     }
   ];
+
+
   
   constructor() { }
-
-  ngOnInit() {
-    
-  }
 
   /*Injections */
   fb = inject(FormBuilder);
@@ -80,103 +77,140 @@ export class FormularioComprasComponent {
 
   /* Definicion de formulario reactivo */
   formularioCompras = this.fb.group ({
-    fechaCompra: '',
-    numeroFactura: '',
-    metodoPago: '',
-    proveedor: '',
+    fechaCompra: [''],
+    numeroFactura: [''],
+    metodoPago: [''],
+    proveedor: [''],
+    totalCompra: [''],
     productos: new FormArray([
       this.fb.group({
-        nombreProducto: '',
-        descripcionProducto: '',
-        categoria:'',
-        cantidadProducto: '',
-        costoUnitario: '',
-        precioVenta: ''
+        codigoProducto: [''],
+        nombreProducto: [''],
+        descripcionProducto: [''],
+        categoria:[''],
+        cantidadProducto: [''],
+        costoUnitario: [''],
+        precioVenta: ['']
       })
-    ])
+    ]),
   })
 
-  calcularTotalCompra(): number {
-    // tomar todos los costos unitarios de los productos añadidos y sumarlos
+
+  //Investigar que es ese get 
+  get obtenerProductosArray() {
+    return this.formularioCompras.get('productos') as FormArray;
+  }
+
+  calcularMontoTotalItem(index: number) {
+    const costoUnitario = parseFloat(this.obtenerProductosArray.at(index).get('costoUnitario')?.value);
+    const cantidad = parseFloat(this.obtenerProductosArray.at(index).get('cantidadProducto')?.value);
+    const inputMontoTotal = document.getElementById(`montoTotal-${index}`) as HTMLInputElement;
+    let resultado: number = 0;
+    /*Producto del costo unitario y la cantidad de articulos*/
+    if (costoUnitario && cantidad) {
+      resultado = costoUnitario * cantidad;
+      /*Asignando el resultado al input de MontoTotal  */
+      inputMontoTotal.value = resultado.toString();
+    }
+  }
+
+  calcularTotalCompra() {
     let total: number = 0;
 
-    return total;
+    for (let i = 0; i <= this.obtenerProductosArray.length - 1; i++) {
+      let inputMontoTotal = document.getElementById(`montoTotal-${i}`) as HTMLInputElement;
+
+      if (inputMontoTotal.value) {
+        total += parseFloat(inputMontoTotal.value);
+      }
+    }
+
+    this.formularioCompras.controls.totalCompra.setValue(total.toString());
   }
 
   handleSubmit() {
     console.log(this.formularioCompras.value);
+    alert("Tus productos han sido agregados a inventario!");
   }
 
   agregarProducto() {
-    this.formularioCompras.controls.productos.push(
-      new FormGroup({
-        nombreProducto: new FormControl(""),
-        descripcionProducto: new FormControl(""),
-        categoria: new FormControl(""),
-        cantidadProducto: new FormControl(""),
-        costoUnitario: new FormControl(""),
-        precioVenta: new FormControl("")
+    this.calcularTotalCompra();
+
+    this.obtenerProductosArray.push(
+      this.fb.group({
+        codigoProducto: [''],
+        nombreProducto: [''],
+        descripcionProducto: [''],
+        categoria:[''],
+        cantidadProducto: [''],
+        costoUnitario: [''],
+        precioVenta: ['']
       }),
     )
-
-    this.calcularTotalCompra();
   }
 
-  eliminarProducto(indexNumber: number) {
-    this.formularioCompras.controls.productos.removeAt(indexNumber);
+  eliminarProducto(index: number) {
+    this.obtenerProductosArray.removeAt(index);
   }
 
   borrarTodosLosCampos() {
-    let inputFechaCompra = document.getElementById("fechaCompra") as HTMLInputElement;
-    let inputNumeroFactura = document.getElementById("numeroFactura") as HTMLInputElement;
-    let dpProveedor = document.getElementById("proveedor") as HTMLSelectElement;
-    let dpMetodoPago = document.getElementById("metodoPago") as HTMLSelectElement;
+    const inputMontoTotal = document.getElementById(`montoTotal-${0}`) as HTMLInputElement;
 
-    this.formularioCompras.controls.productos.clear();
-
-    inputFechaCompra.value = "";
-    inputNumeroFactura.value = "";
-
-    dpProveedor.selectedIndex = 0;
-    dpMetodoPago.selectedIndex = 0;
+    this.formularioCompras.patchValue({
+      fechaCompra: '',
+      numeroFactura: '',
+      proveedor: '',
+      metodoPago: '', 
+    })
+    this.obtenerProductosArray.reset();
+    inputMontoTotal.value = "";
+    this.obtenerProductosArray.clear();
+    this.agregarProducto();
   }
 
-  obtenerArrayProductosExistentes(index: number): ProductoExistente[] {
-    let dpCategorias = document.getElementById("categoriaProducto-"+ index) as HTMLSelectElement;
-    let nuevoProductosExistentes = this.productosExistentes.filter((producto) => producto.categoria == dpCategorias.value);
-  
-    return nuevoProductosExistentes;
+  obtenerArrayProductosExistentes(index: number): Producto[] {
+    let dpCategorias = document.getElementById(`categoriaProducto-${index}`) as HTMLSelectElement;
+    const categoriaSeleccionada = dpCategorias?.value;
+    console.log("Categoria seleccionada: ", categoriaSeleccionada);
+    return this.productosExistentes.filter((producto) => producto.categoria === categoriaSeleccionada);
   }
 
   modificacionesProductoExistente(index: number) {
-    /*Declaracion de campos a llenar */
-    let dpProductosExistentes = document.getElementById("productoExistente-"+index) as HTMLSelectElement;
-    let inputCodigoProducto = document.getElementById("codigoProducto-"+index) as HTMLInputElement;
-    let inputNombreProducto = document.getElementById("nombreProducto-"+index) as HTMLInputElement;
-    let inputDescripcionProducto = document.getElementById("descripcionProducto-"+index) as HTMLInputElement;
-    let inputCostoUnitario = document.getElementById("costoUnitario-"+ index) as HTMLInputElement;
-    let inputPrecioVenta = document.getElementById("precioVenta-"+ index) as HTMLInputElement;
+    const dpProductosExistentes = document.getElementById(`productoExistente-${index}`) as HTMLSelectElement;
+    console.log("Valor del dropdown", dpProductosExistentes?.value)
+    const productoSeleccionado = this.productosExistentes.find((producto) => producto.nombreProducto === dpProductosExistentes?.value);  
+    console.log("Producto seleccionado:", productoSeleccionado);
+
+    if (productoSeleccionado) {
+      this.obtenerProductosArray.at(index).patchValue({
+        codigoProducto: productoSeleccionado.codigoProducto,
+        nombreProducto: productoSeleccionado.nombreProducto,
+        descripcionProducto: productoSeleccionado.descripcionProducto,
+        costoUnitario: productoSeleccionado.costoUnitario,
+        precioVenta: productoSeleccionado.precioVenta
+      })
+    } 
+
+    this.obtenerProductosArray.at(index).get('codigoProducto')?.disable();
+    this.obtenerProductosArray.at(index).get('descripcionProducto')?.disable();
+    this.obtenerProductosArray.at(index).get('costoUnitario')?.disable();
+    this.obtenerProductosArray.at(index).get('precioVenta')?.disable();
 
 
-    /* Encontrando el index del producto seleccionado */
-    let productoSeleccionadoIndex: number = this.productosExistentes.findIndex((producto) => producto.nombreProducto == dpProductosExistentes.value);
-    let productoSeleccionado: ProductoExistente = this.productosExistentes[productoSeleccionadoIndex];
+    const inputNombreProducto = document.getElementById(`nombreProducto-${index}`) as HTMLInputElement;
+    if (inputNombreProducto) {
+      inputNombreProducto.style.display = 'none';
+    } else {
+      this.obtenerProductosArray.at(index).reset();
+      this.obtenerProductosArray.at(index).get('nombreProducto')?.enable();
+      this.obtenerProductosArray.at(index).get('descripcionProducto')?.enable();
+      this.obtenerProductosArray.at(index).get('costoUnitario')?.enable();
+      const inputNombreProducto = document.getElementById(`nombreProducto-${index}`) as HTMLInputElement;
 
-    /*Desaparece el Input de nombreProducto */
-    inputNombreProducto.style.display = "none";
-
-    /* Se dishabilitan los inputs para que no se puedan editar y los input numericos se convierten a texto */
-    inputCostoUnitario.disabled = true;
-    inputCostoUnitario.type = "text";
-    inputPrecioVenta.disabled = true;
-    inputPrecioVenta.type = "text";
-    inputDescripcionProducto.disabled = true;
-
-    /* Se les asigna los valores del producto seleccionado a los input correspondientes */
-    inputCodigoProducto.value = productoSeleccionado.codigoProducto;
-    inputDescripcionProducto.value = productoSeleccionado.descripcionProducto;
-    inputCostoUnitario.value = '$' + productoSeleccionado.costoUnitario.toString();
-    inputPrecioVenta.value = '$' + productoSeleccionado.precioVenta.toString();
+      if (inputNombreProducto) {
+     inputNombreProducto.style.display = '';
+      }
+    }
   }
 
   /* Service */
