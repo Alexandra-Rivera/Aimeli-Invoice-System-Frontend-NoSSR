@@ -1,17 +1,22 @@
-import { Component, inject, input, OnInit, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { NavComponentComponent } from '../../../../../components/nav-component/nav-component.component';
-import {FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule} from '@angular/forms';
-import { CommonModule, JsonPipe } from '@angular/common';
+import {FormArray, FormBuilder, ReactiveFormsModule} from '@angular/forms';
+import { CommonModule, JsonPipe, NgIf } from '@angular/common';
 import { ComprasServiceService } from '../../../../../shared/data-access/compras-service/compras-service.service';
 import { Producto } from '../../../../../shared/interfaces/producto/producto';
 
 @Component({
   selector: 'app-formulario-compras',
-  imports: [NavComponentComponent, ReactiveFormsModule, JsonPipe, CommonModule],
+  imports: [NavComponentComponent, ReactiveFormsModule, JsonPipe, CommonModule, NgIf],
   templateUrl: './formulario-compras.component.html',
   styleUrl: './formulario-compras.component.css'
 })
 export class FormularioComprasComponent {
+  mostrarImagen: { [key: number]: boolean } = {};
+  imagenesString: { [key: number]: string } = {};
+  montoTotal: {[key: number]: number} = {};
+ 
+  
   metodosPago: string[] = ["Efectivo", "Transferencia", "Tarjeta de credito o debito"];
   proveedores: string[] = ['SHEIN', 'AliExpress', 'Temu'];
   categorias: string[] = ["Accesorios", "Ropa para hombre", "Maquillaje", "Ropa para mujer"];
@@ -84,6 +89,7 @@ export class FormularioComprasComponent {
     totalCompra: [''],
     productos: new FormArray([
       this.fb.group({
+        imagenProducto: [''],
         codigoProducto: [''],
         nombreProducto: [''],
         descripcionProducto: [''],
@@ -104,13 +110,10 @@ export class FormularioComprasComponent {
   calcularMontoTotalItem(index: number) {
     const costoUnitario = parseFloat(this.obtenerProductosArray.at(index).get('costoUnitario')?.value);
     const cantidad = parseFloat(this.obtenerProductosArray.at(index).get('cantidadProducto')?.value);
-    const inputMontoTotal = document.getElementById(`montoTotal-${index}`) as HTMLInputElement;
-    let resultado: number = 0;
+    
     /*Producto del costo unitario y la cantidad de articulos*/
     if (costoUnitario && cantidad) {
-      resultado = costoUnitario * cantidad;
-      /*Asignando el resultado al input de MontoTotal  */
-      inputMontoTotal.value = resultado.toString();
+      this.montoTotal[index] = costoUnitario * cantidad;
     }
   }
 
@@ -118,10 +121,8 @@ export class FormularioComprasComponent {
     let total: number = 0;
 
     for (let i = 0; i <= this.obtenerProductosArray.length - 1; i++) {
-      let inputMontoTotal = document.getElementById(`montoTotal-${i}`) as HTMLInputElement;
-
-      if (inputMontoTotal.value) {
-        total += parseFloat(inputMontoTotal.value);
+      if (this.montoTotal[i]) {
+        total += this.montoTotal[i];
       }
     }
 
@@ -135,9 +136,9 @@ export class FormularioComprasComponent {
 
   agregarProducto() {
     this.calcularTotalCompra();
-
     this.obtenerProductosArray.push(
       this.fb.group({
+        imagenProducto: [''],
         codigoProducto: [''],
         nombreProducto: [''],
         descripcionProducto: [''],
@@ -154,7 +155,6 @@ export class FormularioComprasComponent {
   }
 
   borrarTodosLosCampos() {
-    const inputMontoTotal = document.getElementById(`montoTotal-${0}`) as HTMLInputElement;
 
     this.formularioCompras.patchValue({
       fechaCompra: '',
@@ -163,16 +163,28 @@ export class FormularioComprasComponent {
       metodoPago: '', 
     })
     this.obtenerProductosArray.reset();
-    inputMontoTotal.value = "";
+    
+    for (let i = 0; i < this.obtenerProductosArray.length; i++) {
+      this.montoTotal[i] = 0;
+    }
+
+    for (let i = 0; i < this.obtenerProductosArray.length; i++) {
+        this.mostrarImagen[i] = false;
+        this.imagenesString[i] = '';
+    }
+
     this.obtenerProductosArray.clear();
     this.agregarProducto();
   }
 
   obtenerArrayProductosExistentes(index: number): Producto[] {
-    let dpCategorias = document.getElementById(`categoriaProducto-${index}`) as HTMLSelectElement;
-    const categoriaSeleccionada = dpCategorias?.value;
+    // Por que se ejecuta esta funcion tantas veces
+    // Por que al refreshear la pagina, ya no agarra ningun valor al seleccionar ninguna opcion
+    const categoriaSeleccionada = this.obtenerProductosArray.at(index).get("categoria")?.value;
     console.log("Categoria seleccionada: ", categoriaSeleccionada);
-    return this.productosExistentes.filter((producto) => producto.categoria === categoriaSeleccionada);
+    let productosEncontrados: Producto[] = this.productosExistentes.filter((producto) => producto.categoria === categoriaSeleccionada);
+    console.log(productosEncontrados);
+    return productosEncontrados;
   }
 
   modificacionesProductoExistente(index: number) {
@@ -212,6 +224,23 @@ export class FormularioComprasComponent {
       }
     }
   }
+
+  obtenerImagen(index: number, event: any) {
+
+    const file = event.target.files[0];
+    if(file) {
+      this.mostrarImagen[index] = true;
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.imagenesString[index] = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    } else {
+      this.mostrarImagen[index] = false;
+      this.imagenesString[index] = '';
+    }
+  }
+
 
   /* Service */
 
