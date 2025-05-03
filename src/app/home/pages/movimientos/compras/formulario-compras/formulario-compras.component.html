@@ -129,6 +129,7 @@
                 id="imagenProducto-{i}"
                 *ngIf="mostrarImagen[i]"
                 [src]="imagenesString[i]"
+                formControlName="imagenProducto"
                 alt="producto-{{ i }} image"
                 class="w-[100%] h-[20vh] xl:w-[10vw] object-cover"
               />
@@ -143,7 +144,6 @@
                 aria-describedby="file_input_help"
                 id="imagen-{{ i }}"
                 type="file"
-                formControlName="imagenProducto"
                 (change)="obtenerImagen(i, $event)"
                 accept="image/*"
               />

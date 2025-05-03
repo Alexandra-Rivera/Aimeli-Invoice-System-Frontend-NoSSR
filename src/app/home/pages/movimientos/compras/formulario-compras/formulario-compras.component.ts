@@ -23,14 +23,16 @@ export class FormularioComprasComponent {
   productosExistentes: Producto[] = 
   [
     {
-    "codigoProducto": "ACC001",
-    "nombreProducto": "Auriculares Inalámbricos",
-    "descripcionProducto": "Auriculares Bluetooth con cancelación de ruido y hasta 20 horas de reproducción.",
-    "categoria": "Accesorios",
-    "costoUnitario": 85.25,
-    "precioVenta": 129.75
+      "imagenProducto": "https://promart.vteximg.com.br/arquivos/ids/7354120-1000-1000/image-0.jpg?v=638258415095200000",
+      "codigoProducto": "ACC001",
+      "nombreProducto": "Auriculares Inalámbricos",
+      "descripcionProducto": "Auriculares Bluetooth con cancelación de ruido y hasta 20 horas de reproducción.",
+      "categoria": "Accesorios",
+      "costoUnitario": 85.25,
+      "precioVenta": 129.75
     },
     {
+      "imagenProducto": "https://www.tecnoseguro.com/media/k2/items/cache/dc0900c4858a2f0dce82ed3898356bb3_XL.jpg",
       "codigoProducto": "ACC002",
       "nombreProducto": "Pulsera de mano tecnologica",
       "descripcionProducto": "Pulsera de mano con reloj digital de hasta 20 horas de duracion.",
@@ -39,6 +41,7 @@ export class FormularioComprasComponent {
       "precioVenta": 220.75
       },
     {
+      "imagenProducto": "https://shop.mango.com/assets/rcs/pics/static/T8/fotos/S/87000606_01_B.jpg?imwidth=2048&imdensity=1&ts=1727890470817",
       "codigoProducto": "RMH001",
       "nombreProducto": "Camiseta Algodón Premium",
       "descripcionProducto": "Camiseta de manga corta 100% algodón orgánico.",
@@ -47,6 +50,7 @@ export class FormularioComprasComponent {
       "precioVenta": 39.99
     },
     {
+      "imagenProducto": "https://www.korner.es/uploads/media/images/756x756/221BD26036_00_1.jpg",
       "codigoProducto": "RMH002",
       "nombreProducto": "Pantalón Vaquero Recto",
       "descripcionProducto": "Pantalón vaquero corte recto clásico en denim resistente.",
@@ -55,6 +59,7 @@ export class FormularioComprasComponent {
       "precioVenta": 79.50
     },
     {
+      "imagenProducto": "https://ateneaprofesional.com/cdn/shop/files/Atenea_Ecommerce_Oct_236164.jpg?v=1743916068",
       "codigoProducto": "MAQ002",
       "nombreProducto": "Paleta de Sombras Neutras",
       "descripcionProducto": "Paleta con 12 tonos neutros y acabado mate y brillante.",
@@ -63,6 +68,7 @@ export class FormularioComprasComponent {
       "precioVenta": 65.99
     },
     {
+      "imagenProducto": "https://siman.vtexassets.com/arquivos/ids/6028880/104587559-1.jpg?v=638592533250230000",
       "codigoProducto": "MAQ001",
       "nombreProducto": "Base de Maquillaje Líquida",
       "descripcionProducto": "Base de cobertura media con acabado natural.",
@@ -152,6 +158,8 @@ export class FormularioComprasComponent {
 
   eliminarProducto(index: number) {
     this.obtenerProductosArray.removeAt(index);
+    this.imagenesString[index] = '';
+    this.mostrarImagen[index] = false; 
   }
 
   borrarTodosLosCampos() {
@@ -195,6 +203,7 @@ export class FormularioComprasComponent {
 
     if (productoSeleccionado) {
       this.obtenerProductosArray.at(index).patchValue({
+        imagenProducto: productoSeleccionado.imagenProducto,
         codigoProducto: productoSeleccionado.codigoProducto,
         nombreProducto: productoSeleccionado.nombreProducto,
         descripcionProducto: productoSeleccionado.descripcionProducto,
@@ -203,6 +212,9 @@ export class FormularioComprasComponent {
       })
     } 
 
+    this.imagenesString[index] = this.obtenerProductosArray.at(index).get('imagenProducto')?.value;
+    this.mostrarImagen[index] = true;
+    this.obtenerProductosArray.at(index).get('imagenProducto')?.disable();
     this.obtenerProductosArray.at(index).get('codigoProducto')?.disable();
     this.obtenerProductosArray.at(index).get('descripcionProducto')?.disable();
     this.obtenerProductosArray.at(index).get('costoUnitario')?.disable();
