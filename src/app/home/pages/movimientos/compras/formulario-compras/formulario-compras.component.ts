@@ -108,8 +108,6 @@ export class FormularioComprasComponent {
 
   }
 
-
-
   //Investigar que es ese get 
   get obtenerProductosArray() {
     return this.formularioCompras.get('productos') as FormArray;
@@ -139,6 +137,7 @@ export class FormularioComprasComponent {
 
   handleSubmit() {
     console.log(this.formularioCompras.value);
+    this.calcularTotalCompra();
     alert("Tus productos han sido agregados a inventario!");
   }
 
@@ -166,51 +165,47 @@ export class FormularioComprasComponent {
 
   borrarTodosLosCampos() {
 
-    this.formularioCompras.patchValue({
-      fechaCompra: '',
-      numeroFactura: '',
-      proveedor: '',
-      metodoPago: '', 
-    })
+    // this.formularioCompras.patchValue({
+    //   fechaCompra: '',
+    //   numeroFactura: '',
+    //   proveedor: '',
+    //   metodoPago: '', 
+    // })
     
-    for (let i = 0; i < this.obtenerProductosArray.length; i++) {
-      this.montoTotal[i] = 0;
-    }
+    // for (let i = 0; i < this.obtenerProductosArray.length; i++) {
+    //   this.montoTotal[i] = 0;
+    // }
 
-    for (let i = 0; i < this.obtenerProductosArray.length; i++) {
-      this.mostrarImagen[i] = false;
-      this.imagenesString[i] = '';
-    }
+    // for (let i = 0; i < this.obtenerProductosArray.length; i++) {
+    //   this.mostrarImagen[i] = false;
+    //   this.imagenesString[i] = '';
+    // }
 
-    for (let i = 0; i < this.obtenerProductosArray.length; i++) {
-      this.obtenerProductosArray.at(i).patchValue({
-        codigoProducto: '',
-        nombreProducto: '',
-        categoria: '',
-        descripcionProducto: '',
-        costoUnitario: '',
-        precioVenta: ''
-      })
-    }
-    this.obtenerProductosArray.clear();
-    this.agregarProducto();
+    // for (let i = 0; i < this.obtenerProductosArray.length; i++) {
+    //   this.obtenerProductosArray.at(i).patchValue({
+    //     codigoProducto: '',
+    //     nombreProducto: '',
+    //     categoria: '',
+    //     descripcionProducto: '',
+    //     costoUnitario: '',
+    //     precioVenta: ''
+    //   })
+    // }
+    // this.obtenerProductosArray.clear();
+    // this.agregarProducto();
+
+    window.location.reload();
   }
 
   obtenerArrayProductosExistentes(index: number): Producto[] {
-    // Por que se ejecuta esta funcion tantas veces
-    // Por que al refreshear la pagina, ya no agarra ningun valor al seleccionar ninguna opcion
     const categoriaSeleccionada = this.obtenerProductosArray.at(index).get('categoria')?.value;
-    console.log("Categoria seleccionada: ", categoriaSeleccionada);
-    let productosEncontrados: Producto[] = this.productosExistentes.filter((producto) => producto.categoria === categoriaSeleccionada);
-    console.log(productosEncontrados);
-    return productosEncontrados;
+
+    return this.productosExistentes.filter((producto) => producto.categoria === categoriaSeleccionada);
   }
 
   modificacionesProductoExistente(index: number) {
     const dpProductosExistentes = document.getElementById(`productoExistente-${index}`) as HTMLSelectElement;
-    console.log("Valor del dropdown", dpProductosExistentes?.value)
     const productoSeleccionado = this.productosExistentes.find((producto) => producto.nombreProducto === dpProductosExistentes?.value);  
-    console.log("Producto seleccionado:", productoSeleccionado);
 
     if (productoSeleccionado) {
       this.obtenerProductosArray.at(index).patchValue({
@@ -222,7 +217,7 @@ export class FormularioComprasComponent {
       })
     } 
 
-    this.imagenesString[index] = this.obtenerProductosArray.at(index).get('imagenProducto')?.value;
+    this.imagenesString[index] = productoSeleccionado?.imagenProducto ?? "";
     this.mostrarImagen[index] = true;
     this.obtenerProductosArray.at(index).get('imagenProducto')?.disable();
     this.obtenerProductosArray.at(index).get('codigoProducto')?.disable();
