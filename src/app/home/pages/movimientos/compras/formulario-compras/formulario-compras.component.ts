@@ -79,9 +79,6 @@ export class FormularioComprasComponent {
   ];
 
 
-  
-  constructor() { }
-
   /*Injections */
   fb = inject(FormBuilder);
   comprasService = inject(ComprasServiceService);
@@ -106,6 +103,11 @@ export class FormularioComprasComponent {
       })
     ]),
   })
+
+  constructor() { 
+
+  }
+
 
 
   //Investigar que es ese get 
@@ -170,17 +172,26 @@ export class FormularioComprasComponent {
       proveedor: '',
       metodoPago: '', 
     })
-    this.obtenerProductosArray.reset();
     
     for (let i = 0; i < this.obtenerProductosArray.length; i++) {
       this.montoTotal[i] = 0;
     }
 
     for (let i = 0; i < this.obtenerProductosArray.length; i++) {
-        this.mostrarImagen[i] = false;
-        this.imagenesString[i] = '';
+      this.mostrarImagen[i] = false;
+      this.imagenesString[i] = '';
     }
 
+    for (let i = 0; i < this.obtenerProductosArray.length; i++) {
+      this.obtenerProductosArray.at(i).patchValue({
+        codigoProducto: '',
+        nombreProducto: '',
+        categoria: '',
+        descripcionProducto: '',
+        costoUnitario: '',
+        precioVenta: ''
+      })
+    }
     this.obtenerProductosArray.clear();
     this.agregarProducto();
   }
@@ -188,7 +199,7 @@ export class FormularioComprasComponent {
   obtenerArrayProductosExistentes(index: number): Producto[] {
     // Por que se ejecuta esta funcion tantas veces
     // Por que al refreshear la pagina, ya no agarra ningun valor al seleccionar ninguna opcion
-    const categoriaSeleccionada = this.obtenerProductosArray.at(index).get("categoria")?.value;
+    const categoriaSeleccionada = this.obtenerProductosArray.at(index).get('categoria')?.value;
     console.log("Categoria seleccionada: ", categoriaSeleccionada);
     let productosEncontrados: Producto[] = this.productosExistentes.filter((producto) => producto.categoria === categoriaSeleccionada);
     console.log(productosEncontrados);
@@ -203,7 +214,6 @@ export class FormularioComprasComponent {
 
     if (productoSeleccionado) {
       this.obtenerProductosArray.at(index).patchValue({
-        imagenProducto: productoSeleccionado.imagenProducto,
         codigoProducto: productoSeleccionado.codigoProducto,
         nombreProducto: productoSeleccionado.nombreProducto,
         descripcionProducto: productoSeleccionado.descripcionProducto,
