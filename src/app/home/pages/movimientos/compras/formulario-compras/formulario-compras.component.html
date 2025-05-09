@@ -180,32 +180,24 @@
             </td>
 
             <!-- Dropdown de Categorias -->
-            <td class="px-6 py-4">
-              <label
-                for="categoriaProducto-{{ i }}"
-                class="font-semibold mb-5"
-                hidden
-                >Categorias:</label
+            <td class="px-6 py-4" formGroupName="categoriaDTO">
+              <select
+                name="categoriaProducto-{{ i }}"
+                id="categoriaProducto-{{ i }}"
+                formControlName="id"
+                class="w-full text-gray-700 border-none bg-gray-100 hover:bg-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex items-center"
               >
-              <div formGroupName="categoriaDTO">
-                <select
-                  name="categoriaProducto-{{ i }}"
-                  id="categoriaProducto-{{ i }}"
-                  formControlName="id"
-                  class="w-full text-gray-700 border-none bg-gray-100 hover:bg-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex items-center"
+                <option value="" disabled selected>
+                  Seleccionar Categoría
+                </option>
+                <option
+                  *ngFor="let categoria of categorias"
+                  [value]="categoria.id"
+                  class="block px-10 py-2 hover:bg-gray-100"
                 >
-                  <option value="" disabled selected>
-                    Seleccionar Categoría
-                  </option>
-                  <option
-                    *ngFor="let categoria of categorias"
-                    [value]="categoria.id"
-                    class="block px-10 py-2 hover:bg-gray-100"
-                  >
-                    {{ categoria.categoria }}
-                  </option>
-                </select>
-              </div>
+                  {{ categoria.categoria }}
+                </option>
+              </select>
             </td>
 
             <!-- Nombre de producto Input -->
@@ -386,7 +378,7 @@
     </div>
   </form>
   <pre>{{ formularioCompras.value | json }}</pre>
-  <h3 class="text-2xl">Productos Agregados</h3>
+  <!-- <h3 class="text-2xl">Productos Agregados</h3> -->
   <br />
   <!-- <app-productos-tabla-component /> -->
 </section>

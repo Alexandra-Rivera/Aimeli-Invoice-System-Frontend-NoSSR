@@ -20,9 +20,6 @@ export class FormularioComprasComponent {
   imagenesString: { [key: number]: string } = {};
   montoTotal: {[key: number]: number} = {};
  
-  
-  // metodosPago: string[] = ["Efectivo", "Transferencia", "Tarjeta de credito o debito"];
-  // proveedores: string[] = ['SHEIN', 'AliExpress', 'Temu'];
   proveedores: Proveedor[] = [];
   metodosPago: MetodoPago[] = [];
   categorias: Categoria[] = [];
@@ -125,11 +122,13 @@ export class FormularioComprasComponent {
 
   constructor() { 
     // let esValido = this.formularioCompras.valid;
+  }
+
+  ngOnInit() {
     this.obtenerProveedores()
     this.obtenerMetodoDePago();
     this.obtenerCategorias();
   }
-
   //Investigar que es ese get 
   get obtenerProductosArray() {
     // return this.formularioCompras.get('productos') as FormArray;
@@ -169,21 +168,25 @@ export class FormularioComprasComponent {
   }
 
   agregarProducto() {
-    this.calcularTotalCompra();
-    this.obtenerProductosArray.push(
-      this.fb.group({
-        imagenProducto: ['', Validators.required],
-        codigoProducto: ['', Validators.required],
-        nombreProducto: ['', Validators.required],
-        descripcionProducto: ['', Validators.required],
-        categoria: this.fb.group({
-          id: ['', Validators.required]
+
+    if(this.categorias) {
+      this.calcularTotalCompra();
+      this.obtenerProductosArray.push(
+        this.fb.group({
+          imagenProducto: ['', Validators.required],
+          codigoProducto: ['', Validators.required],
+          nombreProducto: ['', Validators.required],
+          descripcionProducto: ['', Validators.required],
+          categoriaDTO: this.fb.group({
+            id: ['', Validators.required]
+          }),
+          cantidadProducto: ['', Validators.required],
+          costoUnitario: ['', Validators.required],
+          precioVenta: ['', Validators.required]
         }),
-        cantidadProducto: ['', Validators.required],
-        costoUnitario: ['', Validators.required],
-        precioVenta: ['', Validators.required]
-      }),
-    )
+      )
+    }
+
   }
 
   eliminarProducto(index: number) {
