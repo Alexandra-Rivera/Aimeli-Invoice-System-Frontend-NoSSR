@@ -1,9 +1,9 @@
-import { Producto } from "../producto/producto";
+import { MetodoPagoDTO } from "../metodo-pago-DTO/metodo-pago-dto";
+import { ProveedorDTO } from "../proveedor-DTO/proveedor-dto";
 
 export interface FacturaCompras {
     fechaCompra: string;
     numeroFactura: string;
-    metodoPago: string;
-    proveedor: string;
-    productos: Producto[];
+    metodoPagoDTO: MetodoPagoDTO;
+    proveedorDTO: ProveedorDTO;
 }

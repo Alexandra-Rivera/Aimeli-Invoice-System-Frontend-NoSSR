@@ -12,6 +12,7 @@
     <!-- Informacion de factura de la compra -->
     <div
       class="flex flex-col w-full lg:grid lg:grid-cols-3 gap-2 xl:gap-10 mb-10 lg:mt-5"
+      formGroupName="compra"
     >
       <!-- Fecha de compra Input -->
       <div class="flex flex-col gap-3 w-[100%]">
@@ -25,6 +26,14 @@
           formControlName="fechaCompra"
           placeholder="Seleccionar fecha"
         />
+
+        <!-- Validacion de fecha  -->
+        <!-- @if (formularioCompras.controls.fechaCompra.errors?.['required'] &&
+        formularioCompras.controls.fechaCompra.touched) {
+        <div class="font-semibold text-sm text-pink-600">
+          Debe ingresar la fecha de compra
+        </div>
+        }  -->
       </div>
 
       <!-- N de factura y Proveedor -->
@@ -50,21 +59,24 @@
             <label for="proveedor" class="font-semibold"
               >Seleccione un proveedor:</label
             >
-
-            <select
-              id="proveedor"
-              formControlName="proveedor"
-              class="w-full text-gray-700 border-none bg-gray-100 hover:bg-gray-200 font-medium rounded-full text-sm px-5 py-2.5 inline-flex items-center"
-            >
-              <option value="" disabled selected>Seleccionar Proveedor</option>
-              <option
-                *ngFor="let proveedor of proveedores"
-                [value]="proveedor"
-                class="block px-4 py-2 hover:bg-gray-100"
+            <div formGroupName="proveedorDTO">
+              <select
+                id="proveedor"
+                formControlName="id"
+                class="w-full text-gray-700 border-none bg-gray-100 hover:bg-gray-200 font-medium rounded-full text-sm px-5 py-2.5 inline-flex items-center"
               >
-                {{ proveedor }}
-              </option>
-            </select>
+                <option value="" disabled selected>
+                  Seleccionar Proveedor
+                </option>
+                <option
+                  *ngFor="let proveedor of proveedores"
+                  [value]="proveedor.id"
+                  class="block px-4 py-2 hover:bg-gray-100"
+                >
+                  {{ proveedor.nombre }}
+                </option>
+              </select>
+            </div>
           </div>
         </div>
       </div>
@@ -74,22 +86,25 @@
         <label for="metodoPago" class="font-semibold"
           >Seleccione un metodo de pago:</label
         >
-
-        <select
-          name="metodoPago"
-          id="metodoPago"
-          formControlName="metodoPago"
-          class="w-full text-gray-700 border-none bg-gray-100 hover:bg-gray-200 font-medium rounded-full text-sm px-5 py-2.5 inline-flex items-center"
-        >
-          <option value="" disabled selected>Seleccionar Método de Pago</option>
-          <option
-            *ngFor="let metodoPago of metodosPago"
-            [value]="metodoPago"
-            class="block px-4 py-2 hover:bg-gray-100"
+        <div formGroupName="metodoPagoDTO">
+          <select
+            name="metodoPago"
+            id="metodoPago"
+            formControlName="id"
+            class="w-full text-gray-700 border-none bg-gray-100 hover:bg-gray-200 font-medium rounded-full text-sm px-5 py-2.5 inline-flex items-center"
           >
-            {{ metodoPago }}
-          </option>
-        </select>
+            <option value="" disabled selected>
+              Seleccionar Método de Pago
+            </option>
+            <option
+              *ngFor="let metodoPago of metodosPago"
+              [value]="metodoPago.id"
+              class="block px-4 py-2 hover:bg-gray-100"
+            >
+              {{ metodoPago.metodoPago }}
+            </option>
+          </select>
+        </div>
       </div>
     </div>
 
@@ -165,17 +180,11 @@
             </td>
 
             <!-- Dropdown de Categorias -->
-            <td class="px-6 py-4">
-              <label
-                for="categoriaProducto-{{ i }}"
-                class="font-semibold mb-5"
-                hidden
-                >Categorias:</label
-              >
+            <td class="px-6 py-4" formGroupName="categoriaDTO">
               <select
                 name="categoriaProducto-{{ i }}"
                 id="categoriaProducto-{{ i }}"
-                formControlName="categoria"
+                formControlName="id"
                 class="w-full text-gray-700 border-none bg-gray-100 hover:bg-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex items-center"
               >
                 <option value="" disabled selected>
@@ -183,10 +192,10 @@
                 </option>
                 <option
                   *ngFor="let categoria of categorias"
-                  [value]="categoria"
+                  [value]="categoria.id"
                   class="block px-10 py-2 hover:bg-gray-100"
                 >
-                  {{ categoria }}
+                  {{ categoria.categoria }}
                 </option>
               </select>
             </td>
@@ -336,7 +345,6 @@
             <label for="totalCompra" hidden></label>
             <input
               type="text"
-              formControlName="totalCompra"
               id="totalCompra"
               class="border-none"
               placeholder="$0"
@@ -370,7 +378,7 @@
     </div>
   </form>
   <pre>{{ formularioCompras.value | json }}</pre>
-  <h3 class="text-2xl">Productos Agregados</h3>
+  <!-- <h3 class="text-2xl">Productos Agregados</h3> -->
   <br />
   <!-- <app-productos-tabla-component /> -->
 </section>
