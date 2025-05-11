@@ -1,29 +1,30 @@
 <app-nav-component titulo="Formulario Categorías" />
-<section class="lg:mt-[10%] mt-[25%]">
+<section class="mt-[20%] md:mt-[20%] lg:mt-[10%] w-[100vw]">
   <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-    <section class="flex justify-center flex-col gap-4 order-2 lg:order-1">
+    <section
+      class="flex centrar-contenido lg:justify-center lg:items-end flex-col gap-4 order-2 lg:order-1"
+    >
       <!-- Formulario de Busqueda -->
-
       <form
         action=""
         [formGroup]="formularioBusqueda"
-        class="flex flex-col mx-15 gap-2"
+        class="flex flex-col gap-2 w-[90%]"
       >
         <label for="search" class="font-semibold">Buscar Categoria: </label>
-        <div class="flex flex-row gap-2 w-full">
+        <div class="flex flex-row gap-2 w-[80%]">
           <input
             type="search"
             name="searchbar"
             id="search"
             formControlName="categoria"
-            class="rounded-full italic w-[90%]"
+            class="rounded-full italic w-full"
             placeholder="Buscar categoria por nombre"
             (input)="buscarCategoria()"
           />
         </div>
       </form>
       <div
-        class="snap-y bg-fondo-terciario rounded-xl scroll-py-4 overflow-y-auto h-[60vh] w-[90%] lg:w-[80%] custom-scrollbar mx-15"
+        class="snap-y bg-fondo-terciario rounded-xl scroll-py-4 overflow-y-auto h-[60vh] w-[90%] lg:w-[90%] custom-scrollbar"
       >
         <ul class="snap-start px-10 py-6">
           <li
@@ -42,28 +43,27 @@
       </div>
     </section>
     <!-- Formulario de categorias -->
-    <section class="flex justify-center order-1 lg:order-2">
+    <section class="order-1 lg:order-2 md:px-[4%]">
       <form
         action=""
         [formGroup]="formularioCategoria"
         (ngSubmit)="guardarCambios()"
+        class="flex flex-col justify-center"
       >
-        <div class="mb-5">
-          <label
-            for="nombre"
-            class="block mb-2 text-sm font-medium text-gray-900"
+        <div class="m-5">
+          <label for="categoria" class="block mb-2 font-semibold text-gray-900"
             >Categoría</label
           >
           <input
             type="text"
-            id="nombre"
+            id="categoria"
             formControlName="categoria"
-            class="w-96 p-2.5 border border-gray-300 rounded-full"
+            class="w-full p-2.5 border border-gray-300 rounded-full"
             placeholder="Categoría"
             required
           />
         </div>
-        <div class="flex flex-row-reverse items-center lg:mt-10">
+        <div class="flex flex-row-reverse justify-start lg:mt-10">
           <button
             type="submit"
             class="boton-redondeado-oscuro h-11 lg:w-[20vw] cursor-pointer"
