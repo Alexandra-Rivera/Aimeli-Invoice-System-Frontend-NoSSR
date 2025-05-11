@@ -1,101 +1,101 @@
 <app-nav-component titulo="Formulario Categorías" />
-<section class="mt-[20%] md:mt-[20%] lg:mt-[10%] w-[100vw]">
-  <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-    <section
-      class="flex centrar-contenido lg:justify-center lg:items-end flex-col gap-4 order-2 lg:order-1"
+<section
+  class="mt-[20%] md:mt-[15%] lg:mt-[8%] w-[100vw] grid grid-cols-1 lg:grid-cols-2 gap-4 px-[2%] lg:px-[5%]"
+>
+  <section
+    class="flex centrar-contenido lg:justify-center lg:items-end flex-col gap-4 order-2 lg:order-1 flex-reverse"
+  >
+    <!-- Formulario de Busqueda -->
+    <form
+      action=""
+      [formGroup]="formularioBusqueda"
+      class="flex flex-col gap-2 w-[90%]"
     >
-      <!-- Formulario de Busqueda -->
-      <form
-        action=""
-        [formGroup]="formularioBusqueda"
-        class="flex flex-col gap-2 w-[90%]"
-      >
-        <label for="search" class="font-semibold">Buscar Categoria: </label>
-        <div class="flex flex-row gap-2 w-[80%]">
-          <input
-            type="search"
-            name="searchbar"
-            id="search"
-            formControlName="categoria"
-            class="rounded-full italic w-full"
-            placeholder="Buscar categoria por nombre"
-            (input)="buscarCategoria()"
-          />
-        </div>
-      </form>
-      <div
-        class="snap-y bg-fondo-terciario rounded-xl scroll-py-4 overflow-y-auto h-[60vh] w-[90%] lg:w-[90%] custom-scrollbar"
-      >
-        <ul class="snap-start px-10 py-6">
-          <li
-            *ngFor="let categoria of categorias; let i = index"
-            class="flex justify-between items-center font-bold cursor-default"
-          >
-            {{ categoria.categoria }}
-            <button
-              class="text-select-text-color font-bold cursor-pointer"
-              (click)="seleccionarCategoria(i)"
-            >
-              Select
-            </button>
-          </li>
-        </ul>
+      <label for="search" class="font-semibold">Buscar Categoria: </label>
+      <div class="flex flex-row gap-2 w-[80%]">
+        <input
+          type="search"
+          name="searchbar"
+          id="search"
+          formControlName="categoria"
+          class="rounded-full italic w-full"
+          placeholder="Buscar categoria por nombre"
+          (input)="buscarCategoria()"
+        />
       </div>
-    </section>
-    <!-- Formulario de categorias -->
-    <section class="order-1 lg:order-2 md:px-[4%]">
-      <form
-        action=""
-        [formGroup]="formularioCategoria"
-        (ngSubmit)="guardarCambios()"
-        class="flex flex-col justify-center"
-      >
-        <div class="m-5">
-          <label for="categoria" class="block mb-2 font-semibold text-gray-900"
-            >Categoría</label
-          >
-          <input
-            type="text"
-            id="categoria"
-            formControlName="categoria"
-            class="w-full p-2.5 border border-gray-300 rounded-full"
-            placeholder="Categoría"
-            required
-          />
-        </div>
-        <div class="flex flex-row-reverse justify-start lg:mt-10">
+    </form>
+    <div
+      class="snap-y bg-fondo-terciario rounded-xl scroll-py-4 overflow-y-auto h-[60vh] w-[90%] lg:w-[90%] custom-scrollbar"
+    >
+      <ul class="snap-start px-10 py-6">
+        <li
+          *ngFor="let categoria of categorias; let i = index"
+          class="flex justify-between items-center font-bold cursor-default"
+        >
+          {{ categoria.categoria }}
           <button
-            type="submit"
-            class="boton-redondeado-oscuro h-11 lg:w-[20vw] cursor-pointer"
+            class="text-select-text-color font-bold cursor-pointer"
+            (click)="seleccionarCategoria(i)"
           >
-            Guardar Categoría
+            Select
           </button>
-          <button
-            id="boton-eliminar"
-            type="button"
-            class="boton-icono-eliminar-relleno cursor-pointer"
-            (click)="eliminarCategoria()"
+        </li>
+      </ul>
+    </div>
+  </section>
+  <!-- Formulario de categorias -->
+  <section class="order-1 lg:order-2 md:px-[2%]">
+    <form
+      action=""
+      [formGroup]="formularioCategoria"
+      (ngSubmit)="guardarCambios()"
+      class="flex flex-col justify-center w-full"
+    >
+      <div class="m-5">
+        <label for="categoria" class="block mb-2 font-semibold text-gray-900"
+          >Categoría</label
+        >
+        <input
+          type="text"
+          id="categoria"
+          formControlName="categoria"
+          class="w-full p-2.5 border border-gray-300 rounded-full"
+          placeholder="Categoría"
+          required
+        />
+      </div>
+      <div class="flex flex-row-reverse justify-start lg:mt-10">
+        <button
+          type="submit"
+          class="boton-redondeado-oscuro h-11 lg:w-[20vw] cursor-pointer"
+        >
+          Guardar Categoría
+        </button>
+        <button
+          id="boton-eliminar"
+          type="button"
+          class="boton-icono-eliminar-relleno cursor-pointer"
+          (click)="eliminarCategoria()"
+        >
+          <svg
+            class="w-6 h-6 text-white"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="none"
+            viewBox="0 0 24 24"
           >
-            <svg
-              class="w-6 h-6 text-white"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"
-              />
-            </svg>
-          </button>
-        </div>
-      </form>
-    </section>
-  </div>
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"
+            />
+          </svg>
+        </button>
+      </div>
+    </form>
+  </section>
 </section>
