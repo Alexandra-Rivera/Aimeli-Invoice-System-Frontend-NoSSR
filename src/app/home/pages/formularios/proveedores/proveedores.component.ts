@@ -8,7 +8,7 @@ import { tap } from 'rxjs';
 
 @Component({
   selector: 'app-proveedores',
-  imports: [NavComponentComponent, ReactiveFormsModule, CommonModule, JsonPipe],
+  imports: [NavComponentComponent, ReactiveFormsModule, CommonModule],
   templateUrl: './proveedores.component.html',
   styleUrl: './proveedores.component.css'
 })
