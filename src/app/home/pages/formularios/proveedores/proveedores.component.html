@@ -1,77 +1,146 @@
-<app-nav-component titulo="Formulario Proveedores" />  
-<section class="lg:mt-[10%] mt-[25%]">
-  <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-    <section class="flex justify-center order-2 lg:order-1">
-      <div class="snap-y bg-fondo-terciario rounded-xl scroll-py-4 overflow-y-auto h-[60vh] w-[90%] lg:w-[80%] custom-scrollbar">
+<app-nav-component titulo="Formulario Proveedores" />
+<section class="lg:mt-[7%] mt-[25%] grid grid-cols-1 lg:grid-cols-2 gap-4">
+  <section
+    class="flex flex-col gap-3 order-2 lg:order-1 px-[10%] justify-start"
+  >
+    <!-- Formulario de Busqueda -->
+    <form
+      action=""
+      [formGroup]="formularioBusqueda"
+      class="flex flex-col gap-2 w-full"
+    >
+      <br />
+      <label for="search" class="block mb-2 font-semibold text-gray-900"
+        >Buscar Proveedor:
+      </label>
+      <div class="flex flex-row gap-2 w-full">
+        <input
+          type="search"
+          name="searchbar"
+          id="search"
+          formControlName="palabra"
+          (input)="buscarProveedor()"
+          class="rounded-full italic w-full"
+          placeholder="Buscar proveedor por nombre"
+        />
+      </div>
+    </form>
+    <div
+      class="snap-y bg-fondo-terciario rounded-xl scroll-py-4 overflow-y-auto h-[60vh] w-full custom-scrollbar"
+    >
       <ul class="snap-start px-10 py-6">
-        <li class="flex justify-between items-center font-bold">Proveedor 1 <a href="" class="text-select-text-color font-bold">Select</a></li>
+        <li
+          *ngFor="let proveedor of proveedores; let i = index"
+          class="flex justify-between items-center font-bold"
+        >
+          {{ proveedor.nombre }}
+          <button
+            class="text-select-text-color font-bold cursor-pointer"
+            (click)="seleccionarProveedor(i)"
+          >
+            Select
+          </button>
+        </li>
       </ul>
+    </div>
+  </section>
+  <section
+    class="flex flex-col gap-4 justify-start items-center order-1 lg:order-2"
+  >
+    <form [formGroup]="formularioProveedores" class="">
+      <div class="mb-5">
+        <label for="proveedor" class="block mb-2 font-semibold text-gray-900"
+          >Nombre del Proveedor</label
+        >
+        <input
+          type="text"
+          id="proveedor"
+          formControlName="nombre"
+          class="w-96 p-2.5 border border-gray-300 rounded-full"
+          placeholder="Proveedor"
+          required
+        />
       </div>
-    </section>
-    <section class="flex justify-center order-1 lg:order-2">
-      <form>
-        <div class="mb-5">
-          <label
-            for="nombre"
-            class="block mb-2 text-sm font-medium text-gray-900"
-            >Nombre del Proveedor</label
-          >
-          <input
-            type="text"
-            id="nombre"
-            class="w-96 p-2.5 border border-gray-300 rounded-full "
-            placeholder="Proveedor"
-            required
-          />
-        </div>
-        <div class="mb-5">
-            <label
-              for="text"
-              class="block mb-2 text-sm font-medium text-gray-900"
-              >Dirección</label
-            >
-            <textarea
-              type="text"
-              id="direccion"
-              class="w-96 p-2.5 rounded-[25px] border border-gray-300"
-              placeholder="Dirección"
-              required
-            ></textarea>
-          </div>
-        <div class="mb-5">
-          <label
-            for="NIT"
-            class="block mb-2 text-sm font-medium text-gray-900"
-            >Número de NIT</label
-          >
-          <input
-            type="number"
-            id="NIT"
-            class="w-96 p-2.5 border border-gray-300 rounded-full"
-            placeholder="0000-000000-000-0"
-          />
-        </div>
-        <div class="mb-5">
-            <label
-              for="Registro"
-              class="block mb-2 text-sm font-medium text-gray-900"
-              >Número de Registro</label
-            >
-            <input
-              type="number"
-              id="registro"
-              class="w-96 p-2.5 border border-gray-300 rounded-full"
-              placeholder="NRC"
-            />
-          </div>
-        <div class="flex flex-row items-center lg:mt-10">
-        <button class="boton-icono-eliminar-relleno"><svg class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"/>
-        </svg>
+      <div class="mb-5">
+        <label for="direccion" class="block mb-2 font-semibold text-gray-900"
+          >Dirección</label
+        >
+        <textarea
+          type="text"
+          id="direccion"
+          formControlName="direccion"
+          class="w-96 p-2.5 rounded-[25px] border border-gray-300"
+          placeholder="Dirección"
+          required
+        ></textarea>
+      </div>
+      <div class="mb-5">
+        <label for="NIT" class="block mb-2 font-semibold text-gray-900"
+          >Número de NIT</label
+        >
+        <input
+          type="number"
+          id="NIT"
+          formControlName="numeroNit"
+          class="w-96 p-2.5 border border-gray-300 rounded-full"
+          placeholder="0000-000000-000-0"
+        />
+      </div>
+      <div class="mb-5">
+        <label for="nrc" class="block mb-2 font-semibold text-gray-900"
+          >Número de Registro</label
+        >
+        <input
+          type="text"
+          id="nrc"
+          formControlName="numeroNrc"
+          class="w-96 p-2.5 border border-gray-300 rounded-full"
+          placeholder="NRC"
+        />
+      </div>
+
+      <!-- botones: Guardar y eliminar -->
+      <div class="flex flex-row-reverse items-center lg:mt-10">
+        <button
+          type="submit"
+          (click)="guardarProveedor()"
+          class="boton-redondeado-oscuro h-11 lg:w-[20vw] cursor-pointer"
+        >
+          Guardar Proveedor
         </button>
-        <button class="boton-redondeado-oscuro h-11 lg:w-[20vw]">Guardar Proveedor</button>
+        <button
+          type="button"
+          class="boton-icono-eliminar-relleno"
+          (click)="eliminarProveedor()"
+        >
+          <svg
+            class="w-6 h-6 text-white"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke="currentColor"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"
+            />
+          </svg>
+        </button>
       </div>
-      </form>
-    </section>
-  </div>
+      <button
+        id="buttonAgregarProveedor"
+        type="button"
+        (click)="agregarProveedor()"
+        *ngIf="mostrarBoton"
+        class="mt-10 mx-auto font-semibold text-blue-900 cursor-pointer"
+      >
+        Agregar nuevo proveedor
+      </button>
+    </form>
+  </section>
 </section>
