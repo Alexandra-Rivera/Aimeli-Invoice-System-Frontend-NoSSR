@@ -5,7 +5,6 @@ import { CommonModule, JsonPipe } from '@angular/common';
 import { Proveedor } from '../../../../shared/interfaces/proveedor/proveedor';
 import { ProveedoresServiceService } from '../../../../shared/data-access/proveedores-service/proveedores-service.service';
 import { tap } from 'rxjs';
-import { RespuestaServidor } from '../../../../shared/interfaces/respuesta-servidor/respuesta-servidor';
 
 @Component({
   selector: 'app-proveedores',
