@@ -20,13 +20,6 @@ export class ComprasServiceService {
 
   private http = inject(HttpClient);
 
-
-  /* Obtener Categorias */
-  obtenerCategorias(): Observable<Categoria[]> {
-    // this.http.get<Categoria[]>(`${this.server_Url}/categoria`);
-    return this.http.get<Categoria[]>(`${this.server_Url}/categoria`);
-  }
-
   /*Obtener Metodo de pago */
   obtenerMetodoDePago(): Observable<MetodoPago[]> {
     return this.http.get<MetodoPago[]>(`${this.server_Url}/metodopago`);

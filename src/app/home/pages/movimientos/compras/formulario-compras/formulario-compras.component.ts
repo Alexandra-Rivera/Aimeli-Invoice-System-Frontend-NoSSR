@@ -8,6 +8,8 @@ import { Categoria } from '../../../../../shared/interfaces/categoria/categoria'
 import { tap } from 'rxjs';
 import { Proveedor } from '../../../../../shared/interfaces/proveedor/proveedor';
 import { MetodoPago } from '../../../../../shared/interfaces/metodopago/metodo-pago';
+import { CategoriasServiceService } from '../../../../../shared/data-access/categorias-service/categorias-service.service';
+import { ProveedoresServiceService } from '../../../../../shared/data-access/proveedores-service/proveedores-service.service';
 
 @Component({
   selector: 'app-formulario-compras',
@@ -19,6 +21,7 @@ export class FormularioComprasComponent {
   mostrarImagen: { [key: number]: boolean } = {};
   imagenesString: { [key: number]: string } = {};
   montoTotal: {[key: number]: number} = {};
+  totalCompra: number | null = null;
  
   proveedores: Proveedor[] = [];
   metodosPago: MetodoPago[] = [];
@@ -31,7 +34,9 @@ export class FormularioComprasComponent {
       "codigoProducto": "ACC001",
       "nombreProducto": "Auriculares Inalámbricos",
       "descripcionProducto": "Auriculares Bluetooth con cancelación de ruido y hasta 20 horas de reproducción.",
-      "categoria": "accesorios",
+      "categoriaDTO": {
+        "id": 1,
+      }, 
       "costoUnitario": 85.25,
       "precioVenta": 129.75
     },
@@ -41,7 +46,9 @@ export class FormularioComprasComponent {
       "codigoProducto": "ACC002",
       "nombreProducto": "Pulsera de mano tecnologica",
       "descripcionProducto": "Pulsera de mano con reloj digital de hasta 20 horas de duracion.",
-      "categoria": "accesorios",
+      "categoriaDTO": {
+        "id": 1
+      },
       "costoUnitario": 128.25,
       "precioVenta": 220.75
       },
@@ -51,7 +58,9 @@ export class FormularioComprasComponent {
       "codigoProducto": "RMH001",
       "nombreProducto": "Camiseta Algodón Premium",
       "descripcionProducto": "Camiseta de manga corta 100% algodón orgánico.",
-      "categoria": "Ropa para hombre",
+      "categoriaDTO": {
+        "id": 1,
+      },
       "costoUnitario": 25.50,
       "precioVenta": 39.99
     },
@@ -61,7 +70,9 @@ export class FormularioComprasComponent {
       "codigoProducto": "RMH002",
       "nombreProducto": "Pantalón Vaquero Recto",
       "descripcionProducto": "Pantalón vaquero corte recto clásico en denim resistente.",
-      "categoria": "Ropa para mujer",
+      "categoriaDTO": {
+        "id": 1
+      },
       "costoUnitario": 55.00,
       "precioVenta": 79.50
     },
@@ -71,7 +82,9 @@ export class FormularioComprasComponent {
       "codigoProducto": "MAQ002",
       "nombreProducto": "Paleta de Sombras Neutras",
       "descripcionProducto": "Paleta con 12 tonos neutros y acabado mate y brillante.",
-      "categoria": "maquillaje",
+      "categoriaDTO": {
+        "id": 1
+      },
       "costoUnitario": 42.75,
       "precioVenta": 65.99
     },
@@ -81,7 +94,9 @@ export class FormularioComprasComponent {
       "codigoProducto": "MAQ001",
       "nombreProducto": "Base de Maquillaje Líquida",
       "descripcionProducto": "Base de cobertura media con acabado natural.",
-      "categoria": "maquillaje",
+      "categoriaDTO": {
+        "id": 1
+      },
       "costoUnitario": 30.25,
       "precioVenta": 45.00
     }
@@ -91,6 +106,8 @@ export class FormularioComprasComponent {
   /*Injections */
   fb = inject(FormBuilder);
   comprasService = inject(ComprasServiceService);
+  categoriasService = inject(CategoriasServiceService);
+  proveedoresService = inject(ProveedoresServiceService);
 
   /* Definicion de formulario reactivo */
   formularioCompras = this.fb.group ({
@@ -135,15 +152,6 @@ export class FormularioComprasComponent {
     return this.formularioCompras.controls['productos'] as FormArray;
   }
 
-  calcularMontoTotalItem(index: number) {
-    const costoUnitario = parseFloat(this.obtenerProductosArray.at(index).get('costoUnitario')?.value);
-    const cantidad = parseFloat(this.obtenerProductosArray.at(index).get('cantidadProducto')?.value);
-    
-    /*Producto del costo unitario y la cantidad de articulos*/
-    if (costoUnitario && cantidad) {
-      this.montoTotal[index] = costoUnitario * cantidad;
-    }
-  }
 
   calcularTotalCompra() {
     let total: number = 0;
@@ -153,22 +161,28 @@ export class FormularioComprasComponent {
         total += this.montoTotal[i];
       }
     }
-
-    // this.formularioCompras.controls.totalCompra.setValue(total.toString());
+    
+    this.totalCompra = parseFloat(total.toFixed(2));
   }
 
-  handleSubmit() {
-    if (!this.formularioCompras.errors) {
-      console.log(this.formularioCompras.value);
-      this.calcularTotalCompra();
-    } else {
-      alert("Algo ocurrio");
-      console.log(this.formularioCompras.errors);
+  calcularMontoTotalItem(index: number) {
+    const costoUnitario = parseFloat(this.obtenerProductosArray.at(index).get('costoUnitario')?.value);
+    const cantidad = parseFloat(this.obtenerProductosArray.at(index).get('cantidadProducto')?.value);
+    /*Producto del costo unitario y la cantidad de articulos*/
+
+    if (costoUnitario && cantidad) {
+      const operacion = costoUnitario * cantidad;
+      this.montoTotal[index] = parseFloat(operacion.toFixed(2));
     }
+
+    this.calcularTotalCompra();
+    }
+
+  guardarFactura() {
+    
   }
 
   agregarProducto() {
-
     if(this.categorias) {
       this.calcularTotalCompra();
       this.obtenerProductosArray.push(
@@ -193,6 +207,7 @@ export class FormularioComprasComponent {
     this.obtenerProductosArray.removeAt(index);
     this.imagenesString[index] = '';
     this.mostrarImagen[index] = false; 
+
   }
 
   borrarTodosLosCampos() {
@@ -232,10 +247,14 @@ export class FormularioComprasComponent {
   obtenerArrayProductosExistentes(index: number): Producto[] {
     const categoria_index: number = parseInt(this.obtenerProductosArray.at(index).get("categoriaDTO")?.get("id")?.value);
     const categoria = this.categorias.find((categoria) => categoria.id === categoria_index);
-    return this.productosExistentes.filter((producto) => producto.categoria === categoria?.categoria);
+    return this.productosExistentes.filter((producto) => producto.categoriaDTO.id === categoria?.id);
   }
 
   modificacionesProductoExistente(index: number) {
+
+    //El index ingresado como parametro representa el item donde se van a efectuar las siguientes modificaciones: 
+
+    /*Ubicando valores del dropdown de productos existentes para acceder al producto seleccionado */
     const dpProductosExistentes = document.getElementById(`productoExistente-${index}`) as HTMLSelectElement;
     const productoSeleccionado = this.productosExistentes.find((producto) => producto.nombreProducto === dpProductosExistentes?.value);  
 
@@ -258,19 +277,32 @@ export class FormularioComprasComponent {
     this.obtenerProductosArray.at(index).get('precioVenta')?.disable();
 
 
+    /*Ubicando inputs a desaparecer: input de nombre de producto e input de imagenes  */
     const inputNombreProducto = document.getElementById(`nombreProducto-${index}`) as HTMLInputElement;
-    if (inputNombreProducto) {
-      inputNombreProducto.style.display = 'none';
-    } else {
-      this.obtenerProductosArray.at(index).reset();
-      this.obtenerProductosArray.at(index).get('nombreProducto')?.enable();
-      this.obtenerProductosArray.at(index).get('descripcionProducto')?.enable();
-      this.obtenerProductosArray.at(index).get('costoUnitario')?.enable();
-      const inputNombreProducto = document.getElementById(`nombreProducto-${index}`) as HTMLInputElement;
+    const inputImagenText = document.getElementById(`inputImagenText-${index}`) as HTMLElement;
+    const inputFile  = document.getElementById(`inputImagen-${index}`) as HTMLInputElement;
 
-      if (inputNombreProducto) {
-     inputNombreProducto.style.display = '';
-      }
+    // if (inputNombreProducto) {
+    //   inputNombreProducto.style.display = 'none';
+    //   inputImagenText.style.display = 'none';
+    //   inputFile.style.display = 'none';
+    // } else {
+    //   this.obtenerProductosArray.at(index).reset();
+    //   this.obtenerProductosArray.at(index).get('nombreProducto')?.enable();
+    //   this.obtenerProductosArray.at(index).get('descripcionProducto')?.enable();
+    //   this.obtenerProductosArray.at(index).get('costoUnitario')?.enable();
+    //   const inputNombreProducto = document.getElementById(`nombreProducto-${index}`) as HTMLInputElement;
+
+    //   if (inputNombreProducto) {
+    //     inputNombreProducto.style.display = '';
+    //   }
+    // }
+
+    
+    if (dpProductosExistentes.value) {
+      inputNombreProducto.style.display = 'none';
+      inputImagenText.style.display = 'none';
+      inputFile.style.display = 'none';
     }
   }
 
@@ -305,7 +337,7 @@ export class FormularioComprasComponent {
   }
 
   obtenerProveedores() {
-    this.comprasService.obtenerProveedores().pipe(
+    this.proveedoresService.obtenerProveedores().pipe(
       tap((data: Proveedor[]) => {
         this.proveedores = data;
       })
@@ -325,12 +357,13 @@ export class FormularioComprasComponent {
   }
 
   obtenerCategorias() {
-    this.comprasService.obtenerCategorias().pipe(
+    this.categoriasService.obtenerCategorias().pipe(
       tap((data: Categoria[]) => {
         this.categorias = data;
       })
     ).subscribe(
       {
+        next: (m) => console.log("La operacion fue exitosa:", m),
         error: (e) => console.error(e),
         complete: () => console.info('complete')
       }
