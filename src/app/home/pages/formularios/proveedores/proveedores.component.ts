@@ -77,7 +77,10 @@ export class ProveedoresComponent {
 
 
   agregarProveedor() {
-    window.location.reload();
+    this.estaEditando = false;
+    this.proveedorSeleccionadoId = null;
+    this.mostrarBoton = false;
+    this.formularioProveedores.reset();
   }
   
   guardarProveedor() {
