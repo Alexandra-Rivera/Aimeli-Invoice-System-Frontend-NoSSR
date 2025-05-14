@@ -122,7 +122,6 @@ export class FormularioComprasComponent {
     productos: new FormArray([
       this.fb.group({
         imagenProducto: ['', Validators.required],
-        codigoProducto: ['', Validators.required],
         nombreProducto: ['', Validators.required],
         descripcionProducto: ['', Validators.required],
         categoria: ['', Validators.required],
@@ -226,7 +225,6 @@ export class FormularioComprasComponent {
       this.obtenerProductosArray.push(
         this.fb.group({
         imagenProducto: ['', Validators.required],
-        codigoProducto: ['', Validators.required],
         nombreProducto: ['', Validators.required],
         descripcionProducto: ['', Validators.required],
         categoria: ['', Validators.required],
@@ -266,7 +264,6 @@ export class FormularioComprasComponent {
 
     // for (let i = 0; i < this.obtenerProductosArray.length; i++) {
     //   this.obtenerProductosArray.at(i).patchValue({
-    //     codigoProducto: '',
     //     nombreProducto: '',
     //     categoria: '',
     //     descripcionProducto: '',
@@ -306,7 +303,6 @@ export class FormularioComprasComponent {
     this.imagenesString[index] = productoSeleccionado?.imagen ?? "";
     this.mostrarImagen[index] = true;
     this.obtenerProductosArray.at(index).get('imagenProducto')?.disable();
-    this.obtenerProductosArray.at(index).get('codigoProducto')?.disable();
     this.obtenerProductosArray.at(index).get('descripcionProducto')?.disable();
     this.obtenerProductosArray.at(index).get('costoUnitario')?.disable();
     this.obtenerProductosArray.at(index).get('precioVenta')?.disable();

@@ -116,7 +116,6 @@
         >
           <tr>
             <th scope="col" class="px-6 py-3">Imagen</th>
-            <th scope="col" class="px-6 py-3">Código de Producto</th>
             <th scope="col" class="px-6 py-3">Categoría</th>
             <th scope="col" class="px-6 py-3">Nombre del producto</th>
             <th scope="col" class="px-6 py-3">Descripción</th>
@@ -162,21 +161,6 @@
                 formControlName="imagenProducto"
                 (change)="obtenerImagen(i, $event)"
                 accept="image/*"
-              />
-            </td>
-
-            <!-- Código de producto -->
-            <td class="px-6 py-4">
-              <label for="codigoProducto-{{ i }}" hidden
-                >Codigo de producto:</label
-              >
-              <input
-                type="text"
-                id="codigoProducto-{{ i }}"
-                formControlName="codigoProducto"
-                class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block p-3"
-                placeholder="XUJKLMNPT001"
-                required
               />
             </td>
 
