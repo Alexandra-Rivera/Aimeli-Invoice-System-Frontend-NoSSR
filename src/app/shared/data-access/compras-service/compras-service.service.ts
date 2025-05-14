@@ -8,6 +8,8 @@ import { Observable, shareReplay } from 'rxjs';
 import { FacturaCompras } from '../../interfaces/compras/factura-compras';
 import { MetodoPago } from '../../interfaces/metodopago/metodo-pago';
 import { Proveedor } from '../../interfaces/proveedor/proveedor';
+import { RespuestaServidor } from '../../interfaces/respuesta-servidor/respuesta-servidor';
+import { RegistroCompras } from '../../interfaces/compras/registro-compras';
 
 @Injectable({
   providedIn: 'root',
@@ -36,9 +38,9 @@ export class ComprasServiceService {
   }
 
   /*POST Registro de Compra */
-  // crearRegistroCompra(registroFactura: FacturaCompras): Observable<FacturaCompras> {
-  //   return this.http.post(`${this.server_Url}/`)
-  // }
+  crearRegistroCompra(registroFactura: RegistroCompras): Observable<RespuestaServidor> {
+    return this.http.post<RespuestaServidor>(`${this.server_Url}/compraproductos`, registroFactura);
+  }
 
   /*GET Solicitar Registros de Compra */
   obtenerRegistrosCompraSegunFecha() {

@@ -12,7 +12,6 @@
     <!-- Informacion de factura de la compra -->
     <div
       class="flex flex-col w-full lg:grid lg:grid-cols-3 gap-2 xl:gap-10 mb-10 lg:mt-5"
-      formGroupName="compra"
     >
       <!-- Fecha de compra Input -->
       <div class="flex flex-col gap-3 w-[100%]">
@@ -59,10 +58,10 @@
             <label for="proveedor" class="font-semibold"
               >Seleccione un proveedor:</label
             >
-            <div formGroupName="proveedorDTO">
+            <div>
               <select
                 id="proveedor"
-                formControlName="id"
+                formControlName="proveedor"
                 class="w-full text-gray-700 border-none bg-gray-100 hover:bg-gray-200 font-medium rounded-full text-sm px-5 py-2.5 inline-flex items-center"
               >
                 <option value="" disabled selected>
@@ -86,11 +85,11 @@
         <label for="metodoPago" class="font-semibold"
           >Seleccione un metodo de pago:</label
         >
-        <div formGroupName="metodoPagoDTO">
+        <div>
           <select
             name="metodoPago"
             id="metodoPago"
-            formControlName="id"
+            formControlName="metodoPago"
             class="w-full text-gray-700 border-none bg-gray-100 hover:bg-gray-200 font-medium rounded-full text-sm px-5 py-2.5 inline-flex items-center"
           >
             <option value="" disabled selected>
@@ -182,11 +181,11 @@
             </td>
 
             <!-- Dropdown de Categorias -->
-            <td class="px-6 py-4" formGroupName="categoriaDTO">
+            <td class="px-6 py-4">
               <select
                 name="categoriaProducto-{{ i }}"
                 id="categoriaProducto-{{ i }}"
-                formControlName="id"
+                formControlName="categoria"
                 class="w-full text-gray-700 border-none bg-gray-100 hover:bg-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex items-center"
               >
                 <option value="" disabled selected>
@@ -223,9 +222,9 @@
                 <option
                   *ngFor="let productoExistente of productosExistentesArray"
                   class="block px-10 py-2 hover:bg-gray-100"
-                  [value]="productoExistente.nombreProducto"
+                  [value]="productoExistente.nombre"
                 >
-                  {{ productoExistente.nombreProducto }}
+                  {{ productoExistente.nombre }}
                 </option>
               </select>
               <br />
