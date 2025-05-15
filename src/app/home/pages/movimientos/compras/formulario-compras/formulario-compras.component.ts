@@ -24,6 +24,8 @@ export class FormularioComprasComponent {
   imagenesString: { [key: number]: string } = {};
   montoTotal: {[key: number]: number} = {};
   totalCompra: number | null = null;
+
+  productoExistenteIndex: number| null = null;
  
   proveedores: Proveedor[] = [];
   metodosPago: MetodoPago[] = [];
@@ -174,22 +176,32 @@ export class FormularioComprasComponent {
     }
 
   guardarFactura() {
-    let productos: Producto[] = [];
+    let productos: any[] = [];
 
     for (let i = 0; i < this.obtenerProductosArray.controls.length; i++) {
-      let producto = {
-        id: 999999999,
-        imagen: this.obtenerProductosArray.controls[i].get('imagenProducto')?.value,
-        nombre: this.obtenerProductosArray.controls[i].get('nombreProducto')?.value,
-        descripcion: this.obtenerProductosArray.controls[i].get('descripcionProducto')?.value,
-        categoriaDTO: {
-          id: this.obtenerProductosArray.controls[i].get('categoria')?.value
-        },
-        cantidad: this.obtenerProductosArray.controls[i].get('cantidadProducto')?.value,
-        costoUnitario: this.obtenerProductosArray.controls[i].get('costoUnitario')?.value,
-        precioVenta: this.obtenerProductosArray.controls[i].get('precioVenta')?.value
+      if (this.productoExistenteIndex !== null) {
+        let producto = {
+          id: this.productosExistentes[i].id,
+          cantidad: this.obtenerProductosArray.controls[i].get('cantidadProducto')?.value,
+        }
+
+        productos.push(producto);
+      } else {
+        let producto = {
+          id: 999999999,
+          imagen: this.obtenerProductosArray.controls[i].get('imagenProducto')?.value,
+          nombre: this.obtenerProductosArray.controls[i].get('nombreProducto')?.value,
+          descripcion: this.obtenerProductosArray.controls[i].get('descripcionProducto')?.value,
+          categoriaDTO: {
+            id: this.obtenerProductosArray.controls[i].get('categoria')?.value
+          },
+          cantidad: this.obtenerProductosArray.controls[i].get('cantidadProducto')?.value,
+          costoUnitario: this.obtenerProductosArray.controls[i].get('costoUnitario')?.value,
+          precioVenta: this.obtenerProductosArray.controls[i].get('precioVenta')?.value
+        }
+
+        productos.push(producto); 
       }
-      productos.push(producto); 
     }
  
     const factura_compras: RegistroCompras  = {
@@ -292,6 +304,9 @@ export class FormularioComprasComponent {
     const productoSeleccionado = this.productosExistentes.find((producto) => producto.nombre === dpProductosExistentes?.value);  
 
     if (productoSeleccionado) {
+
+      this.productoExistenteIndex = productoSeleccionado.id;
+
       this.obtenerProductosArray.at(index).patchValue({
         nombreProducto: productoSeleccionado.nombre,
         descripcionProducto: productoSeleccionado.descripcion,
