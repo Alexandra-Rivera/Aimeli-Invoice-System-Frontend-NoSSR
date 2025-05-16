@@ -150,7 +150,7 @@
                 for="imagen-{{ i }}"
                 >Subir imagen</label
               >
-              <p id="inputImagenText-{{ i }}" class="mb-5">
+              <p id="inputImagenText-{{ i }}" class="mb-5" #imagenTextInput>
                 Seleccione una imagen:
               </p>
               <input
@@ -158,6 +158,7 @@
                 aria-describedby="file_input_help"
                 id="inputImagen-{{ i }}"
                 type="file"
+                #imagenFileInput
                 formControlName="imagenProducto"
                 (change)="obtenerImagen(i, $event)"
                 accept="image/*"
@@ -170,6 +171,7 @@
                 name="categoriaProducto-{{ i }}"
                 id="categoriaProducto-{{ i }}"
                 formControlName="categoria"
+                (change)="obtenerArrayProductosExistentes(i)"
                 class="w-full text-gray-700 border-none bg-gray-100 hover:bg-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex items-center"
               >
                 <option value="" disabled selected>
@@ -193,8 +195,8 @@
                 hidden
                 >Producto existente:</label
               >
-              @let productosExistentesArray =
-              obtenerArrayProductosExistentes(i);
+              <!-- @let productosExistentesArray =
+              obtenerArrayProductosExistentes(i); -->
               <select
                 name="productoExistente-{{ i }}"
                 id="productoExistente-{{ i }}"
@@ -204,7 +206,7 @@
               >
                 <option value="" disabled selected>Seleccionar Producto</option>
                 <option
-                  *ngFor="let productoExistente of productosExistentesArray"
+                  *ngFor="let productoExistente of productosExistentes"
                   class="block px-10 py-2 hover:bg-gray-100"
                   [value]="productoExistente.nombre"
                 >
@@ -215,6 +217,7 @@
               <label for="nombreProducto-{{ i }}" hidden></label>
               <input
                 type="text"
+                #nombreProducto
                 id="nombreProducto-{{ i }}"
                 formControlName="nombreProducto"
                 placeholder="Escribir nombre de producto aquí"
