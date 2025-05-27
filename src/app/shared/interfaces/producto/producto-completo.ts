@@ -1,8 +1,8 @@
 export interface ProductoCompleto {
     id: number;
     codigo: string;
-    imagen: string;
     nombre: string;
+    imagen: string;
     descripcion: string;
     idCategoria: number;
     idProveedor: number;

@@ -5,7 +5,7 @@ export interface Producto {
     imagen: string;
     nombre: string;
     descripcion: string;
-    categoriaDTO: CategoriaDTO;
+    idCategoria: number;
     cantidad: number;
     costoUnitario: number;
     precioVenta: number;

@@ -1,6 +1,6 @@
 import { Component, ElementRef, inject, QueryList, ViewChildren } from '@angular/core';
 import { NavComponentComponent } from '../../../../../components/nav-component/nav-component.component';
-import { FormArray, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import { FormArray, FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
 import { CommonModule, JsonPipe, NgIf } from '@angular/common';
 import { ComprasServiceService } from '../../../../../shared/data-access/compras-service/compras-service.service';
 import { Categoria } from '../../../../../shared/interfaces/categoria/categoria';
@@ -12,6 +12,8 @@ import { ProveedoresServiceService } from '../../../../../shared/data-access/pro
 import { RegistroCompras } from '../../../../../shared/interfaces/compras/registro-compras';
 import { ProductoCompleto } from '../../../../../shared/interfaces/producto/producto-completo';
 import { ProductosServiceService } from '../../../../../shared/data-access/productos-service/productos-service.service';
+import { HotToastService } from '@ngxpert/hot-toast';
+
 
 @Component({
   selector: 'app-formulario-compras',
@@ -20,17 +22,25 @@ import { ProductosServiceService } from '../../../../../shared/data-access/produ
   styleUrl: './formulario-compras.component.css'
 })
 export class FormularioComprasComponent {
+  isValid: boolean = false;
+
   mostrarImagen: { [key: number]: boolean } = {};
   imagenesString: { [key: number]: string } = {};
   montoTotal: {[key: number]: number} = {};
   totalCompra: number | null = null;
 
-  productoExistenteIndex: number| null = null;
+  imagenes: {[key:number]: File} = {};
+  imagenes_array: File[] = [];
+
+  // productoExistenteIndex: number| null = null;
+  productosExistentesIndex: { [key:number] : number} = {};
  
   proveedores: Proveedor[] = [];
   metodosPago: MetodoPago[] = [];
   categorias: Categoria[] = [];
-  productosExistentes: ProductoCompleto[] = [];
+  // productosExistentes: ProductoCompleto[] = [];
+
+  productos : { [key: number] : ProductoCompleto[] } = []
 
   @ViewChildren('nombreProducto') nombreProductoInput!: QueryList<ElementRef>;
   @ViewChildren('imagenTextInput') imagenTextInput!: QueryList<ElementRef>;
@@ -54,8 +64,8 @@ export class FormularioComprasComponent {
     productos: new FormArray([
       this.fb.group({
         imagenProducto: ['', Validators.required],
-        nombreProducto: ['', Validators.required],
-        descripcionProducto: ['', Validators.required],
+        nombreProducto: ['', [Validators.required, Validators.maxLength(100)]],
+        descripcionProducto: ['', [Validators.required, Validators.maxLength(300)]],
         categoria: ['', Validators.required],
         cantidadProducto: ['', Validators.required],
         costoUnitario: ['', Validators.required],
@@ -64,8 +74,8 @@ export class FormularioComprasComponent {
     ]),
   });
 
-  constructor() { 
-    // let esValido = this.formularioCompras.valid;
+  constructor(private toast: HotToastService) { 
+    // let esValido = this.formularioCompras.valid;      
   }
 
   ngOnInit() {
@@ -73,13 +83,13 @@ export class FormularioComprasComponent {
     this.obtenerMetodoDePago();
     this.obtenerCategorias();
   }
-  //Investigar que es ese get 
+  // Se obtienen todos los productos del array 
   get obtenerProductosArray() {
     // return this.formularioCompras.get('productos') as FormArray;
     return this.formularioCompras.controls['productos'] as FormArray;
   }
 
-
+  /*Calculos */
   calcularTotalCompra() {
     let total: number = 0;
 
@@ -105,13 +115,21 @@ export class FormularioComprasComponent {
     this.calcularTotalCompra();
     }
 
+
+  /*Guardar Factura */
   guardarFactura() {
+
+    if (this.formularioCompras.valid) {
+    /*Se genera la parte de productos */
     let productos: any[] = [];
 
     for (let i = 0; i < this.obtenerProductosArray.controls.length; i++) {
-      if (this.productoExistenteIndex !== null) {
+      if (this.imagenes[i]) {
+        this.formarArrayDeImagenes(this.imagenes[i]);
+      }
+      if (this.productosExistentesIndex[i]) {
         let producto = {
-          id: this.productosExistentes[i].id,
+          id: this.productosExistentesIndex[i],
           cantidad: this.obtenerProductosArray.controls[i].get('cantidadProducto')?.value,
         }
 
@@ -119,41 +137,41 @@ export class FormularioComprasComponent {
       } else {
         let producto = {
           id: 999999999,
-          imagen: this.imagenesString[i],
           nombre: this.obtenerProductosArray.controls[i].get('nombreProducto')?.value,
           descripcion: this.obtenerProductosArray.controls[i].get('descripcionProducto')?.value,
-          categoriaDTO: {
-            id: this.obtenerProductosArray.controls[i].get('categoria')?.value
-          },
+          idCategoria: this.obtenerProductosArray.controls[i].get('categoria')?.value,
           cantidad: this.obtenerProductosArray.controls[i].get('cantidadProducto')?.value,
           costoUnitario: this.obtenerProductosArray.controls[i].get('costoUnitario')?.value,
           precioVenta: this.obtenerProductosArray.controls[i].get('precioVenta')?.value
         }
 
-        console.log("Producto a guardar:", producto);
-        console.log("string de imagenes:", this.imagenesString);
         productos.push(producto); 
       }
     }
- 
-    const factura_compras: RegistroCompras  = {
-      id: 999999999,
-      compra: {
+
+        /*Se genera la parte de factura */
+    const factura_compras: RegistroCompras  =  {
+      "compra": {
         id: 999999999,
         fechaCompra: this.formularioCompras.get('fechaCompra')?.value ?? "",
         numeroFactura: this.formularioCompras.get('numeroFactura')?.value ?? "",
-        metodoPagoDTO: {
-          id: parseInt(this.formularioCompras.get('metodoPago')?.value ?? ""),
-        },
-        proveedorDTO: {
-          id: parseInt(this.formularioCompras.get('proveedor')?.value ?? ""),
-        },
+        idMetodoPago: parseInt(this.formularioCompras.get('metodoPago')?.value ?? ""),
+        idProveedor: parseInt(this.formularioCompras.get('proveedor')?.value ?? "")
       },
-      
-      productos: productos
+      "productos" : productos
+    }
+ 
+    this.agregarRegistroCompras(factura_compras);
+    } else {
+      this.toast.error("Formulario Inválido.", {
+        duration: 3000
+      });
     }
 
-    this.agregarRegistroCompras(factura_compras);
+  }
+
+  formarArrayDeImagenes(imagen: File) {
+    this.imagenes_array.push(imagen);
   }
 
   agregarProducto() {
@@ -177,7 +195,8 @@ export class FormularioComprasComponent {
   eliminarProducto(index: number) {
     this.obtenerProductosArray.removeAt(index);
     this.imagenesString[index] = '';
-    this.mostrarImagen[index] = false; 
+    this.mostrarImagen[index] = false;
+    delete this.imagenes[index]; // si se elimina el producto, entonces la imagen se quita del array.
 
   }
 
@@ -215,16 +234,14 @@ export class FormularioComprasComponent {
   }
 
 
-  /*Otros metodos */
+  /*Metodos para gestionar productos existentes */
   obtenerArrayProductosExistentes(index: number): ProductoCompleto[] {
     const categoria_index: number = parseInt(this.obtenerProductosArray.at(index).get("categoria")?.value);
-    this.limpiarInputsProducto(index);
 
 
     this.productosService.obtenerProductosSegunIdCategoria(categoria_index).pipe(
       tap((data: ProductoCompleto[]) => {
-        this.productosExistentes = data;
-        console.log("Data: ", data);
+        this.productos[index] = data;
       })
     ).subscribe({
       next: (response) => console.log("La peticion fue un exito: ", response), 
@@ -232,20 +249,17 @@ export class FormularioComprasComponent {
       complete: () => console.log("Se completó la petición.")
     })
      
-    // const categoria = this.categorias.find((categoria) => categoria.id === categoria_index);
-    return this.productosExistentes;
+    return this.productos[index];
   }
 
   modificacionesProductoExistente(index: number) {
-    //El index ingresado como parametro representa el item donde se van a efectuar las siguientes modificaciones: 
-
     /*Ubicando valores del dropdown de productos existentes para acceder al producto seleccionado */
     const dpProductosExistentes = document.getElementById(`productoExistente-${index}`) as HTMLSelectElement;
-    const productoSeleccionado = this.productosExistentes.find((producto) => producto.nombre === dpProductosExistentes?.value);  
+    const productoSeleccionado = this.productos[index].find((producto) => producto.nombre === dpProductosExistentes?.value);  
 
     if (productoSeleccionado) {
-      this.productoExistenteIndex = productoSeleccionado.id;
-
+      this.productosExistentesIndex[index] = productoSeleccionado.id;
+      
       this.obtenerProductosArray.at(index).patchValue({
         nombreProducto: productoSeleccionado.nombre,
         descripcionProducto: productoSeleccionado.descripcion,
@@ -255,6 +269,7 @@ export class FormularioComprasComponent {
 
         this.imagenesString[index] = productoSeleccionado?.imagen ?? "";
         this.mostrarImagen[index] = true;
+        this.obtenerProductosArray.at(index).get('nombreProducto')?.disable();
         this.obtenerProductosArray.at(index).get('imagenProducto')?.disable();
         this.obtenerProductosArray.at(index).get('descripcionProducto')?.disable();
         this.obtenerProductosArray.at(index).get('costoUnitario')?.disable();
@@ -262,33 +277,11 @@ export class FormularioComprasComponent {
 
       
       if (dpProductosExistentes.value) {
-        this.nombreProductoInput.toArray()[index].nativeElement.style.display = 'none';
+        // this.nombreProductoInput.toArray()[index].nativeElement.style.display = 'none';
         this.imagenTextInput.toArray()[index].nativeElement.style.display = 'none';
         this.imagenFileInput.toArray()[index].nativeElement.style.display = 'none';
       }
     } 
-  }
-
-  limpiarInputsProducto(index: number) {
-      this.obtenerProductosArray.at(index).patchValue({
-        nombreProducto: "",
-        descripcionProducto: "",
-        costoUnitario: "",
-        precioVenta: ""
-      });
-
-      this.mostrarImagen[index] = false;
-      this.imagenesString[index] = '';
-
-      this.obtenerProductosArray.at(index).get('imagenProducto')?.enable();
-      this.obtenerProductosArray.at(index).get('descripcionProducto')?.enable();
-      this.obtenerProductosArray.at(index).get('costoUnitario')?.enable();
-      this.obtenerProductosArray.at(index).get('precioVenta')?.enable();
-
-      this.nombreProductoInput.toArray()[index].nativeElement.style.display = 'block';
-      this.imagenTextInput.toArray()[index].nativeElement.style.display = 'block';
-      this.imagenFileInput.toArray()[index].nativeElement.style.display = 'block';
-
   }
 
   obtenerImagen(index: number, event: any) {
@@ -300,7 +293,8 @@ export class FormularioComprasComponent {
         this.mostrarImagen[index] = true;
         const reader = new FileReader();
         reader.onload = (e: any) => {
-          this.imagenesString[index] = e.target.result; 
+          this.imagenesString[index] = e.target.result; //Se genera un string base64 que representa a la imagen
+          this.imagenes[index] = file; // aqui se guarda el archivo de imagen
         };
         reader.readAsDataURL(file);
       } else {
@@ -318,10 +312,19 @@ export class FormularioComprasComponent {
   /* Service */
 
   agregarRegistroCompras(factura_compras: RegistroCompras) {
-      this.comprasService.crearRegistroCompra(factura_compras).pipe().subscribe(
+      this.comprasService.crearRegistroCompra(factura_compras, this.imagenes_array).pipe().subscribe(
       {
-        next: (m) => console.log("El registro fue agregado exitosamente: ", m),
-        error: (e) => console.error(e), 
+        next: (m) => {
+          console.log(m),
+          this.toast.success(m.mensaje, { duration: 3000 })
+          // setTimeout(() => {
+          //   window.location.reload();
+          // }, 2000);
+        },
+        error: (e) => {
+            this.toast.error("Ha ocurrido un error en el servidor");
+            console.log(e);
+        }, 
         complete: () => console.log("El registro de factura fue agregado exitosamente. Completado.")
       }
     );
@@ -359,17 +362,5 @@ export class FormularioComprasComponent {
         complete: () => console.info('complete')
       }
     )
-  }
-
-  subirImagen(file: any, index: number) {
-    // this.cloudinaryService.publicarImagen(file).pipe().subscribe({
-    //   next: (response: any) => {
-    //   // this.imagenesString[index] = response.secure_url;
-    //       console.log("link de imagen:", this.imagenesString[index]);
-    //     },
-    //     error: (e) => console.error(e),
-    //     complete: () => console.log("Completado.")
-    //     });
-
-  }
+  } 
 }
