@@ -1,11 +1,13 @@
-import { CategoriaDTO } from "../categoria-DTO/categoria-dto";
-
-export interface Producto {
+export interface ProductoCompleto {
     id: number;
-    imagen: string;
+    codigo: string;
     nombre: string;
+    imagen: string;
     descripcion: string;
     idCategoria: number;
+    idProveedor: number;
+    nombreProveedor: string;
+    categoria: string;
     cantidad: number;
     costoUnitario: number;
     precioVenta: number;

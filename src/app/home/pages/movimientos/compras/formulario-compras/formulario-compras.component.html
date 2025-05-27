@@ -12,7 +12,6 @@
     <!-- Informacion de factura de la compra -->
     <div
       class="flex flex-col w-full lg:grid lg:grid-cols-3 gap-2 xl:gap-10 mb-10 lg:mt-5"
-      formGroupName="compra"
     >
       <!-- Fecha de compra Input -->
       <div class="flex flex-col gap-3 w-[100%]">
@@ -33,7 +32,7 @@
         <div class="font-semibold text-sm text-pink-600">
           Debe ingresar la fecha de compra
         </div>
-        }  -->
+        } -->
       </div>
 
       <!-- N de factura y Proveedor -->
@@ -59,10 +58,10 @@
             <label for="proveedor" class="font-semibold"
               >Seleccione un proveedor:</label
             >
-            <div formGroupName="proveedorDTO">
+            <div>
               <select
                 id="proveedor"
-                formControlName="id"
+                formControlName="proveedor"
                 class="w-full text-gray-700 border-none bg-gray-100 hover:bg-gray-200 font-medium rounded-full text-sm px-5 py-2.5 inline-flex items-center"
               >
                 <option value="" disabled selected>
@@ -86,11 +85,11 @@
         <label for="metodoPago" class="font-semibold"
           >Seleccione un metodo de pago:</label
         >
-        <div formGroupName="metodoPagoDTO">
+        <div>
           <select
             name="metodoPago"
             id="metodoPago"
-            formControlName="id"
+            formControlName="metodoPago"
             class="w-full text-gray-700 border-none bg-gray-100 hover:bg-gray-200 font-medium rounded-full text-sm px-5 py-2.5 inline-flex items-center"
           >
             <option value="" disabled selected>
@@ -117,7 +116,6 @@
         >
           <tr>
             <th scope="col" class="px-6 py-3">Imagen</th>
-            <th scope="col" class="px-6 py-3">Código de Producto</th>
             <th scope="col" class="px-6 py-3">Categoría</th>
             <th scope="col" class="px-6 py-3">Nombre del producto</th>
             <th scope="col" class="px-6 py-3">Descripción</th>
@@ -147,12 +145,12 @@
                 alt="producto-{{ i }} image"
                 class="w-[100%] h-[20vh] xl:w-[10vw] object-cover"
               />
-              <label
+              <!-- <label
                 class="hidden mb-2 text-sm font-medium text-gray-900"
                 for="imagen-{{ i }}"
                 >Subir imagen</label
-              >
-              <p id="inputImagenText-{{ i }}" class="mb-5">
+              > -->
+              <p id="inputImagenText-{{ i }}" class="mb-5" #imagenTextInput>
                 Seleccione una imagen:
               </p>
               <input
@@ -160,33 +158,20 @@
                 aria-describedby="file_input_help"
                 id="inputImagen-{{ i }}"
                 type="file"
+                #imagenFileInput
                 formControlName="imagenProducto"
                 (change)="obtenerImagen(i, $event)"
                 accept="image/*"
               />
             </td>
 
-            <!-- Código de producto -->
-            <td class="px-6 py-4">
-              <label for="codigoProducto-{{ i }}" hidden
-                >Codigo de producto:</label
-              >
-              <input
-                type="text"
-                id="codigoProducto-{{ i }}"
-                formControlName="codigoProducto"
-                class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block p-3"
-                placeholder="XUJKLMNPT001"
-                required
-              />
-            </td>
-
             <!-- Dropdown de Categorias -->
-            <td class="px-6 py-4" formGroupName="categoriaDTO">
+            <td class="px-6 py-4">
               <select
                 name="categoriaProducto-{{ i }}"
                 id="categoriaProducto-{{ i }}"
-                formControlName="id"
+                formControlName="categoria"
+                (change)="obtenerArrayProductosExistentes(i)"
                 class="w-full text-gray-700 border-none bg-gray-100 hover:bg-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex items-center"
               >
                 <option value="" disabled selected>
@@ -210,33 +195,46 @@
                 hidden
                 >Producto existente:</label
               >
-              @let productosExistentesArray =
-              obtenerArrayProductosExistentes(i);
               <select
                 name="productoExistente-{{ i }}"
                 id="productoExistente-{{ i }}"
-                formControlName="nombreProducto"
                 (change)="modificacionesProductoExistente(i)"
                 class="w-full mb-[5%] text-gray-700 border-none bg-gray-100 hover:bg-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex items-center"
               >
                 <option value="" disabled selected>Seleccionar Producto</option>
                 <option
-                  *ngFor="let productoExistente of productosExistentesArray"
+                  *ngFor="let productoExistente of productos[i]"
                   class="block px-10 py-2 hover:bg-gray-100"
-                  [value]="productoExistente.nombreProducto"
+                  [value]="productoExistente.nombre"
                 >
-                  {{ productoExistente.nombreProducto }}
+                  {{ productoExistente.nombre }}
                 </option>
               </select>
               <br />
               <label for="nombreProducto-{{ i }}" hidden></label>
               <input
                 type="text"
+                #nombreProducto
                 id="nombreProducto-{{ i }}"
                 formControlName="nombreProducto"
                 placeholder="Escribir nombre de producto aquí"
                 class="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500"
               />
+              <div
+                *ngIf="
+                  formularioCompras.controls.productos.controls[i]
+                    .get('nombreProducto')
+                    ?.hasError('maxLength') &&
+                  formularioCompras.controls.productos.controls[i].get(
+                    'nombreProducto'
+                  )?.touched
+                "
+                class="error"
+              >
+                El nombre del producto no puede exceder
+                {{ formularioCompras.controls.productos.controls[i].get('nombreProducto')?.errors?.['maxLength']?.requiredLength }}
+                caracteres.
+              </div>
             </td>
 
             <!-- Descripcion de producto Input -->
@@ -249,6 +247,13 @@
                 placeholder="Escribir descripción de producto aquí"
                 class="block w-full p-4 h-[10rem] text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 resize-none"
               ></textarea>
+              <div
+                *ngIf="
+                  formularioCompras.controls.productos
+                    .get('descripcionProducto')
+                    ?.hasError('maxLength')
+                "
+              ></div>
             </td>
 
             <!-- Cantidad Input -->
@@ -260,6 +265,8 @@
                 id="cantidadProducto-{{ i }}"
                 formControlName="cantidadProducto"
                 (input)="calcularMontoTotalItem(i)"
+                min="1"
+                step="1"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5"
                 placeholder="0"
                 required

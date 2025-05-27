@@ -1,13 +1,11 @@
 import { inject, Injectable } from '@angular/core';
-import { RegistroComprasComponent } from '../../../home/pages/movimientos/compras/registro-compras/registro-compras.component';
-import { FormGroup } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { Categoria } from '../../interfaces/categoria/categoria';
 import { environment } from '../../../../environments/environment';
-import { Observable, shareReplay } from 'rxjs';
-import { FacturaCompras } from '../../interfaces/compras/factura-compras';
+import { empty, Observable, shareReplay } from 'rxjs';
 import { MetodoPago } from '../../interfaces/metodopago/metodo-pago';
 import { Proveedor } from '../../interfaces/proveedor/proveedor';
+import { RespuestaServidor } from '../../interfaces/respuesta-servidor/respuesta-servidor';
+import { RegistroCompras } from '../../interfaces/compras/registro-compras';
 
 @Injectable({
   providedIn: 'root',
@@ -36,9 +34,16 @@ export class ComprasServiceService {
   }
 
   /*POST Registro de Compra */
-  // crearRegistroCompra(registroFactura: FacturaCompras): Observable<FacturaCompras> {
-  //   return this.http.post(`${this.server_Url}/`)
-  // }
+  crearRegistroCompra(registroFactura: RegistroCompras, imagenes: File[]): Observable<RespuestaServidor> {
+    const formData = new FormData();
+    formData.append("compraProductoJson", JSON.stringify(registroFactura));
+
+    for (let i = 0; i < imagenes.length; i++) {
+      formData.append('imagenes', imagenes[i], imagenes[i].name);
+    }
+
+    return this.http.post<RespuestaServidor>(`${this.server_Url}/compraproductos`, formData);
+  }
 
   /*GET Solicitar Registros de Compra */
   obtenerRegistrosCompraSegunFecha() {
