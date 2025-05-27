@@ -17,7 +17,7 @@ import { HotToastService } from '@ngxpert/hot-toast';
 
 @Component({
   selector: 'app-formulario-compras',
-  imports: [NavComponentComponent, ReactiveFormsModule, JsonPipe, CommonModule, NgIf],
+  imports: [NavComponentComponent, ReactiveFormsModule, CommonModule, NgIf],
   templateUrl: './formulario-compras.component.html',
   styleUrl: './formulario-compras.component.css'
 })
@@ -317,9 +317,9 @@ export class FormularioComprasComponent {
         next: (m) => {
           console.log(m),
           this.toast.success(m.mensaje, { duration: 3000 })
-          // setTimeout(() => {
-          //   window.location.reload();
-          // }, 2000);
+          setTimeout(() => {
+            window.location.reload();
+          }, 2000);
         },
         error: (e) => {
             this.toast.error("Ha ocurrido un error en el servidor");
