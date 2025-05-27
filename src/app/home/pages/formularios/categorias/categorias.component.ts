@@ -23,6 +23,7 @@ export class CategoriasComponent {
 
   protected categorias: Categoria[] = [];
   protected categorias_filtradas: any[] = [];
+  mostrarBoton = false;
 
   protected formularioCategoria: FormGroup;
   protected formularioBusqueda: FormGroup;
@@ -56,11 +57,19 @@ export class CategoriasComponent {
   
   seleccionarCategoria(index: number) {
     console.log("id seleccionado:", index);
+    this.mostrarBoton = true;
     this.estaEditando = true;
     const categoriaSeleccionada: Categoria = this.categorias[index];
     this.categoriaSeleccionadaIndex = categoriaSeleccionada.id;
 
     this.formularioCategoria.controls['categoria'].patchValue(categoriaSeleccionada.categoria);
+  }
+
+  agregarCategoria() {
+    this.estaEditando = false;
+    this.categoriaSeleccionadaIndex = null;
+    this.mostrarBoton = false;
+    this.formularioCategoria.reset();
   }
 
   guardarCambios() {

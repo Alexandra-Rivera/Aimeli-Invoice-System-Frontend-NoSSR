@@ -5,6 +5,6 @@ export interface FacturaCompras {
     id: number,
     fechaCompra: string;
     numeroFactura: string;
-    metodoPagoDTO: MetodoPagoDTO;
-    proveedorDTO: ProveedorDTO;
+    idMetodoPago: number;
+    idProveedor: number;
 }
