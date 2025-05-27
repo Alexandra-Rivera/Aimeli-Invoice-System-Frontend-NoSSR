@@ -1,58 +1,164 @@
-<div
-  id="producto-component-container"
-  class="relative w-[100%] lg:w-[90vw] xl:w-[70vw] 2xl:w-[60vw] lg:h-[35vh] flex flex-col items-center bg-white rounded-lg shadow-sm md:flex-row hover:bg-gray-100"
->
-  <img
-    class="object-cover w-full h-full rounded-t-lg md:w-[30%] lg:w-[40%] md:rounded-none md:rounded-s-lg"
-    src="ropa.jpeg"
-    alt=""
-  />
-  <div class="w-[100%] flex flex-col items-start p-5 leading-normal">
-    <span class="text-gray-500">Codigo SKU: {{ codigo_SKU }}</span>
-    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">
-      {{ nombre }}
-    </h5>
-    <p class="mb-3 font-normal text-gray-700">
-      {{ descripcion }}
-    </p>
-
-    <div class="flex flex-col md:flex-row gap-1">
-      <span class="text-black-font-color font-semibold"
-        >Cantidad en existencias:</span
-      >
-      <p class="text-gray-700">{{ cantidad_existencias }}</p>
-    </div>
-
-    <div class="flex flex-col md:flex-row gap-1">
-      <span class="text-black-font-color font-semibold">Costo Unitario: </span>
-      <p class="text-gray-700">${{ costo_unitario }}</p>
-    </div>
-
-    <div class="flex flex-col md:flex-row gap-1">
-      <span class="text-black-font-color font-semibold">Precio de venta:</span>
-      <p class="text-gray-700">${{ precio_venta }}</p>
-    </div>
-  </div>
-
-  <button type="button" class="absolute right-2 bottom-5 boton-icono-editar">
-    <svg
-      class="w-6 h-6"
-      aria-hidden="true"
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      fill="none"
-      viewBox="0 0 24 24"
+<ul>
+  <li
+    class="relative mb-5 w-[100%] lg:w-[90vw] xl:w-[70vw] 2xl:w-[60vw] lg:h-[30vh] flex flex-col items-center bg-white rounded-lg shadow-sm md:flex-row hover:bg-gray-100"
+    *ngFor="let producto of productos; let i = index"
+    id="card-{{ i }}"
+  >
+    @if (editandoProductos[i] === true) {
+    <form
+      action=""
+      id="product-form"
+      [formGroup]="formularioProducto"
+      class="flex flex-col md:flex-row items-center justify-center"
     >
-      <path
-        stroke="currentColor"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
-        d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"
-      />
-    </svg>
-    <span class="sr-only">Boton editar</span>
-  </button>
-</div>
-<br />
+      <div>
+        <img
+          class="object-cover w-full h-full rounded-t-lg md:w-[30%] lg:w-[40%] md:rounded-none md:rounded-s-lg"
+          [src]="producto.imagen"
+          [alt]="producto.nombre"
+        />
+        <input
+          type="file"
+          name=""
+          id=""
+          accept="image/*"
+          formControlName="imagen"
+        />
+      </div>
+      <div class="grid grid-cols-2 gap-2">
+        <div>
+          <div>
+            <label for="nombre" class="">Nombre:</label><br />
+            <input
+              type="text"
+              id="nombre"
+              name="nombre"
+              class="mb-2 text-2xl font-bold tracking-tight text-gray-900"
+              formControlName="nombre"
+            />
+          </div>
+          <div>
+            <label for="descripcion">Descripcion:</label> <br />
+            <input
+              type="text"
+              id="descripcion"
+              name="descripcion"
+              class="mb-3 font-normal text-gray-700"
+              formControlName="descripcion"
+            />
+            <div>
+              <select name="" id="" formControlName="categoria">
+                <option
+                  [value]="categoria.id"
+                  *ngFor="let categoria of categorias"
+                >
+                  {{ categoria.categoria }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div>
+            <label for="costo_unitario">Costo Unitario: </label><br />
+            <input
+              type="number"
+              name="costo_unitario"
+              id="costo_unitario"
+              class="text-gray-700"
+              formControlName="costoUnitario"
+            />
+          </div>
+
+          <div>
+            <label for="precio_venta">Precio de venta: </label><br />
+            <input
+              type="number"
+              name="precio_venta"
+              id="precio_venta"
+              class="text-gray-700"
+              formControlName="precioVenta"
+            />
+          </div>
+          <button
+            type="submit"
+            class="bg-blue-700 focus:bg-blue-600 text-white-font-color h-[20%] w-[30%] rounded-lg cursor-pointer my-5"
+          >
+            Guardar
+          </button>
+        </div>
+      </div>
+    </form>
+    } @else {
+    <img
+      class="object-cover w-full h-full rounded-t-lg md:w-[30%] lg:w-[40%] md:rounded-none md:rounded-s-lg"
+      [src]="producto.imagen"
+      [alt]="producto.imagen"
+    />
+
+    <div class="w-[100%] flex flex-col items-start p-5 leading-normal">
+      <span class="text-gray-500">Codigo SKU: {{ producto.codigo }}</span>
+      <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">
+        {{ producto.nombre }}
+      </h5>
+
+      <div class="flex flex-col md:flex-row gap-1">
+        <p class="mb-3 font-normal text-gray-700">
+          {{ producto.descripcion }}
+        </p>
+      </div>
+
+      <div class="flex flex-col md:flex-row gap-1">
+        <span class="text-black-font-color font-semibold">Categoria:</span>
+        <p>{{ producto.categoria }}</p>
+      </div>
+      <div class="flex flex-col md:flex-row gap-1">
+        <span class="text-black-font-color font-semibold"
+          >Cantidad en existencias:</span
+        >
+        <p class="text-gray-700">{{ producto.cantidad }}</p>
+      </div>
+
+      <div class="flex flex-col md:flex-row gap-1">
+        <span class="text-black-font-color font-semibold"
+          >Costo Unitario:
+        </span>
+        <p class="text-gray-700">${{ producto.costoUnitario }}</p>
+      </div>
+
+      <div class="flex flex-col md:flex-row gap-1">
+        <span class="text-black-font-color font-semibold"
+          >Precio de venta:</span
+        >
+        <p class="text-gray-700">${{ producto.precioVenta }}</p>
+      </div>
+    </div>
+    }
+
+    <button
+      type="button"
+      class="absolute right-2 bottom-5 boton-icono-editar"
+      (click)="editarProducto(i)"
+    >
+      <svg
+        class="w-6 h-6"
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        fill="none"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"
+        />
+      </svg>
+      <span class="sr-only">Boton editar</span>
+    </button>
+  </li>
+</ul>
