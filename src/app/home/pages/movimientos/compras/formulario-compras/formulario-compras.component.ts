@@ -1,7 +1,7 @@
 import { Component, ElementRef, inject, QueryList, ViewChildren } from '@angular/core';
 import { NavComponentComponent } from '../../../../../components/nav-component/nav-component.component';
 import { FormArray, FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
-import { CommonModule, JsonPipe, NgIf } from '@angular/common';
+import { CommonModule, NgIf } from '@angular/common';
 import { ComprasServiceService } from '../../../../../shared/data-access/compras-service/compras-service.service';
 import { Categoria } from '../../../../../shared/interfaces/categoria/categoria';
 import { tap } from 'rxjs';
@@ -17,7 +17,7 @@ import { HotToastService } from '@ngxpert/hot-toast';
 
 @Component({
   selector: 'app-formulario-compras',
-  imports: [NavComponentComponent, ReactiveFormsModule, JsonPipe, CommonModule, NgIf],
+  imports: [NavComponentComponent, ReactiveFormsModule, CommonModule, NgIf],
   templateUrl: './formulario-compras.component.html',
   styleUrl: './formulario-compras.component.css'
 })
@@ -317,9 +317,9 @@ export class FormularioComprasComponent {
         next: (m) => {
           console.log(m),
           this.toast.success(m.mensaje, { duration: 3000 })
-          // setTimeout(() => {
-          //   window.location.reload();
-          // }, 2000);
+          setTimeout(() => {
+            window.location.reload();
+          }, 2000);
         },
         error: (e) => {
             this.toast.error("Ha ocurrido un error en el servidor");

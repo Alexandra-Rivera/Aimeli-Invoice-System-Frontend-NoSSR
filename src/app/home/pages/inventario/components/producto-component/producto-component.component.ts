@@ -2,10 +2,11 @@ import { Component, inject, Input } from '@angular/core';
 import { ProductoCompleto } from '../../../../../shared/interfaces/producto/producto-completo';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { Producto } from '../../../../../shared/interfaces/producto/producto';
 import { Categoria } from '../../../../../shared/interfaces/categoria/categoria';
 import { CategoriasServiceService } from '../../../../../shared/data-access/categorias-service/categorias-service.service';
 import { tap } from 'rxjs';
+import { ProductosServiceService } from '../../../../../shared/data-access/productos-service/productos-service.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-producto-component',
@@ -15,9 +16,13 @@ import { tap } from 'rxjs';
 })
 export class ProductoComponentComponent {
 
+  /*Definicion de variables */
   protected formularioProducto!: FormGroup;
+
+  /*Inyecciones */
   protected fb = inject(FormBuilder);
   protected categoriasService = inject(CategoriasServiceService);
+  protected productosService = inject(ProductosServiceService);
 
   estaEditando: boolean = false;
   editandoProductos: {[key:number]: boolean} = {};
@@ -28,38 +33,10 @@ export class ProductoComponentComponent {
 
   @Input() productos: ProductoCompleto[] = [];
 
-  constructor() {
-    this.formularioProducto = this.fb.group({
-          id: [''],
-          imagen: [''],
-          nombre: [''],
-          descripcion: [''],
-          categoriaDTO: [''],
-          costoUnitario: [''],
-          precioVenta: [''],
-    })
+  constructor(private router: Router) {
   }
 
-  editarProducto(index: number) {
-    console.log("Posicion de producto: ", index);
-    this.editandoProductos[index] = true;
-    this.productoSeleccionadoId = this.productos[index].id;
-    this.obtenerCategorias();
-      
-    const producto: ProductoCompleto = this.productos[index];
- 
-    this.formularioProducto.patchValue({
-      nombre: producto.nombre,
-      descripcion: producto.descripcion,
-      categoria: producto.categoria,
-      costoUnitario: producto.costoUnitario,
-      precioVenta: producto.precioVenta
-    })
-  }
 
-  actualizarProducto() {
-
-  }
 
   obtenerCategorias() {
     this.categoriasService.obtenerCategorias().pipe(
@@ -71,5 +48,10 @@ export class ProductoComponentComponent {
       error: (e) => console.error(e),
       complete: () => console.log("Completado")
     })
+  }
+
+  editarProducto(index: number) {
+    const producto = this.productos[index];
+    this.router.navigate(['inventario/editar-producto', producto.id]);
   }
 }
