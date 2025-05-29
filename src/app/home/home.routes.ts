@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { inventarioRoutes } from './pages/inventario/inventario.routes';
 
 export const homeRoutes: Routes = [
     {
@@ -8,8 +9,8 @@ export const homeRoutes: Routes = [
     },
     {
         path: 'inventario',
-        loadComponent: () =>
-            import('./pages/inventario/inventario.component').then((c) => c.InventarioComponent),
+        loadChildren: () =>
+            import('./pages/inventario/inventario.routes').then((c) => inventarioRoutes),
         title: 'Inventario'
     },
     {

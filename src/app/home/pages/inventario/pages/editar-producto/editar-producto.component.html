@@ -1,0 +1,168 @@
+<app-nav-component
+  titulo="Editar producto"
+  titulo_enlace="Regresar a inventario"
+  enlace_Href="/inventario"
+/>
+<section class="flex centrar-contenido mt-25 w-screen">
+  <div class="relative bg-white w-full lg:w-[80vw] p-8 mx-auto">
+    <h3 class="font-bold text-2xl">Información del producto</h3>
+    <br />
+
+    <form
+      action=""
+      id="product-form"
+      [formGroup]="formularioActualizarProducto"
+      class="lg:grid lg:grid-cols-2 flex flex-col"
+    >
+      <div class="lg:w-[50%] h-full order-last lg:order-none">
+        <h3 class="font-bold">Selecciona una nueva imagen</h3>
+        <br />
+        <img
+          class="object-cover rounded-t-lg md:w-[30%] lg:w-[100%] border-2 md:rounded-none md:rounded-s-lg"
+          [src]="imagenString ? imagenString : producto.imagen"
+          [alt]="producto.nombre"
+        />
+
+        <br />
+        <input
+          type="file"
+          accept="image/*"
+          formControlName="image"
+          (change)="obtenerImagen($event)"
+        />
+      </div>
+
+      <div class="flex flex-col lg:grid lg:grid-cols-2 lg:gap-5 gap-2 h-full">
+        <div class="flex flex-col gap-3">
+          <div class="flex flex-col gap-2">
+            <p><b>Codigo de producto: </b>{{ producto.codigo }}</p>
+
+            <label for="nombre" class="font-semibold">Nombre:</label>
+            <input
+              type="text"
+              id="nombre"
+              name="nombre"
+              class="mb-2 w-full tracking-tight text-gray-900 rounded-2xl"
+              formControlName="nombre"
+            />
+          </div>
+
+          <div class="flex flex-col gap-2">
+            <label for="descripcion" class="font-semibold">Descripcion:</label>
+            <textarea
+              id="descripcion"
+              name="descripcion"
+              class="mb-2 w-full tracking-tight text-gray-900 rounded-2xl resize-none"
+              formControlName="descripcion"
+            ></textarea>
+            <div
+              *ngIf="
+                formularioActualizarProducto.controls['descripcion']?.hasError(
+                  'maxLength'
+                ) &&
+                (formularioActualizarProducto.controls['descripcion']?.dirty ||
+                  formularioActualizarProducto.controls['descripcion']?.touched)
+              "
+              class="error text-red-500 text-sm mt-1"
+            >
+              La descripción del producto no debe superar los
+              {{ formularioActualizarProducto.controls['descripcion'].errors?.['maxLength']?.requiredLength }}
+              caracteres.
+            </div>
+            <div class="flex flex-col gap-2">
+              <p class="font-semibold">Categoria:</p>
+              <select
+                formControlName="idCategoria"
+                class="bg-sky-100 text-blue-950 border-none rounded-2xl"
+              >
+                <option
+                  class="bg-white text-black-font-color"
+                  *ngFor="let categoria of categorias"
+                  [value]="categoria.id"
+                >
+                  {{ categoria.categoria }}
+                </option>
+              </select>
+            </div>
+
+            <div class="flex flex-col gap-2">
+              <p class="font-semibold">Proveedor:</p>
+              <select
+                formControlName="idProveedor"
+                class="bg-sky-100 text-blue-950 border-none rounded-2xl"
+              >
+                <option
+                  class="bg-white text-black-font-color"
+                  *ngFor="let proveedor of proveedores"
+                  [value]="proveedor.id"
+                >
+                  {{ proveedor.nombre }}
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex flex-col gap-3">
+          <div class="flex flex-col gap-2">
+            <label for="cantidad" class="font-semibold">Cantidad: </label>
+            <input
+              type="number"
+              name="cantidad"
+              id="cantidad"
+              min="0"
+              class="text-gray-700 rounded-2xl"
+              formControlName="cantidad"
+            />
+          </div>
+
+          <div class="flex flex-col gap-2">
+            <label for="costo_unitario" class="font-semibold"
+              >Costo Unitario:
+            </label>
+            <input
+              type="number"
+              name="costo_unitario"
+              id="costo_unitario"
+              min="0"
+              class="text-gray-700 rounded-2xl"
+              formControlName="costoUnitario"
+            />
+          </div>
+
+          <div class="flex flex-col gap-2">
+            <label for="precio_venta" class="font-semibold"
+              >Precio de venta:
+            </label>
+            <input
+              type="number"
+              name="precio_venta"
+              id="precio_venta"
+              min="0"
+              class="text-gray-700 rounded-2xl"
+              formControlName="precioVenta"
+            />
+          </div>
+        </div>
+
+        <div
+          class="flex flex-row gap-2 w-full lg:w-[10vw] h-[5vh] mt-4 lg:col-span-2 justify-end"
+        >
+          <button
+            type="submit"
+            (click)="guardarCambios()"
+            class="bg-blue-700 hover:bg-blue-500 focus:bg-blue-400 w-[100%] h-[100%] text-white-font-color rounded-lg cursor-pointer my-5"
+          >
+            Guardar
+          </button>
+          <button
+            (click)="cancelarCambios()"
+            class="bg-red-700 hover:bg-red-500 focus:bg-red-400 w-[100%] h-[100%] text-white-font-color rounded-lg cursor-pointer my-5"
+          >
+            Cancelar
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>

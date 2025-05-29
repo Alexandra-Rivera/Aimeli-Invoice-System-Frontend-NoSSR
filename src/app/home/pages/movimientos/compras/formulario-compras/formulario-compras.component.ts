@@ -1,7 +1,7 @@
 import { Component, ElementRef, inject, QueryList, ViewChildren } from '@angular/core';
 import { NavComponentComponent } from '../../../../../components/nav-component/nav-component.component';
 import { FormArray, FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
-import { CommonModule, JsonPipe, NgIf } from '@angular/common';
+import { CommonModule, NgIf } from '@angular/common';
 import { ComprasServiceService } from '../../../../../shared/data-access/compras-service/compras-service.service';
 import { Categoria } from '../../../../../shared/interfaces/categoria/categoria';
 import { tap } from 'rxjs';
