@@ -119,6 +119,18 @@
             formularioRegistro.get('password')!.touched) {
             <div class="text-red-600">La contraseña es un campo requerido.</div>
             }
+            <div
+              class="text-red-600"
+              *ngIf="
+                formularioRegistro
+                  .get('password')!
+                  .hasError('strongPassword') &&
+                formularioRegistro.get('password')!.touched
+              "
+            >
+              La contraseña debe tener 8 caracteres, incluir números y 1
+              símbolo.
+            </div>
           </div>
           <div class="mt-5">
             <label
@@ -136,17 +148,22 @@
             @if (formularioRegistro.get('passwordConfirmation')!.invalid &&
             formularioRegistro.get('passwordConfirmation')!.touched) {
             <div class="text-red-600">
-              La confirmación de contraseña es un campo requerido.
+              Confirmación de contraseña no válido.
             </div>
             }
+
+            <div
+              *ngIf="
+                formularioRegistro.controls['passwordConfirmation']?.errors?.['passwordMismatch']
+              "
+            ></div>
           </div>
         </div>
       </div>
       <div class="flex justify-center mt-10">
         <button
           type="submit"
-          routerLink=""
-          routerLinkActive="true"
+          (click)="crearUsuario()"
           [disabled]="formularioRegistro.invalid"
           class="boton-redondeado-oscuro h-11 lg:w-[20vw] mb-5 cursor-pointer"
         >

@@ -40,7 +40,7 @@
             type="password"
             id="password"
             class="w-full p-2.5 border border-gray-300 rounded-full"
-            placeholder="••••••••"
+            placeholder="Contraseña..."
             formControlName="password"
           />
 
@@ -54,6 +54,7 @@
             type="submit"
             routerLink="/home"
             routerLinkActive="true"
+            (click)="onSubmit()"
             [disabled]="loginFormulario.invalid"
             class="boton-redondeado-oscuro h-11 lg:w-[20vw] mb-5 cursor-pointer"
           >

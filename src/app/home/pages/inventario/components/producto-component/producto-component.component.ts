@@ -26,7 +26,8 @@ export class ProductoComponentComponent {
 
   
   editarProducto(index: number) {
+    console.log("Se ejecuta editarProducto");
     const producto = this.productos[index];
-    this.router.navigate(['inventario/editar-producto', producto.id]);
+    this.router.navigate(['/home/inventario/editar-producto', producto.id]);
   }
 }
