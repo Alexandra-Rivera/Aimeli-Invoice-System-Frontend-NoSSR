@@ -1,38 +1,67 @@
 <section class="h-[100vh] w-full bg-white">
-    <div class="flex flex-col items-center justify-center h-full mx-5">
-        <div class="w-full max-w-sm p-4 bg-fondo-primario border border-gray-200 rounded-lg shadow-sm sm:p-6 md:p-8">
-        <form class="space-y-6" action="#">
-            <img src="Logo3.svg" alt="Logo" class="mx-auto my-7" width="100" height="200"/>
-            <div class="mb-5">
-                <label
-                for="username"
-                class="block mb-2 text-sm font-medium text-gray-900"
-                >Username</label
-              >
-              <input
-                type="text"
-                id="username"
-                class="w-full p-2.5 border border-gray-300 rounded-full"
-                placeholder="Username"
-              />
-            </div>
-            <div class="mb-5">
-              <label
-                for="password"
-                class="block mb-2 text-sm font-medium text-gray-900"
-                >Password</label
-              >
-              <input
-                type="password"
-                id="password"
-                class="w-full p-2.5 border border-gray-300 rounded-full"
-                placeholder="••••••••"
-              />
-            </div>
-              <div class="flex justify-center mt-10">
-                <button class="boton-redondeado-oscuro h-11 lg:w-[20vw] mb-5" routerLink="home" routerLinkActive="active">Ingresar</button>
-              </div>
-        </form>
+  <div class="flex flex-col items-center justify-center h-full mx-5">
+    <div
+      class="w-full max-w-sm p-4 bg-fondo-primario border border-gray-200 rounded-lg shadow-sm sm:p-6 md:p-8"
+    >
+      <form class="space-y-6" [formGroup]="login">
+        <img
+          src="Logo3.svg"
+          alt="Logo"
+          class="mx-auto my-7"
+          width="100"
+          height="200"
+        />
+        <div class="mb-5">
+          <label
+            for="username"
+            class="block mb-2 text-sm font-medium text-gray-900"
+            >Username</label
+          >
+          <input
+            type="text"
+            id="username"
+            class="w-full p-2.5 border border-gray-300 rounded-full"
+            placeholder="Username"
+            formControlName="username"
+          />
+
+          @if (login.get('username')!.invalid && login.get('username')!.touched)
+          {
+          <div class="text-red-600">El username es un campo requerido.</div>
+          }
+        </div>
+        <div class="mb-5">
+          <label
+            for="password"
+            class="block mb-2 text-sm font-medium text-gray-900"
+            >Password</label
+          >
+          <input
+            type="password"
+            id="password"
+            class="w-full p-2.5 border border-gray-300 rounded-full"
+            placeholder="••••••••"
+            formControlName="password"
+          />
+
+          @if (login.get('password')!.invalid && login.get('password')!.touched)
+          {
+          <div class="text-red-600">La contraseña es un campo requerido.</div>
+          }
+        </div>
+        <div class="flex justify-center mt-10">
+          <button
+            type="submit"
+            routerLink="/home"
+            routerLinkActive="true"
+            [disabled]="login.invalid"
+            class="boton-redondeado-oscuro h-11 lg:w-[20vw] mb-5 cursor-pointer"
+          >
+            Ingresar
+          </button>
+        </div>
+      </form>
     </div>
-</div>        
+  </div>
 </section>
+<pre>{{ login.value | json }}</pre>
