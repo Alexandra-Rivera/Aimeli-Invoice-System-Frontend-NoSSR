@@ -231,11 +231,17 @@
 
 <br />
 <section class="w-[100%] px-2 flex flex-col items-center">
-  <app-producto-component [productos]="productos" />
-
-  <!-- <button
-    class="italic cursor-pointer m-2 bg-gray-400 p-1 rounded-2xl text-white-font-color"
-  >
-    Cargar más productos...
-  </button> -->
+  <app-producto-component
+    [productos]="productos"
+    [p]="page"
+    [totalItems]="totalItems"
+  />
+  <div class="centrar-contenido">
+    <pagination-controls
+      (pageChange)="page = $event"
+      (pageChange)="obtenerProductosPorPaginacion()"
+      previousLabel="Anterior"
+      nextLabel="Siguiente"
+    ></pagination-controls>
+  </div>
 </section>
