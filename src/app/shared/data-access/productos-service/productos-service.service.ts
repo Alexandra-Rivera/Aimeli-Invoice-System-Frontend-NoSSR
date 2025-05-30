@@ -16,9 +16,18 @@ export class ProductosServiceService {
 
   constructor() { }
 
-  /*GET ALL: Obtener todos los productos existentes INCOMPLETA */
-  obtenerProductos(): Observable<RespuestaInventarioPaginacion> {
-    return this.http.get<RespuestaInventarioPaginacion>(`${this.server_url}/producto/paginacion`);
+  /*GET ALL PRODUCTS */
+  obtenerTodosProductos(): Observable<ProductoCompleto[]> {
+    return this.http.get<ProductoCompleto[]>(`${this.server_url}/producto`);
+  }
+  
+  /*GET ALL BY PAGINATION: Obtener todos los productos existentes INCOMPLETA */
+  obtenerProductos(numero_paginacion: number): Observable<RespuestaInventarioPaginacion> {
+    const pagination_Data = new HttpParams()
+      .set('page', numero_paginacion)
+      .set('size', 10)
+      
+    return this.http.get<RespuestaInventarioPaginacion>(`${this.server_url}/producto/paginacion`, { params: pagination_Data });
   }
 
   /*GET PRODUCTS BY CATEGORY ID: Obtener los productos segun la categoria */

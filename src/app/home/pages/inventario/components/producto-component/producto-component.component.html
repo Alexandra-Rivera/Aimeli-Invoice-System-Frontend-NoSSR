@@ -1,102 +1,23 @@
 <ul>
   <li
     class="relative mb-5 w-[100%] lg:w-[90vw] xl:w-[70vw] 2xl:w-[60vw] lg:h-[30vh] flex flex-col items-center bg-white rounded-lg shadow-sm md:flex-row hover:bg-gray-100"
-    *ngFor="let producto of productos; let i = index"
+    *ngFor="
+      let producto of productos
+        | paginate
+          : {
+              itemsPerPage: 10,
+              currentPage: p,
+              totalItems: totalItems
+            };
+      let i = index
+    "
     id="card-{{ i }}"
   >
-    @if (editandoProductos[i] === true) {
-    <form
-      action=""
-      id="product-form"
-      [formGroup]="formularioProducto"
-      class="flex flex-col md:flex-row items-center justify-center"
-    >
-      <div>
-        <img
-          class="object-cover w-full h-full rounded-t-lg md:w-[30%] lg:w-[40%] md:rounded-none md:rounded-s-lg"
-          [src]="producto.imagen"
-          [alt]="producto.nombre"
-        />
-        <input
-          type="file"
-          name=""
-          id=""
-          accept="image/*"
-          formControlName="imagen"
-        />
-      </div>
-      <div class="grid grid-cols-2 gap-2">
-        <div>
-          <div>
-            <label for="nombre" class="">Nombre:</label><br />
-            <input
-              type="text"
-              id="nombre"
-              name="nombre"
-              class="mb-2 text-2xl font-bold tracking-tight text-gray-900"
-              formControlName="nombre"
-            />
-          </div>
-          <div>
-            <label for="descripcion">Descripcion:</label> <br />
-            <input
-              type="text"
-              id="descripcion"
-              name="descripcion"
-              class="mb-3 font-normal text-gray-700"
-              formControlName="descripcion"
-            />
-            <div>
-              <select name="" id="" formControlName="categoria">
-                <option
-                  [value]="categoria.id"
-                  *ngFor="let categoria of categorias"
-                >
-                  {{ categoria.categoria }}
-                </option>
-              </select>
-            </div>
-          </div>
-        </div>
-
-        <div>
-          <div>
-            <label for="costo_unitario">Costo Unitario: </label><br />
-            <input
-              type="number"
-              name="costo_unitario"
-              id="costo_unitario"
-              class="text-gray-700"
-              formControlName="costoUnitario"
-            />
-          </div>
-
-          <div>
-            <label for="precio_venta">Precio de venta: </label><br />
-            <input
-              type="number"
-              name="precio_venta"
-              id="precio_venta"
-              class="text-gray-700"
-              formControlName="precioVenta"
-            />
-          </div>
-          <button
-            type="submit"
-            class="bg-blue-700 focus:bg-blue-600 text-white-font-color h-[20%] w-[30%] rounded-lg cursor-pointer my-5"
-          >
-            Guardar
-          </button>
-        </div>
-      </div>
-    </form>
-    } @else {
     <img
       class="object-cover w-full h-full rounded-t-lg md:w-[30%] lg:w-[40%] md:rounded-none md:rounded-s-lg"
       [src]="producto.imagen"
       [alt]="producto.imagen"
     />
-
     <div class="w-[100%] flex flex-col items-start p-5 leading-normal">
       <span class="text-gray-500">Codigo SKU: {{ producto.codigo }}</span>
       <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900">
@@ -134,8 +55,6 @@
         <p class="text-gray-700">${{ producto.precioVenta }}</p>
       </div>
     </div>
-    }
-
     <button
       type="button"
       class="absolute right-2 bottom-5 boton-icono-editar"
