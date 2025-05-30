@@ -11,12 +11,12 @@ import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 })
 export class LoginComponent {
   /*ReactiveForm Variables */
-  login!: FormGroup;
+  loginFormulario!: FormGroup;
 
   constructor(
     fb: FormBuilder 
   ) {
-    this.login = fb.group({
+    this.loginFormulario = fb.group({
       username: ['', [Validators.required]],
       password: ['', [Validators.required]]
     })
