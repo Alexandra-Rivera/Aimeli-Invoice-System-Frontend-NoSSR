@@ -10,16 +10,23 @@
         <th scope="col" class="px-6 py-3">Productos</th>
         <th scope="col" class="px-6 py-3">Método de pago</th>
         <th scope="col" class="px-6 py-3">Total</th>
+        <th scope="col" class="px-6 py-3">Seleccionar</th>
       </tr>
     </thead>
     <tbody>
-      <tr class="bg-white border-b border-gray-200 hover:bg-gray-50">
-        <td class="px-6 py-4">{{ fecha_compra }}</td>
-        <td class="px-6 py-4">{{ n_factura }}</td>
-        <td class="px-6 py-4">{{ proveedor }}</td>
-        <td class="px-6 py-4">{{ productos }}</td>
-        <td class="px-6 py-4">{{ metodo_pago }}</td>
-        <td class="px-6 py-4">${{ total }}</td>
+      <tr
+        *ngFor="let productoInfo of registros"
+        class="bg-white border-b border-gray-200 hover:bg-gray-50"
+      >
+        <td class="px-6 py-4">{{ productoInfo.fechaCompra }}</td>
+        <td class="px-6 py-4">{{ productoInfo.numeroFactura }}</td>
+        <td class="px-6 py-4">{{ productoInfo.proveedor }}</td>
+        <td class="px-6 py-4">{{ productoInfo.productos }}</td>
+        <td class="px-6 py-4">{{ productoInfo.metodoPago }}</td>
+        <td class="px-6 py-4">${{ productoInfo.total }}</td>
+        <td class="px-6 py-4">
+          <a href="" class="font-bold text-select-text-color">Select</a>
+        </td>
       </tr>
     </tbody>
   </table>
