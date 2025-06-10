@@ -165,7 +165,7 @@ export class EditarProductoComponent {
         console.log(m);
         this.toast.success("¡El producto ha sido actualizado con éxito!");
         setTimeout(() => {
-          this.router.navigate(['inventario']);
+          this.router.navigate(['/home/inventario']);
         }, 3000);
       }, 
       error: (e) => {
