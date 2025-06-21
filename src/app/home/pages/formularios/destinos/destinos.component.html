@@ -6,13 +6,28 @@
         class="snap-y bg-fondo-terciario rounded-xl scroll-py-4 overflow-y-auto h-[60vh] w-[90%] lg:w-[80%] custom-scrollbar"
       >
         <ul class="snap-start px-10 py-6">
-          <li class="flex justify-between items-center font-bold">
-            Destino 1
-            <a href="" class="text-select-text-color font-bold">Select</a>
+          <li class="flex justify-between items-center"
+          *ngFor="let destino of destinos; let i = index">
+            <div>
+              <br>
+      <div><span class="font-bold">Departamento:</span> {{ destino.departamento }}</div>
+        <div><span class="font-bold">Municipio:</span> {{ destino.municipio }}</div>
+        <div><span class="font-bold">Punto de Entrega:</span> {{ destino.puntoEntrega }}</div>
+        <div><span class="font-bold">Encomendista:</span> {{ destino.encomendista }}</div>
+      
+    </div>
+    <button
+      class="text-select-text-color font-bold cursor-pointer"
+      (click)="editarDestino(destino.id)"
+    >
+      Select
+    </button>
           </li>
+          
         </ul>
       </div>
     </section>
+
     <section class="flex justify-center order-1 lg:order-2">
       <form [formGroup]="formularioDestino">
         <div class="flex justify-center w-full order-2 lg:order-1 gap-2">
@@ -42,24 +57,25 @@
 
           <div class="mb-5 w-full">
             <div class="flex flex-col gap-3 w-full relative">
-              <label for="municipios" class="font-semibold">Municipios:</label>
-              <div>
-                <select
-                  id="municipios"
-                  formControlName="municipio"
-                  class="w-full text-gray-700 border-none bg-gray-100 hover:bg-gray-200 font-medium rounded-full text-sm px-5 py-2.5 inline-flex items-center"
-                >
-                  <option value="" disabled selected>Municipios</option>
-                  <option
-                    *ngFor="let municipio of municipios"
-                    [value]="municipio.id"
-                    class="block px-4 py-2 hover:bg-gray-100"
-                  >
-                    {{ municipio.municipio }}
-                  </option>
-                </select>
-              </div>
-            </div>
+  <label for="municipios" class="font-semibold">Municipios:</label>
+  <div>
+    <select
+      id="municipios"
+      formControlName="municipio"
+      class="w-full text-gray-700 border-none bg-gray-100 hover:bg-gray-200 font-medium rounded-full text-sm px-5 py-2.5"
+    >
+      <option value="" disabled selected>Municipio</option>
+      <option
+        *ngFor="let municipio of municipios"
+        [value]="municipio.id"
+        class="block px-4 py-2 hover:bg-gray-100"
+      >
+        {{ municipio.municipio }}
+      </option>
+    </select>
+  </div>
+</div>
+
           </div>
         </div>
         <div class="mb-5">
@@ -88,11 +104,11 @@
             >
               <option value="" disabled selected>Encomendista</option>
               <option
-                *ngFor="let municipio of municipios"
-                [value]="municipio.id"
+                *ngFor="let Encomendista of encomendistas"
+                [value]="Encomendista.id"
                 class="block px-4 py-2 hover:bg-gray-100"
               >
-                {{ municipio.municipio }}
+                {{ Encomendista.nombre }}
               </option>
             </select>
           </div>
@@ -100,7 +116,8 @@
         <div class="flex flex-row-reverse items-center lg:mt-10">
           <button
             class="boton-redondeado-oscuro h-11 lg:w-[20vw] cursor-pointer"
-          >
+            (click)="agregarDestino()"
+            >
             Guardar Destino
           </button>
           <button class="boton-icono-eliminar-relleno cursor-pointer">
