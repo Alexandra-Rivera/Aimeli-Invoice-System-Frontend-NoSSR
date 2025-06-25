@@ -18,7 +18,7 @@
     </div>
     <button
       class="text-select-text-color font-bold cursor-pointer"
-      (click)="editarDestino(destino.id)"
+      (click)="SeleccionarDestino(i)"
     >
       Select
     </button>
@@ -120,7 +120,8 @@
             >
             Guardar Destino
           </button>
-          <button class="boton-icono-eliminar-relleno cursor-pointer">
+          <button class="boton-icono-eliminar-relleno cursor-pointer"
+          (click)="eliminarDestino()">
             <svg
               class="w-6 h-6 text-white"
               aria-hidden="true"

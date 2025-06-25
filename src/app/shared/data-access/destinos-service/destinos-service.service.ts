@@ -33,4 +33,13 @@ export class DestinosServiceService {
   obtenerDestinos(): Observable<Destino[]> {
     return this.http.get<Destino[]>(`${this.server_url}/destino`);
   }
+  /*PUT: Actualizar un destino */
+  actualizarDestino(destino: Destino): Observable<RespuestaServidor> {
+    return this.http.put<RespuestaServidor>(`${this.server_url}/destino`, destino);
+  }
+  /*DELETE: Eliminar un destino */
+  eliminarDestino(id: number): Observable<RespuestaServidor> {  
+    return this.http.delete<RespuestaServidor>(`${this.server_url}/destino/${id}`);
+  }
+
 }
