@@ -2,9 +2,15 @@
 <section class="lg:mt-[10%] mt-[25%]">
   <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
     <section class="flex justify-center order-2 lg:order-1">
-      <div class="snap-y bg-fondo-terciario rounded-xl scroll-py-4 overflow-y-auto h-[60vh] w-[90%] lg:w-[80%] custom-scrollbar">
-      <ul class="snap-start px-10 py-6">
-        <li class="flex justify-between items-center font-bold">Cliente 1 <a href="" class="text-select-text-color font-bold">Select</a></li>
+      <div class="snap-y bg-fondo-terciario rounded-xl scroll-py-4 overflow-y-auto h-[60vh] w-[90%] lg:w-[80%] p-4 custom-scrollbar">
+      <ul class="snap-start px-10 py-1"
+      *ngFor="let cliente of clientesLista; let i = index">
+        <li class="flex justify-between items-center font-bold">{{ cliente.nombreCliente }}<button
+      class="text-select-text-color font-bold cursor-pointer"
+      (click)="editarCliente(cliente)"
+    >
+      Select
+    </button></li>
       </ul>
       </div>
     </section>
@@ -32,7 +38,7 @@
             >Número de telefono</label
           >
           <input
-            type="tel"
+            type="number"
             id="telefono"
             class="w-96 p-2.5 border border-gray-300 rounded-full"
             placeholder="0000-0000"
@@ -41,14 +47,13 @@
           />
         </div>
         <div class="flex flex-row items-center lg:mt-10">
-        <button class="boton-icono-eliminar-relleno"><svg class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+        <button class="boton-icono-eliminar-relleno" (click)="eliminarCliente()"><svg class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
           <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"/>
         </svg>
         </button>
-        <button class="boton-redondeado-oscuro h-11 lg:w-[20vw]">Guardar Cliente</button>
+        <button class="boton-redondeado-oscuro h-11 lg:w-[20vw]" (click)="estaEditando ? actualizarCliente() : crearCliente()">Guardar Cliente</button>
       </div>
       </form>
-      <pre>{{formularioClientes.value | json}}</pre>
     </section>
   </div>
 </section>
