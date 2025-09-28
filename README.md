@@ -1,11 +1,11 @@
-# Aimeli Invoice System Frontend
-## Descripción del proyecto
+# 🚀 Aimeli Invoice System Frontend 
+## Descripción del proyecto 📝
 Aimeli Invoice System Frontend contiene la interfaz de usuario del sistema Aimeli Invoice System. El objetivo del sistema es cumplir con las siguientes funcionalidades: 
 * Gestión de inventario en tiempo real.
 * Registro de ventas y compras con generación de reportes.
 * Generación automática de viñetas y facturas.
 
-## Tecnologías utilizadas
+## Tecnologías utilizadas 🧑‍💻
 
 | Tecnología  | Descripción |
 | ------------- | ------------- |
