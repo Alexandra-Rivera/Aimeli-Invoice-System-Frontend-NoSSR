@@ -1,33 +1,44 @@
-<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-  <table class="w-full text-sm text-left rtl:text-right text-gray-500">
-    <thead
-      class="text-xs text-white-font-color uppercase bg-tablas-encabezados-color"
-    >
-      <tr>
-        <th scope="col" class="px-6 py-3">Fecha de compra</th>
-        <th scope="col" class="px-6 py-3">N° de factura</th>
-        <th scope="col" class="px-6 py-3">Proveedor</th>
-        <th scope="col" class="px-6 py-3">Productos</th>
-        <th scope="col" class="px-6 py-3">Método de pago</th>
-        <th scope="col" class="px-6 py-3">Total</th>
-        <th scope="col" class="px-6 py-3">Seleccionar</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr
-        *ngFor="let productoInfo of registros"
-        class="bg-white border-b border-gray-200 hover:bg-gray-50"
-      >
-        <td class="px-6 py-4">{{ productoInfo.fechaCompra }}</td>
-        <td class="px-6 py-4">{{ productoInfo.numeroFactura }}</td>
-        <td class="px-6 py-4">{{ productoInfo.proveedor }}</td>
-        <td class="px-6 py-4">{{ productoInfo.productos }}</td>
-        <td class="px-6 py-4">{{ productoInfo.metodoPago }}</td>
-        <td class="px-6 py-4">${{ productoInfo.total }}</td>
-        <td class="px-6 py-4">
-          <a href="" class="font-bold text-select-text-color">Select</a>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+<!--<div class="relative overflow-x-auto shadow-md sm:rounded-lg">-->
+<!--  <table class="w-full text-sm text-left rtl:text-right text-gray-500">-->
+<!--    <thead-->
+<!--      class="text-xs text-white-font-color uppercase bg-tablas-encabezados-color"-->
+<!--    >-->
+<!--      <tr>-->
+<!--        <th scope="col" class="px-6 py-3">Fecha de compra</th>-->
+<!--        <th scope="col" class="px-6 py-3">N° de factura</th>-->
+<!--        <th scope="col" class="px-6 py-3">Proveedor</th>-->
+<!--        <th scope="col" class="px-6 py-3">Productos</th>-->
+<!--        <th scope="col" class="px-6 py-3">Método de pago</th>-->
+<!--        <th scope="col" class="px-6 py-3">Total</th>-->
+<!--        <th scope="col" class="px-6 py-3">Seleccionar</th>-->
+<!--      </tr>-->
+<!--    </thead>-->
+<!--    <tbody>-->
+<!--      <tr-->
+<!--        *ngFor="let productoInfo of registros; let i"-->
+<!--        class="bg-white border-b border-gray-200 hover:bg-gray-50"-->
+<!--      >-->
+<!--        <td class="px-6 py-4">{{ productoInfo.fechaCompra }}</td>-->
+<!--        <td class="px-6 py-4">{{ productoInfo.numeroFactura }}</td>-->
+<!--        <td class="px-6 py-4">{{ productoInfo.proveedor }}</td>-->
+<!--        <td class="px-6 py-4">{{ productoInfo.productos }}</td>-->
+<!--        <td class="px-6 py-4">{{ productoInfo.metodoPago }}</td>-->
+<!--        <td class="px-6 py-4">${{ productoInfo.total }}</td>-->
+<!--        <td class="px-6 py-4">-->
+<!--          <a-->
+<!--            (click)="navegarVistaRegistroDeCompra(productoInfo.idCompra)"-->
+<!--            class="font-bold text-select-text-color cursor-pointer"-->
+<!--            >Select</a-->
+<!--          >-->
+<!--        </td>-->
+<!--      </tr>-->
+<!--    </tbody>-->
+<!--  </table>-->
+
+<!--  <div-->
+<!--    *ngIf="registros.length === 0"-->
+<!--    class="bg-white border-b border-gray-200 hover:bg-gray-50 p-4 centrar-contenido font-bold text-select-text-color"-->
+<!--  >-->
+<!--    No hay registros-->
+<!--  </div>-->
+<!--</div>-->

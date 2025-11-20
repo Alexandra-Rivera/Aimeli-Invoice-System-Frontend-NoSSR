@@ -1,6 +1,11 @@
 import { Component, Input } from '@angular/core';
 import { ProductoInfoCompraproducto } from '../../../../../../shared/interfaces/compraproducto/producto-info-compraproducto';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
+import { ComprasServiceService } from '../../../../../../shared/data-access/compras-service/compras-service.service';
+import { CompraInformacion } from '../../../../../../shared/interfaces/compras/compra-informacion';
+import { tap } from 'rxjs';
+import { HotToastService } from '@ngxpert/hot-toast';
 
 @Component({
   selector: 'app-registro-de-compras-tabla',
@@ -9,12 +14,30 @@ import { CommonModule } from '@angular/common';
   styleUrl: './registro-de-compras-tabla.component.css'
 })
 export class RegistroDeComprasTablaComponent {
-  // @Input() fecha_compra: string = "05 / 03 / 2025";
-  // @Input() n_factura: string = "FAC0001";
-  // @Input() proveedor: string = "SHEIN";
-  // @Input() productos: string = "CAMISOLA BLANCA TIPO CROPTOP, ARITOS...";
-  // @Input() metodo_pago : string = "Efectivo";
-  // @Input() total: number = 22.50;
+  @Input() registros: ProductoInfoCompraproducto[] = [];
 
-  @Input() registros!: ProductoInfoCompraproducto[];
+  constructor(
+    private router: Router,
+    private comprasService: ComprasServiceService,
+    private toast: HotToastService
+  ) {
+
+  }
+
+  navegarVistaRegistroDeCompra(index: number) {
+    let registro_compra: CompraInformacion;
+    this.comprasService.solicitarItemPorID(index).pipe(
+      tap((data: CompraInformacion) => {
+        registro_compra = data;
+      })
+    ).subscribe({
+      next: () => {
+        this.router.navigate(["/home/compras/registro-compra", registro_compra.compra.id])
+      },
+      error: (e) => {
+        this.toast.error("No se pudo cargar la vista. ");
+        console.error(e);
+      }
+    });
+  }
 }

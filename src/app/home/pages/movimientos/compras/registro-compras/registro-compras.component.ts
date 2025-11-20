@@ -1,7 +1,6 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavComponentComponent } from "../../../../../components/nav-component/nav-component.component";
 import { RegistroDeComprasTablaComponent } from "../components/registro-de-compras-tabla/registro-de-compras-tabla.component";
-import { initFlowbite } from 'flowbite';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { ComprasServiceService } from '../../../../../shared/data-access/compras-service/compras-service.service';
 import { RegistroCompraproducto } from '../../../../../shared/interfaces/compraproducto/registro-compraproducto';
@@ -10,10 +9,11 @@ import { tap } from 'rxjs';
 import { ProductoInfoCompraproducto } from '../../../../../shared/interfaces/compraproducto/producto-info-compraproducto';
 import { HotToastService } from '@ngxpert/hot-toast';
 import { FormatearFechaService } from '../../../../../shared/utils/formatear-fecha.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-registro-compras',
-  imports: [NavComponentComponent, RegistroDeComprasTablaComponent, RouterLink, RouterLinkActive, ReactiveFormsModule],
+  imports: [NavComponentComponent, RegistroDeComprasTablaComponent, RouterLink, RouterLinkActive, ReactiveFormsModule, CommonModule],
   templateUrl: './registro-compras.component.html',
   styleUrl: './registro-compras.component.css',
   providers: [ComprasServiceService],
@@ -21,10 +21,10 @@ import { FormatearFechaService } from '../../../../../shared/utils/formatear-fec
 export class RegistroComprasComponent {
 
   protected compraProductosFormulario!: FormGroup;
-  protected registros!: ProductoInfoCompraproducto[];
+  protected registros: ProductoInfoCompraproducto[] = [];
 
   constructor(
-    fb: FormBuilder, 
+    fb: FormBuilder,
     private comprasService: ComprasServiceService,
     private toast: HotToastService,
     private utils: FormatearFechaService
@@ -47,7 +47,7 @@ export class RegistroComprasComponent {
       tap((data: RegistroCompraproducto) => {
         this.registros = data.content.map(item => ({
           idCompra: item.idCompra,
-          numeroFactura: item.numeroFactura, 
+          numeroFactura: item.numeroFactura,
           fechaCompra: this.utils.formatearFecha(item.fechaCompra),
           proveedor: item.proveedor,
           productos: item.productos,

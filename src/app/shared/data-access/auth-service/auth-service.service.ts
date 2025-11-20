@@ -16,15 +16,15 @@ export class AuthServiceService {
 
   // Determina si el usuario está autenticado
   private _isAuthenticated = new BehaviorSubject<boolean>(this.hasToken());
-  
- get isAuthenticated() {
-    return this._isAuthenticated.asObservable();
-  }
 
   constructor(private http: HttpClient, private router: Router) { }
 
   private hasToken(): boolean {
     return !!localStorage.getItem(this.authTokenKey);
+  }
+
+   get isAuthenticated() {
+    return this._isAuthenticated.asObservable();
   }
 
   login(login_info: Login): Observable<any> {
