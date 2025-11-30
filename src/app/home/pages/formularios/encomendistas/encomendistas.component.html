@@ -62,6 +62,15 @@
             >
             Guardar Destino
           </button>      </div>
+          <button
+        id="buttonAgregarProveedor"
+        type="button"
+        (click)="agregarEncomendista()"
+        *ngIf="mostrarBoton"
+        class="mt-10 mx-auto font-semibold text-blue-900 cursor-pointer"
+      >
+        Agregar nuevo encomendista  
+      </button>
       </form>
     </section>
   </div>
