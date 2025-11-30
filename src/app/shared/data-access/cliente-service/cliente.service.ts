@@ -38,7 +38,7 @@ export class ClienteServiceService {
     return this.http.get<Cliente[]>(`${this.server_url}/cliente?page=${pagina}&size=${tamanoPagina}`);
   }
   /*Get by search: Buscar clientes por nombre */
-  /*buscarClientesPorNombre(nombre: string): Observable<Cliente[]> {
-    return this.http.get<Cliente[]>(`${this.server_url}/cliente/search?nombre=${nombre}`);
-  }*/
+  buscarClientesPorNombre(nombre: string): Observable<Cliente[]> {
+    return this.http.get<Cliente[]>(`${this.server_url}/cliente/filter?nombre=${nombre}`);
+  }
 }

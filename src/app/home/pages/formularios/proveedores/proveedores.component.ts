@@ -144,21 +144,21 @@ export class ProveedoresComponent {
     window.location.reload();
   }
 
-  buscarProveedor() {
-    // let texto_ingresado = this.formularioBusqueda.controls['palabra']?.value;
+   buscarProveedorPorNombre() {
+    let texto_ingresado = this.formularioBusqueda.controls['palabra']?.value;
 
-    // if (texto_ingresado) {
-    //   this.proveedoresService.filtrarProveedores(texto_ingresado).pipe(
-    //     tap((data: Proveedor[]) => {
-    //       this.proveedores = data;
-    //     })
-    //   ).subscribe({
-    //     next: (message) => console.log(message),
-    //     error: (error) => console.log(error),
-    //     complete: () => console.log("Completado")
-    //   });
-    // } else {
-    //   this.obtenerProveedores()
-    // }
-  }
+    if (texto_ingresado) {
+      this.proveedoresService.buscarProveedoresPorNombre(texto_ingresado).pipe(
+        tap((data: Proveedor[]) => {
+          this.proveedores = data;
+        })
+      ).subscribe({
+        next: (message) => console.log(message),
+        error: (error) => console.log(error),
+        complete: () => console.log("Completado")
+      });
+    } else {
+      this.obtenerProveedores()
+    }
+}
 }

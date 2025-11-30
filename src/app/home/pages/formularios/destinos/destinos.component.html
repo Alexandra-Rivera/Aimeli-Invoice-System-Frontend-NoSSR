@@ -1,10 +1,33 @@
-<app-nav-component titulo="Formulario Destinos" />
-<section class="lg:mt-[10%] mt-[25%]">
-  <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-    <section class="flex justify-center order-2 lg:order-1">
-      <div
-        class="snap-y bg-fondo-terciario rounded-xl scroll-py-4 overflow-y-auto h-[60vh] w-[90%] lg:w-[80%] custom-scrollbar"
-      >
+<app-nav-component titulo="Formulario Destino" />
+<section class="lg:mt-[7%] mt-[25%] grid grid-cols-1 lg:grid-cols-2 gap-4">
+  <section
+    class="flex flex-col gap-3 order-2 lg:order-1 px-[10%] justify-start"
+  >
+    <!-- Formulario de Busqueda -->
+    <form
+      action=""
+      [formGroup]="formularioBusqueda"
+      class="flex flex-col gap-2 w-full"
+    >
+      <br />
+      <label for="search" class="block mb-2 font-semibold text-gray-900"
+        >Buscar Destino:
+      </label>
+      <div class="flex flex-row gap-2 w-full">
+        <input
+          type="search"
+          name="searchbar"
+          id="search"
+          formControlName="palabra"
+          (input)="buscarDestinoPorPuntoEntrega()"
+          class="rounded-full italic w-full"
+          placeholder="Buscar Destino"
+        />
+      </div>
+    </form>
+    <div
+      class="snap-y bg-fondo-terciario rounded-xl scroll-py-4 overflow-y-auto h-[60vh] w-full custom-scrollbar"
+    >
         <ul class="snap-start px-10 py-6">
           <li class="flex justify-between items-center"
           *ngFor="let destino of destinos; let i = index">
@@ -143,5 +166,4 @@
         </div>
       </form>
     </section>
-  </div>
 </section>

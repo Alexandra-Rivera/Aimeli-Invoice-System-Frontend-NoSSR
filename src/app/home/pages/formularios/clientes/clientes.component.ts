@@ -16,6 +16,7 @@ import { tap } from 'rxjs';
 export class ClientesComponent {
 
   formularioClientes: FormGroup;
+  formularioBusqueda: FormGroup;
 
   protected clientesLista: Cliente[] = [];
   protected clienteSeleccionadoId: number | null = null;
@@ -23,11 +24,15 @@ export class ClientesComponent {
   protected estaEditando: boolean = false;
 
 
+
   protected mostrarBoton: boolean = false;
   constructor() {
     this.formularioClientes = this.fb.group({
       nombre: [''],
       telefono: [''],
+    });
+    this.formularioBusqueda = this.fb.group({
+      nombre: [''],    
     });
   }
   clientesService = inject(ClienteServiceService);
@@ -118,8 +123,20 @@ export class ClientesComponent {
         error: (error) => console.error(error),
         complete: () => console.log("Actividad finalizada")
       });
+    }
   }
-
-}
+  buscarClientePorNombre() {
+    const nombre = this.formularioBusqueda.value.nombre;
+    this.clientesService.buscarClientesPorNombre(nombre).pipe(
+      tap((data: Cliente[]) => {
+        console.log(data);
+        this.clientesLista = data;
+      })
+    ).subscribe({
+      next: (message) => console.log(message),
+      error: (error) => console.error(error),
+      complete: () => console.log("Actividad finalizada")
+    });
+  }   
 }
 
