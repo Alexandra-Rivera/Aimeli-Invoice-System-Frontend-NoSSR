@@ -6,6 +6,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, ɵInternalForm
 import { CommonModule } from '@angular/common';
 import { tap, map } from 'rxjs';
 import { EncomendistaDestino } from '../../../../shared/interfaces/encomendista/encomendista-destino';
+import { HotToastService, ToastStacking } from '@ngxpert/hot-toast';
 
 @Component({
   selector: 'app-encomendistas',
@@ -28,8 +29,9 @@ export class EncomendistasComponent {
   private encomendista!: Encomendista;
   encomendistaSeleccionadoIndex: number | null = null;
   estaEditando = false;
+  encomendistaDestino!: EncomendistaDestino;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private toast: HotToastService) {
     this.formularioEncomendista = fb.group({
       encomendista: ['', Validators.required],
       local: [''],
@@ -45,7 +47,6 @@ export class EncomendistasComponent {
   }
 
   seleccionarEncomendista(index: number) {
-    console.log("id seleccionado:", index);
         this.mostrarBoton = true;
         this.estaEditando = true;
         const encomendistaSeleccionado: EncomendistaDestino = this.encomendistas[index];
@@ -62,50 +63,66 @@ export class EncomendistasComponent {
     };
 
     guardarEncomendista() {
-      if (this.estaEditando && this.encomendistaSeleccionadoIndex !== null) {
-        this.encomendista = {
-          id: this.encomendistaSeleccionadoIndex,
-          nombre: this.formularioEncomendista.value.encomendista,
-          local: this.formularioEncomendista.value.local ?? '',
-          estado: true,
-          fechaCreacion: new Date(),
-          fechaActualizacion: new Date()
-        };
-        this.encomendistasService.crearEncomendista(this.encomendista).pipe().subscribe({
-           next: (response) => console.log(response),
-           error: (e) => console.error(e),});}
-    else{
-      const nuevo_encomendista: EncomendistaDestino = {
+      if (this.estaEditando === true && this.encomendistaSeleccionadoIndex !== null) {
+      this.encomendistaDestino = {
+        id: this.encomendistaSeleccionadoIndex,
+        nombre: this.formularioEncomendista.controls['encomendista'].value ?? "",
+        local: this.formularioEncomendista.controls['local'].value ?? "",
+      };
+      this.encomendistasService.actualizarEncomendista(this.encomendistaDestino).pipe().subscribe({
+        next: () => {
+          this.toast.success('Encomendista actualizado con éxito');
+        },
+        error: (error) => {
+          this.toast.error('Error al actualizar encomendista');
+          console.error(error);
+        }
+      });
+    } else {
+      const nuevo_encomendista : EncomendistaDestino = {
         id: 0,
-        nombre: this.formularioEncomendista.value.encomendista,
-        local: this.formularioEncomendista.value.local ?? '',
+        nombre: this.formularioEncomendista.controls['encomendista'].value ?? "",
+        local: this.formularioEncomendista.controls['local'].value ?? "",
       };
       this.encomendistasService.crearEncomendista(nuevo_encomendista).pipe().subscribe({
-        error: (e) => console.error(e)
-      
-      })
-      }
-      window.location.reload();
+        next: () => {
+          this.toast.success('Encomendista creado con éxito');
+        },
+        error: (error) => {
+          this.toast.error('Error al crear encomendista');
+          console.error(error);
+        }
+      });
+    }
+    setTimeout(() => {
+    window.location.reload();}, 2000);
 }
 obtenerEncomendistas() {
   this.encomendistasService.obtenerEncomendistas().pipe(
         tap((data: EncomendistaDestino[]) => {
           this.encomendistas = data;
-          console.log(this.encomendistas);
         }) 
         ).subscribe({
-        error: (e) => console.log(e),
-        complete: () => console.log("Completado")
       })
     }
   eliminarEncomendista() {
     if (this.encomendistaSeleccionadoIndex) {
-      console.log("Index a elimiar:", this.encomendistaSeleccionadoIndex);
       this.encomendistasService.eliminarEncomendista(this.encomendistaSeleccionadoIndex).pipe().subscribe({
-        next: (message) => {console.log(message); window.location.reload();},
-        error: (e) => console.error(e.mensaje),
-        complete: () => console.log("Operacion completada con exito"),
+        next: () => {
+          this.toast.success('Encomendista eliminado con éxito');
+          this.obtenerEncomendistas();
+        },
+        error: (error) => {
+          this.toast.error('Error al eliminar encomendista');
+          console.error(error);
+        }
       });
     }
+  }
+  agregarEncomendista() {
+    this.estaEditando = false;
+    this.encomendistaSeleccionadoIndex = null;
+    this.mostrarBoton = false;
+    this.formularioEncomendista.reset();
   }
 }

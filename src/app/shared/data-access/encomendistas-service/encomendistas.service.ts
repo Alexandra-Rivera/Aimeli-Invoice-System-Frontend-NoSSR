@@ -10,7 +10,6 @@ import { RespuestaServidor } from '../../interfaces/respuesta-servidor/respuesta
   providedIn: 'root'
 })
 export class EncomendistasService {
-
   constructor() { }
   protected http = inject(HttpClient);
   private server_url = environment.API_URL;
@@ -32,5 +31,9 @@ export class EncomendistasService {
   /*Eliminar encomendista */
   eliminarEncomendista(id: number): Observable<RespuestaServidor> {
     return this.http.delete<RespuestaServidor>(`${this.server_url}/encomendista`, { params: { id: id } });
+  }
+  /*Actualizar encomendista */
+  actualizarEncomendista(encomendista: EncomendistaDestino): Observable<RespuestaServidor> {
+    return this.http.put<RespuestaServidor>(`${this.server_url}/encomendista`, encomendista);
   }
 }
