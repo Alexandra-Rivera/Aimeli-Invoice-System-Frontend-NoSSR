@@ -1,8 +1,8 @@
 export interface Encomendista {
-    id: number,
-    encomendista: string, 
-    local: string, 
-    estado: boolean,
-    fechaCreacion: string,
-    fechaActualizacoin: string
+  id: number;    
+  nombre: string;
+  local: string;
+  estado: boolean;
+  fechaCreacion: Date;
+  fechaActualizacion: Date;
 }

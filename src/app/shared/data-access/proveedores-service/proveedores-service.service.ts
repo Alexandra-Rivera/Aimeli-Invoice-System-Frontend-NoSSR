@@ -39,8 +39,8 @@ export class ProveedoresServiceService {
     return this.http.get<Proveedor>(`${this.server_url}/proveedor/${id_proveedor}`);
   }
 
-  /*FILTRAR: Busqueda por palabra */
-  filtrarProveedores(texto_ingresado: string): Observable<Proveedor[]> {
-    return this.http.get<Proveedor[]>(`${this.server_url}/proveedor/filter`, { params: { nombre: texto_ingresado } });
+  /*Get by search: Buscar proveedor por nombre */
+    buscarProveedoresPorNombre(nombre: string): Observable<Proveedor[]> {
+      return this.http.get<Proveedor[]>(`${this.server_url}/proveedor/filter/${nombre}`);
+    }
   }
-}

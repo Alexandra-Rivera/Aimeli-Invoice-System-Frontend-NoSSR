@@ -30,6 +30,7 @@ export class DestinosComponent implements OnInit {
   protected mostrarBoton: boolean = false;
   protected destinoSeleccionadoId: number | null = null;
   protected estaEditando: boolean = false;
+  protected formularioBusqueda!: FormGroup;
 
   constructor() {
     this.formularioDestino = this.fb.group({
@@ -38,6 +39,11 @@ export class DestinosComponent implements OnInit {
       punto_entrega: ["", Validators.required],
       encomendista: ["", Validators.required],
     });
+    this.formularioBusqueda = this.fb.group({
+      nombre: [''],    
+    });
+
+    
   }
 
   ngOnInit() {
@@ -220,5 +226,18 @@ export class DestinosComponent implements OnInit {
     }
 
     window.location.reload();
+  }
+  buscarDestinoPorPuntoEntrega() {
+    const puntoEntrega = this.formularioBusqueda.value.nombre;
+    this.destinosService.buscarDestinosPorNombre(puntoEntrega).pipe(
+      tap((data: Destino[]) => {
+        console.log(data);
+        this.destinos = data;
+      })
+    ).subscribe({
+      next: (message) => console.log(message),
+      error: (error) => console.error(error),
+      complete: () => console.log("Actividad finalizada")
+    });
   }
 }

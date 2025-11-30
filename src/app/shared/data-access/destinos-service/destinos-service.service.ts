@@ -15,6 +15,7 @@ export class DestinosServiceService {
   constructor() { }
   protected http = inject(HttpClient);
   private server_url = environment.API_URL;
+  
 
   /*GET ALL: Obtener todos los departamentos de El Salvador */
   obtenerDepartamentos(): Observable<Departamento[]> {
@@ -41,5 +42,8 @@ export class DestinosServiceService {
   eliminarDestino(id: number): Observable<RespuestaServidor> {  
     return this.http.delete<RespuestaServidor>(`${this.server_url}/destino/${id}`);
   }
-
+  /*GET BY: Buscar destinos por nombre */
+  buscarDestinosPorNombre(nombre: string): Observable<Destino[]> {
+    return this.http.get<Destino[]>(`${this.server_url}/destino/filter/${nombre}`);
+  }
 }
