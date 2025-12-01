@@ -1,8 +1,44 @@
 <app-nav-component titulo="Formulario Encomendistas" />
-<section class="lg:mt-[10%] mt-[25%]">
-  <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-    <section class="flex justify-center order-2 lg:order-1">
-      <div class="snap-y bg-fondo-terciario rounded-xl scroll-py-4 overflow-y-auto h-[60vh] w-[90%] lg:w-[80%] custom-scrollbar">
+<section
+  class="mt-[20%] md:mt-[15%] lg:mt-[8%] w-[100vw] grid grid-cols-1 lg:grid-cols-2 gap-4 px-[2%] lg:px-[5%]"
+>
+  <section
+    class="flex centrar-contenido lg:justify-center lg:items-end flex-col gap-4 order-2 lg:order-1 flex-reverse"
+  >
+    <!-- Formulario de Busqueda por Nombre -->
+    <form
+      action=""
+      [formGroup]="formularioBusqueda"
+      class="flex flex-col gap-2 w-[90%]"
+    >
+      <label for="search" class="font-semibold">Nombre: </label>
+      <div class="flex flex-row gap-2 w-[80%]">
+        <input
+          type="search"
+          name="searchbar"
+          id="search"
+          formControlName="encomendista"
+          class="rounded-full italic w-full"
+          placeholder="Buscar encomendista por nombre"
+          (input)="buscarEncomendista()"
+        />
+      </div>
+       <label for="search" class="font-semibold">Local: </label>
+      <div class="flex flex-row gap-2 w-[80%]">
+        <input
+          type="search"
+          name="searchbar"
+          id="search"
+          formControlName="local"
+          class="rounded-full italic w-full"
+          placeholder="Buscar encomendista por local"
+          (input)="buscarEncomendista()"
+        />
+      </div>
+    </form>
+    <div
+      class="snap-y bg-fondo-terciario rounded-xl scroll-py-4 overflow-y-auto h-[60vh] w-[90%] lg:w-[90%] custom-scrollbar"
+    >
       <ul class="snap-start px-10 py-6">
         <li
           *ngFor="let encomendista of encomendistas; let i = index"
@@ -73,5 +109,4 @@
       </button>
       </form>
     </section>
-  </div>
 </section>
