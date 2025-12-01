@@ -5,6 +5,7 @@ import { CommonModule, JsonPipe } from '@angular/common';
 import { Proveedor } from '../../../../shared/interfaces/proveedor/proveedor';
 import { ProveedoresServiceService } from '../../../../shared/data-access/proveedores-service/proveedores-service.service';
 import { tap } from 'rxjs';
+import { HotToastService } from '@ngxpert/hot-toast';
 
 @Component({
   selector: 'app-proveedores',
@@ -30,7 +31,7 @@ export class ProveedoresComponent {
   protected message: object = {};
   protected error: object = {};
 
-  constructor() {
+  constructor(private toast: HotToastService) {
     this.formularioProveedores = this.fb.group({
       nombre: ['', Validators.required],
       direccion: ['', Validators.required],
@@ -39,7 +40,7 @@ export class ProveedoresComponent {
     })
 
     this.formularioBusqueda = this.fb.group({
-      palabra: ['']
+      proveedor: ['']
     })
   }
 
@@ -53,9 +54,6 @@ export class ProveedoresComponent {
         this.proveedores = data;
       })
     ).subscribe({
-      next: (m) => console.log(m),
-      error: (e) => console.error(e),
-      complete: () => console.log("Completado")
     });
   }
 
@@ -98,13 +96,11 @@ export class ProveedoresComponent {
         estado: true
       } 
       this.proveedoresService.actualizarProveedor(proveedor).pipe().subscribe({
-        next: (m) => {
-          console.log(m);
-        },
-        error: (e) => {
-          console.log(e);
-        },
-        complete: () => console.log("Completado")
+        next: () => {this.toast.success('Proveedor actualizado con éxito');},
+        error: (error) => {
+          this.toast.error('Error al actualizar proveedor');
+        }
+        
       })
     } else {
       const proveedor: Proveedor = {
@@ -120,32 +116,35 @@ export class ProveedoresComponent {
 
       if (proveedor.nombre !== "" || proveedor.direccion !== "") {
         this.proveedoresService.crearProveedor(proveedor).pipe().subscribe({
-          next: (m) => console.log(m),
-          error: (e) => console.error(e),
-          complete: () => console.log("Completado")
+          next: () => {this.toast.success('Proveedor creado con éxito');},
+          error: (error) => {
+            this.toast.error('Error al crear proveedor');
+          }
         })
       }
     }
-
-    window.location.reload();
+setTimeout(() => {
+    window.location.reload();}, 2000);
   }
 
   eliminarProveedor() {
     if (this.estaEditando === true && this.proveedorSeleccionadoId !== null) {
       this.proveedoresService.eliminarProveedor(this.proveedorSeleccionadoId).pipe().subscribe(
         {
-          next: (m) => console.log(m),
-          error: (e) => console.log(e),
-          complete: () => console.log("completado")
+         next: () => {this.toast.success('Proveedor eliminado con éxito');},
+         error: (error) => {
+           this.toast.error('Error al eliminar proveedor');
         }
+      }
       );
     }
-
-    window.location.reload();
+setTimeout(() => {
+    window.location.reload();}, 2000);
+  
   }
 
    buscarProveedorPorNombre() {
-    let texto_ingresado = this.formularioBusqueda.controls['palabra']?.value;
+    let texto_ingresado = this.formularioBusqueda.controls['proveedor']?.value;
 
     if (texto_ingresado) {
       this.proveedoresService.buscarProveedoresPorNombre(texto_ingresado).pipe(
@@ -153,12 +152,7 @@ export class ProveedoresComponent {
           this.proveedores = data;
         })
       ).subscribe({
-        next: (message) => console.log(message),
-        error: (error) => console.log(error),
-        complete: () => console.log("Completado")
       });
-    } else {
-      this.obtenerProveedores()
     }
 }
 }
