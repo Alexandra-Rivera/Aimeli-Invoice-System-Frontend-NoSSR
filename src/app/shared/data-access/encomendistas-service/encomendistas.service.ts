@@ -36,4 +36,8 @@ export class EncomendistasService {
   actualizarEncomendista(encomendista: EncomendistaDestino): Observable<RespuestaServidor> {
     return this.http.put<RespuestaServidor>(`${this.server_url}/encomendista`, encomendista);
   }
+  /*Filtrar encomendistas por nombre */
+  filtrarEncomendistas(objeto: {nombre: string, local: string}): Observable<EncomendistaDestino[]> {
+    return this.http.get<EncomendistaDestino[]>(`${this.server_url}/encomendista/filter`, { params: objeto });
+  }
 }

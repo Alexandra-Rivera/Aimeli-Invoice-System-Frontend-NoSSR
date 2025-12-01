@@ -34,11 +34,12 @@ export class EncomendistasComponent {
   constructor(private fb: FormBuilder, private toast: HotToastService) {
     this.formularioEncomendista = fb.group({
       encomendista: ['', Validators.required],
-      local: [''],
+      local: ['', Validators.required],
     });
 
     this.formularioBusqueda = fb.group({
-      encomendista: ['']  
+      encomendista: [''],
+      local: [''],
     })
   }
 
@@ -75,7 +76,6 @@ export class EncomendistasComponent {
         },
         error: (error) => {
           this.toast.error('Error al actualizar encomendista');
-          console.error(error);
         }
       });
     } else {
@@ -90,7 +90,6 @@ export class EncomendistasComponent {
         },
         error: (error) => {
           this.toast.error('Error al crear encomendista');
-          console.error(error);
         }
       });
     }
@@ -114,7 +113,6 @@ obtenerEncomendistas() {
         },
         error: (error) => {
           this.toast.error('Error al eliminar encomendista');
-          console.error(error);
         }
       });
     }
@@ -124,5 +122,20 @@ obtenerEncomendistas() {
     this.encomendistaSeleccionadoIndex = null;
     this.mostrarBoton = false;
     this.formularioEncomendista.reset();
+  }
+  buscarEncomendista() {
+    let nombre = this.formularioBusqueda.controls['encomendista']?.value ??"";
+    let local = this.formularioBusqueda.controls['local']?.value ??"";
+    let objeto: {nombre: string, local: string} = {
+      nombre: nombre,
+      local: local
+    };
+    
+      this.encomendistasService.filtrarEncomendistas(objeto).pipe(
+        tap((data: EncomendistaDestino[]) => {
+          this.encomendistas = data;
+        })
+      ).subscribe({
+      });
   }
 }
