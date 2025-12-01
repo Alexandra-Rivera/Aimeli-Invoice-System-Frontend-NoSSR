@@ -5,7 +5,6 @@
   >
     <!-- Formulario de Busqueda -->
     <form
-      action=""
       [formGroup]="formularioBusqueda"
       class="flex flex-col gap-2 w-full"
     >
@@ -18,7 +17,7 @@
           type="search"
           name="searchbar"
           id="search"
-          formControlName="palabra"
+          formControlName="proveedor"
           (input)="buscarProveedorPorNombre()"
           class="rounded-full italic w-full"
           placeholder="Buscar proveedor por nombre"
