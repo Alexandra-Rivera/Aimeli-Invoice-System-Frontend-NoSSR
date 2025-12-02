@@ -12,5 +12,11 @@ export const comprasRoutes: Routes = [
         loadComponent: () => 
             import('./formulario-compras/formulario-compras.component').then((c) => c.FormularioComprasComponent),
         title: 'Formulario de Compras'
+    },
+    {
+        path: 'registro-compra/:id',
+        loadComponent: () => 
+            import('./components/vista-registro-compras/vista-registro-compras.component').then((c) => c.VistaRegistroComprasComponent),
+        title: 'Registro de Compra'
     }
 ];
