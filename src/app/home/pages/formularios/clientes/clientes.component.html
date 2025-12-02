@@ -87,6 +87,15 @@
             Guardar Cliente
           </button>
         </div>
+        <button
+        id="buttonAgregarCliente"
+        type="button"
+        (click)="agregarCliente()"
+        *ngIf="mostrarBoton"
+        class="mt-10 mx-auto font-semibold text-blue-900 cursor-pointer"
+      >
+        Agregar nuevo Cliente
+      </button>
       </form>
     </section>
   </div>

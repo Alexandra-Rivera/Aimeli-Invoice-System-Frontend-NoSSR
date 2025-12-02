@@ -6,6 +6,7 @@ import { CommonModule, JsonPipe } from '@angular/common';
 import { ClienteServiceService } from '../../../../shared/data-access/cliente-service/cliente.service';
 import { Cliente } from '../../../../shared/interfaces/cliente/cliente';
 import { tap } from 'rxjs';
+import { HotToastService } from '@ngxpert/hot-toast';
 
 @Component({
   selector: 'app-clientes',
@@ -26,7 +27,7 @@ export class ClientesComponent {
 
 
   protected mostrarBoton: boolean = false;
-  constructor() {
+  constructor( private toast: HotToastService) {
     this.formularioClientes = this.fb.group({
       nombre: [''],
       telefono: [''],
@@ -42,7 +43,6 @@ export class ClientesComponent {
 
 
   handleSubmit() {
-    console.log(this.formularioClientes.value);
   }
 
   ngOnInit() {
@@ -51,13 +51,9 @@ export class ClientesComponent {
   ObternerClientes() {
         this.clientesService.obtenerClientes().pipe(
           tap((data: Cliente[]) => {
-            console.log(data);
             this.clientesLista = data;
           })
         ).subscribe({
-          next: (message) => console.log(message),
-          error: (error) => console.error(error),
-          complete: () => console.log("Actividad finalizada")
         });
   }
   crearCliente() {
@@ -69,17 +65,17 @@ export class ClientesComponent {
     };
     this.clientesService.crearCliente(cliente).pipe(
       tap((data: Cliente) => {
-        console.log(data);
         this.ObternerClientes();
         this.formularioClientes.reset();
       })
     ).subscribe({
-      next: (message) => console.log(message),
-      error: (error) => console.error(error),
-      complete: () => console.log("Actividad finalizada")
+      next: () => {this .toast.success('Cliente creado con exito');},
+      error: () => {this.toast.error('Error al crear el cliente');},
+        
     });
   }
   editarCliente(cliente: Cliente) {
+    this.mostrarBoton = true;
     this.estaEditando = true;
     this.clienteSeleccionadoId = cliente.id;
     this.formularioClientes.patchValue({
@@ -96,16 +92,14 @@ export class ClientesComponent {
       };
       this.clientesService.actualizarCliente(clienteActualizado).pipe(
         tap((data: Cliente) => {
-          console.log(data);
           this.ObternerClientes();
           this.formularioClientes.reset();
           this.estaEditando = false;
           this.clienteSeleccionadoId = null;
         })
       ).subscribe({
-        next: (message) => console.log(message),
-        error: (error) => console.error(error),
-        complete: () => console.log("Actividad finalizada")
+        next: () => {this .toast.success('Cliente actualizado con exito');},
+        error: () => {this.toast.error('Error al actualizar el cliente');},
       });
     }
   }
@@ -113,15 +107,13 @@ export class ClientesComponent {
     if (this.clienteSeleccionadoId !== null) {
       this.clientesService.eliminarCliente(this.clienteSeleccionadoId).pipe(
         tap(() => {
-          console.log(`Cliente con ID ${this.clienteSeleccionadoId} eliminado`);
           this.ObternerClientes();
           this.formularioClientes.reset();
           this.estaEditando = false;
         })
       ).subscribe({
-        next: (message) => console.log(message),
-        error: (error) => console.error(error),
-        complete: () => console.log("Actividad finalizada")
+        next: () => {this .toast.success('Cliente eliminado con exito');},
+          error: () => {this.toast.error('Error al eliminar el cliente');},
       });
     }
   }
@@ -129,14 +121,17 @@ export class ClientesComponent {
     const nombre = this.formularioBusqueda.value.nombre;
     this.clientesService.buscarClientesPorNombre(nombre).pipe(
       tap((data: Cliente[]) => {
-        console.log(data);
         this.clientesLista = data;
       })
     ).subscribe({
-      next: (message) => console.log(message),
-      error: (error) => console.error(error),
-      complete: () => console.log("Actividad finalizada")
+  
     });
   }   
+  agregarCliente() {
+    this.estaEditando = false;
+    this.clienteSeleccionadoId = null;
+    this.mostrarBoton = false;
+    this.formularioClientes.reset();
+  }
 }
 

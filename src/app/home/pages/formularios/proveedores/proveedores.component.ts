@@ -82,9 +82,6 @@ export class ProveedoresComponent {
   
   guardarProveedor() {
     if (this.estaEditando === true && this.proveedorSeleccionadoId !== null) {
-      console.log("Estado:", this.estaEditando);
-      console.log("Formulario: ", this.formularioProveedores.value);
-
       const proveedor: Proveedor = {
         id: this.proveedorSeleccionadoId,
         nombre: this.formularioProveedores.controls['nombre'].value ?? "",

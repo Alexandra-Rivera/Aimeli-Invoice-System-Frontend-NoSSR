@@ -6,6 +6,7 @@ import { Categoria } from '../../../../shared/interfaces/categoria/categoria';
 import { CategoriasServiceService } from '../../../../shared/data-access/categorias-service/categorias-service.service';
 import { catchError, of, tap, throwError } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { HotToastService } from '@ngxpert/hot-toast';
 
 @Component({
   selector: 'app-categorias',
@@ -31,7 +32,7 @@ export class CategoriasComponent {
   categoriaSeleccionadaIndex: number | null = null;
   estaEditando = false;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private toast: HotToastService, fb: FormBuilder) {
     this.formularioCategoria = fb.group({
       categoria: ['', Validators.required],
     });
@@ -56,7 +57,6 @@ export class CategoriasComponent {
 
   
   seleccionarCategoria(index: number) {
-    console.log("id seleccionado:", index);
     this.mostrarBoton = true;
     this.estaEditando = true;
     const categoriaSeleccionada: Categoria = this.categorias[index];
@@ -82,18 +82,20 @@ export class CategoriasComponent {
         estado: true,
       };
       this.categoriasService.actualizarCategoria(this.categoria).pipe().subscribe({
-        next: (response) => console.log(response),
-        error: (e) => console.log(e),
+        next: () => {this.toast.success('Categoria actualizada con exito');},
+        error: () => {this.toast.error('Error al actualizar la categoria');},
       });
     } else {
       const nueva_categoria = this.formularioCategoria.controls['categoria']?.value ?? "";
       if (nueva_categoria) {
       this.categoriasService.crearCategoria(nueva_categoria).pipe().subscribe({
-        error: (e) => console.log(e)
+        next: () => {this.toast.success('Categoria creada con exito');},
+        error: () => {this.toast.error('Error al crear la categoria');},
       })
       }
     }
-    window.location.reload();
+    setTimeout(() => {
+    window.location.reload();}, 2000);
   };
 
   obtenerCategorias() {
@@ -102,21 +104,19 @@ export class CategoriasComponent {
         this.categorias = data;
       })
     ).subscribe({
-      error: (e) => console.log(e),
-      complete: () => console.log("Completado")
+      
     })
   }
 
   eliminarCategoria() {
     if (this.categoriaSeleccionadaIndex) {
-      console.log("Index a elimiar:", this.categoriaSeleccionadaIndex);
       this.categoriasService.eliminarCategoriaPorId(this.categoriaSeleccionadaIndex).pipe().subscribe({
-        next: (message) => console.log(message),
-        error: (e) => console.log(e),
-        complete: () => console.log("Operacion completada con exito"),
+        next: () => {this.toast.success('Categoria eliminada con exito');},
+        error: () => {this.toast.error('Error al eliminar la categoria');},
       }); 
     };
-    window.location.reload();
+    setTimeout(() => {
+    window.location.reload();}, 2000);
   }
 
   buscarCategoria() {
@@ -128,9 +128,7 @@ export class CategoriasComponent {
          this.categorias = data;
         })
       ).subscribe({
-        next: (message) => console.log(message),
-        error: (error) => console.log(error),
-        complete: () => console.log("Completado")
+        
       });
     } else {
       this.obtenerCategorias()
