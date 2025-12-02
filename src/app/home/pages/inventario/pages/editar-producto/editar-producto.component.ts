@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import { NavComponentComponent } from "../../../../../components/nav-component/nav-component.component";
 import { ProductoCompleto } from '../../../../../shared/interfaces/producto/producto-completo';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -18,7 +18,7 @@ import { ProveedoresServiceService } from '../../../../../shared/data-access/pro
   templateUrl: './editar-producto.component.html',
   styleUrl: './editar-producto.component.css'
 })
-export class EditarProductoComponent {
+export class EditarProductoComponent implements OnInit{
   producto!: ProductoCompleto;
   productoId: number = 0;
   categorias: Categoria[] = [];
@@ -39,12 +39,12 @@ export class EditarProductoComponent {
   constructor(private route: ActivatedRoute, private router: Router, private toast: HotToastService) {
       this.formularioActualizarProducto = this.formBuilder.group({
         image: [''],
-        nombre: ['', [Validators.maxLength(100)]], 
+        nombre: ['', [Validators.maxLength(100)]],
         descripcion: ['', [Validators.maxLength(300)]],
         cantidad: ['', [Validators.min(0)]],
-        precioVenta: ['', [Validators.min(0.0)]], 
+        precioVenta: ['', [Validators.min(0.0)]],
         costoUnitario: ['', [Validators.min(0.0)]],
-        idCategoria: [''], 
+        idCategoria: [''],
         idProveedor: ['']
       })
   }
@@ -62,7 +62,7 @@ export class EditarProductoComponent {
   }
 
   obtenerImagen(event: any) {
-        let tiposImagenPermitidos: string[] = ['image/jpg', 'image/png', 'image/jpeg'];
+    let tiposImagenPermitidos: string[] = ['image/jpg', 'image/png', 'image/jpeg'];
 
     const file = event.target.files[0];
     if(file) {
@@ -87,18 +87,17 @@ export class EditarProductoComponent {
   }
 
   guardarCambios() {
-
     if(this.formularioActualizarProducto.valid) {
       const data = {
             id: this.producto.id,
-            codigo: this.producto.codigo, 
+            codigo: this.producto.codigo,
             imagenURL: this.producto.imagen,
-            nombre: this.formularioActualizarProducto.controls['nombre'].value, 
+            nombre: this.formularioActualizarProducto.controls['nombre'].value,
             descripcion: this.formularioActualizarProducto.controls['descripcion'].value,
             cantidad: this.formularioActualizarProducto.controls['cantidad'].value,
-            precioVenta: this.formularioActualizarProducto.controls['precioVenta'].value, 
+            precioVenta: this.formularioActualizarProducto.controls['precioVenta'].value,
             costoUnitario: this.formularioActualizarProducto.controls['costoUnitario'].value,
-            idCategoria: this.formularioActualizarProducto.controls['idCategoria'].value, 
+            idCategoria: this.formularioActualizarProducto.controls['idCategoria'].value,
             idProveedor: this.formularioActualizarProducto.controls['idProveedor'].value
       }
       this.actualizarProducto(data, this.imagenFile);
@@ -115,18 +114,19 @@ export class EditarProductoComponent {
       tap((data: ProductoCompleto) => {
         this.producto = data;
         this.formularioActualizarProducto.patchValue({
-            nombre: this.producto.nombre, 
-            descripcion: this.producto.descripcion, 
-            cantidad: this.producto.cantidad, 
-            precioVenta: this.producto.precioVenta, 
+            imagen: "",
+            nombre: this.producto.nombre,
+            descripcion: this.producto.descripcion,
+            cantidad: this.producto.cantidad,
+            precioVenta: this.producto.precioVenta,
             costoUnitario: this.producto.costoUnitario,
             idCategoria: this.producto.idCategoria,
             idProveedor: this.producto.idProveedor
-        })  
+        })
       })
     ).subscribe({
-      next: (m) => console.log(m), 
-      error: (e) => console.log(e), 
+      next: (m) => console.log(m),
+      error: (e) => console.log(e),
     });
   }
 
@@ -167,7 +167,7 @@ export class EditarProductoComponent {
         setTimeout(() => {
           this.router.navigate(['/home/inventario']);
         }, 3000);
-      }, 
+      },
       error: (e) => {
         console.error(e);
         this.toast.error("Ocurrio un error!");

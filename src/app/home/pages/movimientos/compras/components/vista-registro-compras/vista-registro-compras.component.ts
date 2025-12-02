@@ -1,5 +1,5 @@
-import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {Component, OnInit} from '@angular/core';
 import { NavComponentComponent } from '../../../../../../components/nav-component/nav-component.component';
 import { CompraInformacion } from '../../../../../../shared/interfaces/compras/compra-informacion';
 import { ComprasServiceService } from '../../../../../../shared/data-access/compras-service/compras-service.service';
@@ -21,11 +21,15 @@ import { Producto } from '../../../../../../shared/interfaces/producto/producto'
   templateUrl: './vista-registro-compras.component.html',
   styleUrl: './vista-registro-compras.component.css'
 })
-export class VistaRegistroComprasComponent {
+export class VistaRegistroComprasComponent implements OnInit {
   proveedores: Proveedor[] = [];
   categorias: Categoria[] = [];
   metodosPago: MetodoPago[] = [];
   productos: Producto[] = [];
+
+  // Arreglo para Files y Strings de las imagenes a editar
+  imagenesFiles: File[] = [];
+  imagen:{[key: number]: String} = {};
 
   registro_compra: CompraInformacion = {
     compra: {
@@ -40,45 +44,36 @@ export class VistaRegistroComprasComponent {
     productos: []
   };
 
-  registro_id: number = 0;
+  registroId: number = 0;
 
   actualizarFacturaFormulario!: FormGroup;
 
   constructor(
-    fb: FormBuilder,
+    private fb: FormBuilder,
     private comprasService: ComprasServiceService,
     private proveedoresService: ProveedoresServiceService,
     private categoriasService: CategoriasServiceService,
     private metodoPagoService: MetodopagoService,
     private route: ActivatedRoute,
     private toast: HotToastService
-  ) {
-    this.actualizarFacturaFormulario = fb.group({
+  ) {}
+
+  ngOnInit() {
+
+    /*Obteniendo ID del registro a traves de los parametros del url */
+    this.route.paramMap.subscribe(params => {
+      this.registroId = Number(params.get('id'));
+      if (this.registroId) {
+        this.obtenerDatosRegistroPorId(this.registroId);
+      }
+    })
+
+    this.actualizarFacturaFormulario = this.fb.group({
       fechaCompra: ['', Validators.required],
       numeroFactura: ['', Validators.required],
       metodoPago: ['', Validators.required],
       proveedor: ['', Validators.required],
-      productos: new FormArray([
-        fb.group({
-          imagenProducto: ['', Validators.required],
-          nombreProducto: ['', [Validators.required, Validators.maxLength(100)]],
-          descripcionProducto: ['', [Validators.required, Validators.maxLength(300)]],
-          categoria: ['', Validators.required],
-          cantidadProducto: ['', Validators.required],
-          costoUnitario: ['', Validators.required],
-          precioVenta: ['', Validators.required]
-        })
-      ]),
-    })
-  }
-
-  ngOnInit() {
-    /*Obteniendo ID del registro a traves de los parametros del url */
-    this.route.paramMap.subscribe(params => {
-      this.registro_id = Number(params.get('id'));
-      if (this.registro_id) {
-        this.obtenerDatosRegistroPorId(this.registro_id);
-      }
+      productos: this.fb.array([]),
     })
 
     /*Obteniendo proveedores */
@@ -96,9 +91,40 @@ export class VistaRegistroComprasComponent {
     return this.actualizarFacturaFormulario.get('productos') as FormArray;
   }
 
-  actualizarFactura() {
+  crearProducto(producto: Producto): FormGroup {
+    return this.fb.group({
+      imagen: ["", [Validators.required]],
+      nombre: [producto.nombre, [Validators.required, Validators.maxLength(100)]],
+      descripcion: [producto.descripcion, [Validators.required, Validators.maxLength(300)]],
+      categoria: [producto.idCategoria, Validators.required],
+      cantidad: [producto.cantidad, Validators.required],
+      costoUnitario: [producto.costoUnitario, Validators.required],
+      precioVenta: [producto.precioVenta, Validators.required]
+    })
+  }
+
+  /*Obteniendo el valor total por producto*/
+  obteniendoTotalporProducto() {
 
   }
+
+  obtenerImagen(event: any, index: number) {
+    let tiposImagenPermitidos: string[] = ['image/jpg', 'image/png', 'image/jpeg'];
+
+    const file = event.target.files[0];
+    if(file) {
+      if (tiposImagenPermitidos.includes(file.type)) {
+        const reader = new FileReader();
+        reader.onload = (e: any) => {
+          this.imagen[index] = e.target.result; //Se genera un string base64 que representa a la imagen
+          this.imagenesFiles = file; // aqui se guarda el archivo de imagen
+        };
+        reader.readAsDataURL(file);
+      } else {
+        event.target.result = '';
+        }
+      }
+   }
 
   /* Services */
   obtenerDatosRegistroPorId(registro_id: number) {
@@ -115,12 +141,18 @@ export class VistaRegistroComprasComponent {
             proveedor: this.registro_compra.compra.idProveedor,
         });
 
-        this.actualizarFacturaFormulario.controls['productos'].patchValue(this.productos);
+        const productosArray = this.obtenerProductosArray;
+        productosArray.clear();
+
+        this.productos.forEach(producto => {
+          productosArray.push(this.crearProducto(producto));
+        })
+
+        for (let i = 0; i <= productosArray.length; i++) {
+          this.imagen[i] = this.productos[i].imagen;
+        }
       }
     )).subscribe({
-        next: (r) => {
-        console.log(r);
-      },
       error: (e) => {
         console.error(e);
         this.toast.error("Algo salio mal.");

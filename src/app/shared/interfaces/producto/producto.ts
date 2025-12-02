@@ -1,5 +1,3 @@
-import { CategoriaDTO } from "../categoria-DTO/categoria-dto";
-
 export interface Producto {
     id: number;
     imagen: string;
