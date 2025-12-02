@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { inventarioRoutes } from './pages/inventario/inventario.routes';
+import { FormularioInfoAmeliComponent } from '../formulario-info-ameli/formulario-info-ameli.component';
 
 export const homeRoutes: Routes = [
     {
@@ -32,5 +33,9 @@ export const homeRoutes: Routes = [
         loadComponent: () =>
             import('./pages/reportes/reportes.component').then((c) => c.ReportesComponent),
         title: 'Reportes'
-    }
+    },{
+            path: 'formulario-info-aimeli',
+            component: FormularioInfoAmeliComponent,
+            title: 'Formulario de Informacion de Aimeli'
+        }
 ];
