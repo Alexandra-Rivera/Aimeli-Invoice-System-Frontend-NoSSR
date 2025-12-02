@@ -27,9 +27,8 @@ export class VistaRegistroComprasComponent implements OnInit {
   metodosPago: MetodoPago[] = [];
   productos: Producto[] = [];
 
-  imagenesString: String[] = [];
+  // Arreglo para Files y Strings de las imagenes a editar
   imagenesFiles: File[] = [];
-
   imagen:{[key: number]: String} = {};
 
   registro_compra: CompraInformacion = {
@@ -94,7 +93,7 @@ export class VistaRegistroComprasComponent implements OnInit {
 
   crearProducto(producto: Producto): FormGroup {
     return this.fb.group({
-      imagen: [producto.imagen, [Validators.required]],
+      imagen: ["", [Validators.required]],
       nombre: [producto.nombre, [Validators.required, Validators.maxLength(100)]],
       descripcion: [producto.descripcion, [Validators.required, Validators.maxLength(300)]],
       categoria: [producto.idCategoria, Validators.required],
@@ -109,29 +108,23 @@ export class VistaRegistroComprasComponent implements OnInit {
 
   }
 
-  obtenerImagen(event: any) {
+  obtenerImagen(event: any, index: number) {
     let tiposImagenPermitidos: string[] = ['image/jpg', 'image/png', 'image/jpeg'];
 
-    for (let i = 0; i <= event.target.files.length; i++) {
-      const file = event.target.files[i];
-
-      if(file) {
-        if (tiposImagenPermitidos.includes(file.type)) {
-          const reader = new FileReader();
-          reader.onload = (e: any) => {
-            this.imagenesString = e.target.result; //Se genera un string base64 que representa a la imagen
-            this.imagenesFiles = file; // aqui se guarda el archivo de imagen
-          };
-          reader.readAsDataURL(file);
-        } else {
-          event.target.result = '';
-          this.imagenesString = [];
-        }
+    const file = event.target.files[0];
+    if(file) {
+      if (tiposImagenPermitidos.includes(file.type)) {
+        const reader = new FileReader();
+        reader.onload = (e: any) => {
+          this.imagen[index] = e.target.result; //Se genera un string base64 que representa a la imagen
+          this.imagenesFiles = file; // aqui se guarda el archivo de imagen
+        };
+        reader.readAsDataURL(file);
       } else {
-        this.imagenesString = [];
+        event.target.result = '';
+        }
       }
-    }
-  }
+   }
 
   /* Services */
   obtenerDatosRegistroPorId(registro_id: number) {

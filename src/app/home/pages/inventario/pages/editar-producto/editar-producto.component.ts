@@ -62,7 +62,7 @@ export class EditarProductoComponent implements OnInit{
   }
 
   obtenerImagen(event: any) {
-        let tiposImagenPermitidos: string[] = ['image/jpg', 'image/png', 'image/jpeg'];
+    let tiposImagenPermitidos: string[] = ['image/jpg', 'image/png', 'image/jpeg'];
 
     const file = event.target.files[0];
     if(file) {

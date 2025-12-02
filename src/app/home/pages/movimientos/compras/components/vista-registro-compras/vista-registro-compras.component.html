@@ -134,7 +134,7 @@
             <td class="px-6 py-4">
               <img
                 [src]="imagen[i]"
-                id="imagenProducto-{{i}}}"
+                id="imagenProducto- {{i}}"
                 alt="producto-{{ i }} imagen"
                 class="w-[100%] h-[20vh] xl:w-[10vw] object-cover"
               />
@@ -142,7 +142,8 @@
               <input
                 type="file"
                 accept="image/*"
-                (change)="obtenerImagen($event)"
+                formControlName="imagen"
+                (change)="obtenerImagen($event, i)"
               />
             </td>
 
