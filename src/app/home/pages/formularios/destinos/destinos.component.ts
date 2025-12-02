@@ -10,6 +10,8 @@ import { MunicipiosPorDepartamento } from '../../../../shared/interfaces/Municip
 import { EncomendistasService } from '../../../../shared/data-access/encomendistas-service/encomendistas.service';
 import { EncomendistaDestino } from '../../../../shared/interfaces/encomendista/encomendista-destino';
 import { Destino } from '../../../../shared/interfaces/destino/destino';
+import { HotObservable } from 'rxjs/internal/testing/HotObservable';
+import { HotToastService } from '@ngxpert/hot-toast';
 
 @Component({
   selector: 'app-destinos',
@@ -32,7 +34,7 @@ export class DestinosComponent implements OnInit {
   protected estaEditando: boolean = false;
   protected formularioBusqueda!: FormGroup;
 
-  constructor() {
+  constructor(private toast : HotToastService) {
     this.formularioDestino = this.fb.group({
       departamento: ["", Validators.required],
       municipio: ["", Validators.required],
@@ -61,52 +63,38 @@ export class DestinosComponent implements OnInit {
   obtenerDepartamentos() {
     this.destinosService.obtenerDepartamentos().pipe(
       tap((data: Departamento[]) => {
-        console.log(data);
         this.departamentos = data;
       })
     ).subscribe({
-      next: (message) => console.log(message),
-      error: (error) => console.error(error),
-      complete: () => console.log("Actividad finalizada")
     });
   }
 
   obtenerMunicipiosPorDepartamento(id: number) {
     this.destinosService.obtenerMunicipiosPorDepartamento(id).pipe(
       tap((data: MunicipiosPorDepartamento[]) => {
-        console.log(data);
         this.municipios = data;
       })
     ).subscribe({
-      next: (message) => console.log(message),
-      error: (error) => console.error(error),
-      complete: () => console.log("Actividad finalizada")
     });
   }
 
   obtenerEncomendista() {
     this.encomendistasService.obtenerEncomendistas().pipe(
       tap((data: EncomendistaDestino[]) => {
-        console.log(data);
         this.encomendistas = data;
       })
     ).subscribe({
-      next: (message) => console.log(message),
-      error: (error) => console.error(error),
-      complete: () => console.log("Actividad finalizada")
+     
     });
   }
 
   obtenerDestinos() {
     this.destinosService.obtenerDestinos().pipe(
       tap((data: Destino[]) => {
-        console.log(data);
         this.destinos = data;
       })
     ).subscribe({
-      next: (message) => console.log(message),
-      error: (error) => console.error(error),
-      complete: () => console.log("Actividad finalizada")
+      
     });
   }
 
@@ -115,7 +103,6 @@ export class DestinosComponent implements OnInit {
     this.mostrarBoton = true;
     const destino: Destino = this.destinos[index];
     this.destinoSeleccionadoId = destino.id;
-    console.log("Destino seleccionado:", destino);
 
     this.formularioDestino.patchValue({
       departamento: destino.departamentoId,
@@ -140,10 +127,9 @@ export class DestinosComponent implements OnInit {
         };
 
         this.destinosService.actualizarDestino(destino).subscribe({
-          next: (m) => console.log(m),
-          error: (e) => console.log(e),
+          next: () => {this .toast.success('Destino actualizado con exito');},
+          error: () => {this.toast.error('Error al actualizar el destino');},
           complete: () => {
-            console.log("Completado");
             this.obtenerDestinos();
             this.formularioDestino.reset();
             this.estaEditando = false;
@@ -164,21 +150,18 @@ export class DestinosComponent implements OnInit {
           encomendistaId: formularioValue.encomendista
         };
 
-        console.log('Nuevo destino:', nuevoDestino);
-
         this.destinosService.crearDestino(nuevoDestino).subscribe({
-          next: (response) => console.log('Destino creado:', response),
-          error: (error) => console.error('Error al crear destino:', error),
+          next: () => {this .toast.success('Destino creado con exito');},
+          error: () => {this.toast.error('Error al crear el destino');},
           complete: () => {
-            console.log('Petición completada');
             this.obtenerDestinos();
             this.formularioDestino.reset();
           }
         });
       }
-    } else {
-      console.error('Formulario inválido');
     }
+    setTimeout(() => {
+    window.location.reload();}, 2000);
   }
 
   actualizarDestino() {
@@ -195,13 +178,11 @@ export class DestinosComponent implements OnInit {
         encomendistaId: formularioValue.encomendista
       };
 
-      console.log('Destino actualizado:', destinoActualizado);
 
       this.destinosService.actualizarDestino(destinoActualizado).subscribe({
-        next: (response) => console.log('Destino actualizado:', response),
-        error: (error) => console.error('Error al actualizar destino:', error),
+        next: () => {this .toast.success('Destino actualizado con exito');},
+        error: () => {this.toast.error('Error al actualizar el destino');},
         complete: () => {
-          console.log('Petición completada');
           this.obtenerDestinos();
           this.formularioDestino.reset();
           this.estaEditando = false;
@@ -209,35 +190,34 @@ export class DestinosComponent implements OnInit {
           this.destinoSeleccionadoId = null;
           
         }
+        
       });
-    } else {
-      console.error('Formulario inválido');
-    }
+      setTimeout(() => {
+    window.location.reload();}, 2000);
+    } 
+    
   }
     eliminarDestino() {
     if (this.estaEditando === true && this.destinoSeleccionadoId !== null) {
       this.destinosService.eliminarDestino(this.destinoSeleccionadoId).pipe().subscribe(
         {
-          next: (m) => console.log(m),
-          error: (e) => console.log(e),
-          complete: () => console.log("completado")
+          next: () => {this .toast.success('Destino eliminado con exito');},
+          error: () => {this.toast.error('Error al eliminar el destino');},
         }
       );
     }
 
-    window.location.reload();
+   setTimeout(() => {
+    window.location.reload();}, 2000);
   }
   buscarDestinoPorPuntoEntrega() {
     const puntoEntrega = this.formularioBusqueda.value.nombre;
     this.destinosService.buscarDestinosPorNombre(puntoEntrega).pipe(
       tap((data: Destino[]) => {
-        console.log(data);
         this.destinos = data;
       })
     ).subscribe({
-      next: (message) => console.log(message),
-      error: (error) => console.error(error),
-      complete: () => console.log("Actividad finalizada")
+  
     });
   }
 }
